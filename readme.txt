@@ -1,14 +1,14 @@
 === Affiliate Power ===
 Contributors: JonasBreuer
 Donate link: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
-Tags: affiliate, tracking, networks, overview, subid, affili, affili.net, zanox, tradedoubler
+Tags: affiliate, tracking, networks, overview, subid, sales, affili, affili.net, zanox, tradedoubler
 Requires at least: 3.1
 Tested up to: 3.4.2
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Finde automatisch heraus, welches Artikel zu welchen Affiliate-Einnahmen geführt hat.
+Finde automatisch heraus, welche Artikel zu welchen Affiliate-Einnahmen geführt haben.
 
 == Description ==
 
