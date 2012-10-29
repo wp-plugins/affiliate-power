@@ -1,7 +1,7 @@
 === Affiliate Power ===
 Contributors: JonasBreuer
 Donate link: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
-Tags: affiliate, tracking, networks, overvoew, subid, affili, affili.net, zanox, tradedoubler
+Tags: affiliate, tracking, networks, overview, subid, affili, affili.net, zanox, tradedoubler
 Requires at least: 3.1
 Tested up to: 3.4.2
 Stable tag: trunk
@@ -12,7 +12,7 @@ Finde automatisch heraus, welches Artikel zu welchen Affiliate-Einnahmen geführ
 
 == Description ==
 
-Mit Affiliate Power werden deine erzielten Affiliate-Einnahmen automatisch deinen Artikel und Seiten zugeordnet. So kannst du heraus finden, welcher Artikel sich gelohnt hat und welcher weniger. Alle Daten werden dabei auf deinem Server ausgewertet und sind somit sicher.
+Mit Affiliate Power werden deine erzielten Affiliate-Einnahmen automatisch deinen Artikeln und Seiten zugeordnet. So kannst du herausfinden, welcher Artikel sich gelohnt hat und welcher weniger. Alle Daten werden dabei auf deinem Server ausgewertet und sind somit sicher.
 
 Bei Fragen oder Problemen hinterlasse einfach einen Kommentar auf der [Plugin Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power/). Ich helfe gerne.
 
@@ -26,8 +26,6 @@ Bei Fragen oder Problemen hinterlasse einfach einen Kommentar auf der [Plugin Se
 
 
 == Installation ==
-
-= DE: =
 
 Wie immer.
 
