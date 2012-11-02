@@ -11,22 +11,25 @@ class Affiliate_Power_Apis {
 		
 		//affili
 		if(is_numeric($options['affili-id']) && strlen($options['affili-password']) == 20) {
-			
 			$transactions = self::downloadTransactionsAffili($options['affili-id'], $options['affili-password'], $fromTS, $tillTS);
 			foreach ($transactions as $transaction) self::handleTransaction($transaction);
 		}
 		
 		//zanox
 		if(strlen($options['zanox-connect-id']) == 20 && strlen($options['zanox-public-key']) == 20 && strlen($options['zanox-secret-key']) >= 20) {
-			
-			$transactions = self::downloadTransactionsZanox($options['zanox-connect-id'], $options['zanox-public-key'], $options['zanox-secret-key'], $fromTS, $tillTS);
+			$transactions = self::downloadTransactionsZanox($options['zanox-connect-id'], $options['zanox-public-key'], $options['zanox-secret-key'], $options['zanox-adspace'], $fromTS, $tillTS);
 			foreach ($transactions as $transaction) self::handleTransaction($transaction);
 		}
 		
 		//tradedoubler
 		if(strlen($options['tradedoubler-key']) >= 32) {
-			
-			$transactions = self::downloadTransactionsTradedoubler($options['tradedoubler-key'], $fromTS, $tillTS);
+			$transactions = self::downloadTransactionsTradedoubler($options['tradedoubler-key'], $options['tradedoubler-sitename'], $fromTS, $tillTS);
+			foreach ($transactions as $transaction) self::handleTransaction($transaction);
+		}
+		
+		//belboon
+		if (isset($options['belboon-username']) && strlen($options['belboon-password']) == 20) {
+			$transactions = self::downloadTransactionsBelboon($options['belboon-username'], $options['belboon-password'], $options['belboon-platform'], $fromTS, $tillTS);
 			foreach ($transactions as $transaction) self::handleTransaction($transaction);
 		}
 		
@@ -166,9 +169,34 @@ class Affiliate_Power_Apis {
 		$report_url .= '&key='.$report_key;
 
 		$http_answer = wp_remote_get($report_url);
+		
+		if (is_wp_error($http_answer) || $http_answer['response']['code'] != 200) return false;
+		
 		$str_report = $http_answer['body'];
 		if (strpos($str_report, 'Access Denied') !== false) return false;
-		else return true;
+		
+		return true;
+	}
+	
+	
+	static public function checkLoginBelboon($username, $password) {
+		define('WSDL_SERVER', 'http://api.belboon.com/?wsdl');
+		
+		$config = array(
+			'login' => $username,
+			'password' => $password,
+			'trace' => true
+		);
+		
+		try {
+			$client = new SoapClient(WSDL_SERVER, $config);
+			$result = $client->getAccountInfo();
+		}
+		catch( Exception $e ) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	
@@ -178,11 +206,19 @@ class Affiliate_Power_Apis {
 		define ("WSDL_STATS",  "https://api.affili.net/V2.0/PublisherStatistics.svc?wsdl");
 		
 		$SOAP_LOGON = new SoapClient(WSDL_LOGON);
-		$Token      = $SOAP_LOGON->Logon(array(
-             'Username'  => $username,
-             'Password'  => $password,
-             'WebServiceType' => 'Publisher'
-             ));
+		
+		try {
+			$Token      = $SOAP_LOGON->Logon(array(
+				 'Username'  => $username,
+				 'Password'  => $password,
+				 'WebServiceType' => 'Publisher'
+				 ));
+		}
+		catch (Expection $e) {
+			//todo: error handling, mail to admin etc.
+			return array();
+		}
+		
 		$SOAP_REQUEST = new SoapClient(WSDL_STATS);
 		
 		$params = array(
@@ -211,6 +247,8 @@ class Affiliate_Power_Apis {
 				'TransactionQuery' => $params,
 				'PageSettings' => $page_params
 				));
+				
+			//print_r($req);
 				
 			if (is_array($req->TransactionCollection->Transaction))
 			{
@@ -263,7 +301,7 @@ class Affiliate_Power_Apis {
 	
 	
 	
-	static public function downloadTransactionsZanox($connect_id, $public_key, $secret_key, $fromTS, $tillTS) {
+	static public function downloadTransactionsZanox($connect_id, $public_key, $secret_key, $filter_adspace, $fromTS, $tillTS) {
 		include_once ("zanox-api/ApiClient.php");
 		
 		$zx = ApiClient::factory(PROTOCOL_SOAP);
@@ -291,6 +329,9 @@ class Affiliate_Power_Apis {
 				{
 					for ($i=0;$i<count($result->leadItems->leadItem);$i++)
 					{
+						$adspace = $result->leadItems->leadItem[$i]->adspace->_;
+						if ($filter_adspace != '' && $filter_adspace != $adspace) continue;
+						
 						$date = $result->leadItems->leadItem[$i]->trackingDate;
 						$number = $result->leadItems->leadItem[$i]->id;
 						$sub_id = isset($result->saleItems->saleItem[$i]->subPublisher->id) ? $result->saleItems->saleItem[$i]->subPublisher->id : 0;
@@ -349,6 +390,9 @@ class Affiliate_Power_Apis {
 				{
 					for ($i=0;$i<count($result->saleItems->saleItem);$i++)
 					{
+						$adspace = $result->saleItems->saleItem[$i]->adspace->_;
+						if ($filter_adspace != '' && $filter_adspace != $adspace) continue;
+						
 						$date = $result->saleItems->saleItem[$i]->trackingDate;
 						$number = $result->saleItems->saleItem[$i]->id;
 						$sub_id = isset($result->saleItems->saleItem[$i]->subPublisher->id) ? $result->saleItems->saleItem[$i]->subPublisher->id : 0;
@@ -409,7 +453,7 @@ class Affiliate_Power_Apis {
 		
 		
 	
-	static public function downloadTransactionsTradedoubler($report_key, $fromTS, $tillTS) {
+	static public function downloadTransactionsTradedoubler($report_key, $filter_sitename, $fromTS, $tillTS) {
 	
 		$output_transactions = array();
 			
@@ -428,6 +472,7 @@ class Affiliate_Power_Apis {
 		$report_url .= '&columns=orderNR';
 		$report_url .= '&columns=orderValue';
 		$report_url .= '&columns=eventId';
+		$report_url .= '&columns=siteName';
 		$report_url .= '&startDate='.$StartDate;
 		$report_url .= '&endDate='.$EndDate;
 		$report_url .= '&metric1.lastOperator=/';
@@ -454,15 +499,27 @@ class Affiliate_Power_Apis {
 		$report_url .= '&key='.$report_key;
 
 		$http_answer = wp_remote_get($report_url);
+		
+		if (is_wp_error($http_answer) || $http_answer['response']['code'] != 200) {
+			//todo: error handling, mail to admin etc.
+			return array();
+		}
+	
 		$str_report = $http_answer['body'];
+		if (strpos($str_report, 'Access Denied') !== false) {
+			//todo: error handling, mail to admin etc.
+			return array();
+		}
+		
 		$arr_report = explode("\r\n", $str_report);
 		
+		//print_r($arr_report);
 		
 		array_shift($arr_report);
 		array_shift($arr_report);
 		array_pop($arr_report);
 		
-		//print_r($arr_report);
+		
 
 		
 
@@ -470,6 +527,10 @@ class Affiliate_Power_Apis {
 		foreach($arr_report as $transaction)
 		{
 			$arr_transaction = explode(';', $transaction);
+			
+			$sitename = $arr_transaction[9];
+			if ($filter_sitename != '' && $filter_sitename != $sitename) continue;
+			
 			$shop_name = mysql_real_escape_string($arr_transaction[0]);
 			$shop_id = $arr_transaction[1];
 			$date = $arr_transaction[2];
@@ -479,8 +540,8 @@ class Affiliate_Power_Apis {
 			$sub_id = $arr_transaction[6];
 			$arr_number['event'] = $arr_transaction[7];
 			$status = $arr_transaction[8];
-			$price = $arr_transaction[9];
-			$commission = $arr_transaction[10];
+			$price = $arr_transaction[10];
+			$commission = $arr_transaction[11];
 
 			$arr_datetime = explode(' ', $date);
 			$arr_date = explode('.', $arr_datetime[0]);
@@ -537,6 +598,93 @@ class Affiliate_Power_Apis {
 			);
 		} //foreach
 		
+		return $output_transactions;
+	} //function
+	
+	
+	public static function downloadTransactionsBelboon($username, $password, $filter_platform, $fromTS, $tillTS) {
+		
+		define('WSDL_SERVER', 'http://api.belboon.com/?wsdl');
+		
+		$StartDate = date('Y-m-d', $fromTS);
+		$EndDate = date('Y-m-d', $tillTS);
+		$config = array(
+			'login' => $username,
+			'password' => $password,
+			'trace' => true
+		);
+		$output_transactions = array();
+		
+		try {
+			$client = new SoapClient(WSDL_SERVER, $config);
+			$result = $client->getEventList(
+				null, // adPlatformIds
+				null, // programId
+				null, // eventType
+				null, // eventStatus
+				'EUR', // eventCurrency
+				$StartDate, // eventDateStart
+				$EndDate, // eventDateEnd
+				null, // eventChangeDateStart
+				null, // eventChangeDateEnd
+				array('eventdate' => 'ASC'), // orderBy
+				null, // limit
+				0 // offset
+		  );
+		}
+		catch (Expection $e) {
+			//todo: error handling, mail to admin etc.
+			return array();
+		}
+		
+		//print_r($result);
+		
+		foreach ($result->handler->events as $arr_transaction)
+		{
+			//print_r($transaction);
+			
+			$platform = $arr_transaction['platformname'];
+			if ($filter_platform != '' && $filter_platform != $platform) continue;
+						
+			$number = $arr_transaction['eventid'];
+			$datetime_db = $arr_transaction['eventdate'];
+			$sub_id = str_replace('subid=', '', $arr_transaction['subid']);
+			$shop_id = $arr_transaction['programid'];
+			$shop_name = $arr_transaction['programname'];
+			$transaction_type = substr($arr_transaction['eventtype'], 0, 1);
+			$price = $arr_transaction['netvalue'];
+			$commission = $arr_transaction['eventcommission'];
+			$checkdatetime_db = $arr_transaction['lastchangedate'];
+
+			if ($arr_transaction['eventstatus'] == 'PENDING') {
+				$status = 'Open';
+				$confirmed = 0;
+			}
+			elseif ($arr_transaction['eventstatus'] == 'APPROVED') {
+				$status = 'Confirmed';
+				$confirmed = $commission;
+			}
+			elseif ($arr_transaction['eventstatus'] == 'REJECTED') {
+				$status = 'Cancelled';
+				$confirmed = 0;
+			}
+			
+			$output_transactions[] = array(
+						'network' => 'belboon', 
+						'number' => $number,
+						'datetime_db' => $datetime_db,
+						'sub_id' => $sub_id,
+						'shop_id' => $shop_id,
+						'shop_name' => $shop_name,
+						'transaction_type' => $transaction_type,
+						'price' => $price,
+						'commission' => $commission,
+						'confirmed' => $confirmed,
+						'checkdatetime_db' => $checkdatetime_db,
+						'status' => $status
+			);
+			
+		} //foreach
 		return $output_transactions;
 	} //function
 	

@@ -5,7 +5,7 @@ PLUGIN URI: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 DESCRIPTION: Affiliate Power ermöglicht es, die Affiliate-Einnahmen durch bestimmte Artikel zu ermitteln. 
 AUTHOR: Jonas Breuer
 AUTHOR URI: http://www.j-breuer.de
-VERSION: 0.2.0
+VERSION: 0.3.0
 Min WP Version: 3.1
 Max WP Version: 3.4.2
 */
@@ -29,8 +29,8 @@ You should have received a copy of the GNU General Public License
 
 
 
-include_once("affiliate-power-menu.php");
-include_once("affiliate-power-apis.php");
+include_once("affiliate-power-menu.php"); //admin menu
+include_once("affiliate-power-apis.php"); //APIs for transaction download
 
 register_activation_hook(__FILE__, array('Affiliate_Power', 'activation'));
 register_deactivation_hook(__FILE__, array('Affiliate_Power', 'deactivation'));
@@ -38,10 +38,15 @@ register_uninstall_hook(__FILE__, array('Affiliate_Power', 'uninstall'));
 
 add_action('affiliate_power_daily_event', array('Affiliate_Power_Apis', 'downloadTransactions'));
 add_filter('the_content', array('Affiliate_Power', 'addSubIds'));
-add_filter('prli_target_url', array('Affiliate_Power', 'addSubIdsPrettyLink'));
+
+//pretty link integration
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+if(is_plugin_active('pretty-link/pretty-link.php')) {
+	include_once("affiliate-power-prli.php");
+}
 
 
-
+//Affiliate_Power_Apis::downloadTransactions();
 
 class Affiliate_Power {
 
@@ -107,39 +112,6 @@ class Affiliate_Power {
 		
 		return $content;
 	}
-	
-	
-	static public function addSubIdsPrettyLink ($arrLinkInfo) {
-		
-		$options = get_option('affiliate-power-options');
-		if ($options['add-sub-ids'] === 0) {
-			return $arrLinkInfo;
-		}
-		
-		$id = url_to_postid($_SERVER['HTTP_REFERER']);
-		$link = $arrLinkInfo['url'];
-
-		
-		//affili.net
-		if (strpos($link, 'partners.webmasterplan.com')) {
-			$link .= '&subid='.$id; 
-		}
-		
-		//zanox
-		elseif (strpos($link, "zanox")) {
-			$link = str_replace("T", "S".$id."T", $link);
-		}
-		
-		//tradedoubler
-		elseif (strpos($link, "tradedoubler")) {
-			$link .= '&epi='.$id; 
-		}
-
-		
-		$arrLinkInfo['url'] = $link;
-		return $arrLinkInfo;
-	}
-
 	
 }
 
