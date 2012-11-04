@@ -65,6 +65,11 @@ class Affiliate_Power_Prli {
 		elseif (strpos($link, "tradedoubler")) {
 			$link .= '&epi='.$id; 
 		}
+		
+		//belboon
+		elseif (strpos($link, "belboon")) {
+			$link .= '/subid='.$id; 
+		}
 
 		
 		$arrLinkInfo['url'] = $link;

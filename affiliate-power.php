@@ -5,7 +5,7 @@ PLUGIN URI: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 DESCRIPTION: Affiliate Power ermöglicht es, die Affiliate-Einnahmen durch bestimmte Artikel zu ermitteln. 
 AUTHOR: Jonas Breuer
 AUTHOR URI: http://www.j-breuer.de
-VERSION: 0.3.0
+VERSION: 0.3.1
 Min WP Version: 3.1
 Max WP Version: 3.4.2
 */
@@ -103,11 +103,16 @@ class Affiliate_Power {
 		//affili.net
 		$content = preg_replace("@(['\"]http://partners\.webmasterplan\.com/click\.asp[^'\"]+)(['\"])@", "$1&subid=".$id."$2", $content);
 		
+		//belboon
+		$content = preg_replace("@(['\"]http://www1\.belboon\.de/adtracking/[^'\"]+\.html)(['\"])@", "$1/subid=".$id."$2", $content);
+
+		//tradedoubler
+		$content = preg_replace("@(['\"]http://clkde\.tradedoubler\.com/click[^'\"]+)(['\"])@", "$1&epi=".$id."$2", $content);
+		
 		//zanox
 		$content = preg_replace("@(['\"]http://[a-z\-\.]+zanox[a-z\-\.]+/ppc/[A-Z0-9\?]+)T(['\"])@", "$1S".$id."T$2", $content);
 		
-		//tradedoubler
-		$content = preg_replace("@(['\"]http://clkde\.tradedoubler\.com/click[^'\"]+)(['\"])@", "$1&epi=".$id."$2", $content);
+		
 		
 		
 		return $content;

@@ -66,6 +66,9 @@ Ja, bei Pretty Links wird das Artikel-Tracking automatisch integriert. Bei ander
 
 == Changelog ==
 
+= 0.3.1 =
+* Zuweisung von Belboon Sales zu Artikeln gefixt (Hotfix)
+
 = 0.3.0 =
 * Integration Belboon
 * Filter nach Webseiten
