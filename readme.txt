@@ -16,7 +16,7 @@ Mit Affiliate Power werden deine erzielten Affiliate-Einnahmen automatisch deine
 
 Bei Fragen oder Problemen hinterlasse einfach einen Kommentar auf der [Plugin Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power/). Ich helfe gerne.
 
-= Features der Beta-Version 0.3.0 =
+= Features =
 
 * Aktuell verfügbare Netzwerke: affili.net, belboon, tradedoubler, zanox
 * Automatische Zuweisung von Einnahmen zu Artikeln und Seiten (auch bei aktiviertem Pretty Link)
