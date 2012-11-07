@@ -66,6 +66,9 @@ Ja, bei Pretty Links wird das Artikel-Tracking automatisch integriert. Bei ander
 
 == Changelog ==
 
+= 0.3.2 =
+* Artikel-Tracking von Zanox Deeplinks gefixt (Hotfix)
+
 = 0.3.1 =
 * Zuweisung von Belboon Sales zu Artikeln gefixt (Hotfix)
 
