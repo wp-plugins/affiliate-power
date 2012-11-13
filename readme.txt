@@ -1,7 +1,7 @@
 === Affiliate Power ===
 Contributors: JonasBreuer
 Donate link: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
-Tags: affiliate, tracking, networks, overview, provisionen, commissions, subid, sales, affili, affili.net, zanox, tradedoubler, belboon
+Tags: affiliate, tracking, überblick, provisionen, subid, sales, leads, affili, affili.net, zanox, tradedoubler, belboon, superclix
 Requires at least: 3.1
 Tested up to: 3.4.2
 Stable tag: trunk
@@ -18,11 +18,11 @@ Bei Fragen oder Problemen hinterlasse einfach einen Kommentar auf der [Plugin Se
 
 = Features =
 
-* Aktuell verfügbare Netzwerke: affili.net, belboon, tradedoubler, zanox
+* Aktuell verfügbare Netzwerke: affili.net, belboon, superclix, tradedoubler, zanox
 * Automatische Zuweisung von Einnahmen zu Artikeln und Seiten (auch bei aktiviertem Pretty Link)
 * Filterung des Imports nach Webseiten
 * Übersicht über alle Leads und Sales
-* Statistiken über Artikel, Partner und Monate
+* Statistiken über Artikel, Partner, Netzwerke, Tage, Wochen und Monate
 * Deine Daten bleiben in deiner Datenbank
 
 
@@ -35,6 +35,7 @@ Wie immer.
 3. Das Plugin erstellt ein eigenes Untermenü `Affiliate Power`. Unter `Einstellungen` kannst du das Artikel-Tracking aktivieren und die Daten der Affiliate-Netzwerke hinterlegen
 4. Im Menüpunkt `Leads/Sales` kannst du nach dem Eintrag der Netzwerk-Daten auf `Transaktionen aktualisieren` klicken, um deine bisheringen Transaktionen zu importieren
 5. Das Plugin aktualisiert künftig einmal täglich automatisch deine Transaktionen.
+
 
 == Frequently Asked Questions ==
 
@@ -54,9 +55,13 @@ Amazon bietet leider kein vernünftiges Tracking an. Daher wird das Amazon Partn
 
 Ja, bei Pretty Links wird das Artikel-Tracking automatisch integriert. Bei anderen Link-Cloakern funktioniert leider nur der Download der Transaktionen in den Adminbereich.
 
+= Kann ich das Plugin zusammen mit einem eigenen SubId Tracking benutzen =
 
+Ja, du kannst das Plugin benutzen, solltest allerdings das Artikel Tracking nicht aktivieren, da dieses ebenfalls Gebrauch von den SubIds macht.
 
+= Wie oft werden die Leads / Sales aktualisiert? =
 
+Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Backend zusätzlich jederzeit eine manuelle Aktualisierung auslösen.
 
 
 == Screenshots ==
@@ -65,6 +70,15 @@ Ja, bei Pretty Links wird das Artikel-Tracking automatisch integriert. Bei ander
 2. Übersicht über die erzielten Provisionen
 
 == Changelog ==
+
+= 0.4.0 =
+* Neues Netzwerk: Superclix
+* Neue Statistiken: Netzwerke, Tage, Wochen
+* Neue Spalten in der Transaktions-Übersicht: Typ (Sale oder Lead), Einkaufswert
+* Einstellungsseite überarbeitet (Untersektionen, Erklärungstexte)
+* Performance Verbesserungen
+* Kleine Bugfixes
+* Code aufgeräumt
 
 = 0.3.2 =
 * Artikel-Tracking von Zanox Deeplinks gefixt (Hotfix)

@@ -5,7 +5,7 @@ PLUGIN URI: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 DESCRIPTION: Affiliate Power ermöglicht es, die Affiliate-Einnahmen durch bestimmte Artikel zu ermitteln. 
 AUTHOR: Jonas Breuer
 AUTHOR URI: http://www.j-breuer.de
-VERSION: 0.3.2
+VERSION: 0.4.0
 Min WP Version: 3.1
 Max WP Version: 3.4.2
 */
@@ -45,7 +45,7 @@ if(is_plugin_active('pretty-link/pretty-link.php')) {
 	include_once("affiliate-power-prli.php");
 }
 
-
+			
 //Affiliate_Power_Apis::downloadTransactions();
 
 class Affiliate_Power {
@@ -101,16 +101,29 @@ class Affiliate_Power {
 		$id = get_the_ID();
 
 		//affili.net
-		$content = preg_replace("@(['\"]http://partners\.webmasterplan\.com/click\.asp[^'\"]+)(['\"])@", "$1&subid=".$id."$2", $content);
+		if(is_numeric($options['affili-id']) && strlen($options['affili-password']) == 20) {
+			$content = preg_replace("@(['\"]http://partners\.webmasterplan\.com/click\.asp[^'\"]+)(['\"])@", "$1&subid=".$id."$2", $content);
+		}
 		
 		//belboon
-		$content = preg_replace("@(['\"]http://www1\.belboon\.de/adtracking/[^'\"]+\.html)(['\"])@", "$1/subid=".$id."$2", $content);
+		if (isset($options['belboon-username']) && strlen($options['belboon-password']) == 20) {
+			$content = preg_replace("@(['\"]http://www1\.belboon\.de/adtracking/[^'\"]+\.html)(['\"])@", "$1/subid=".$id."$2", $content);
+		}
+		
+		//superclix
+		if (isset($options['superclix-username']) && isset($options['superclix-password'])) {
+			$content = preg_replace("@(['\"]http://clix\.superclix\.de/cgi-bin/[^'\"]+)(['\"])@", "$1&subid=".$id."$2", $content);
+		}
 
 		//tradedoubler
-		$content = preg_replace("@(['\"]http://clkde\.tradedoubler\.com/click[^'\"]+)(['\"])@", "$1&epi=".$id."$2", $content);
+		if(strlen($options['tradedoubler-key']) >= 32) {
+			$content = preg_replace("@(['\"]http://clkde\.tradedoubler\.com/click[^'\"]+)(['\"])@", "$1&epi=".$id."$2", $content);
+		}
 		
 		//zanox
-		$content = preg_replace("@(['\"]http://[a-z\-\.]+zanox[a-z\-\.]+/ppc/[A-Z0-9\?]+)T([^'\"]*['\"])@", "$1S".$id."T$2", $content);
+		if(strlen($options['zanox-connect-id']) == 20 && strlen($options['zanox-public-key']) == 20 && strlen($options['zanox-secret-key']) >= 20) {
+			$content = preg_replace("@(['\"]http://[a-z\-\.]+zanox[a-z\-\.]+/ppc/[A-Z0-9\?]+)T([^'\"]*['\"])@", "$1S".$id."T$2", $content);
+		}
 		
 		
 		

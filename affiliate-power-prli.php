@@ -51,14 +51,20 @@ class Affiliate_Power_Prli {
 		
 		$link = $arrLinkInfo['url'];
 		
+		
 		//affili.net
 		if (strpos($link, 'partners.webmasterplan.com')) {
 			$link .= '&subid='.$id; 
 		}
 		
-		//zanox
-		elseif (strpos($link, "zanox")) {
-			$link = str_replace("T", "S".$id."T", $link);
+		//belboon
+		elseif (strpos($link, "belboon")) {
+			$link .= '/subid='.$id; 
+		}
+		
+		//superclix
+		elseif (strpos($link, 'superclix')) {
+			$link .= '&subid='.$id; 
 		}
 		
 		//tradedoubler
@@ -66,10 +72,14 @@ class Affiliate_Power_Prli {
 			$link .= '&epi='.$id; 
 		}
 		
-		//belboon
-		elseif (strpos($link, "belboon")) {
-			$link .= '/subid='.$id; 
+		//zanox
+		elseif (strpos($link, "zanox")) {
+			$link = preg_replace("@(http://[a-z\-\.]+zanox[a-z\-\.]+/ppc/[A-Z0-9\?]+)T([^'\"]*)@", "$1S".$id."T$2", $link);
 		}
+		
+		
+		
+		
 
 		
 		$arrLinkInfo['url'] = $link;
