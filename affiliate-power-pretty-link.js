@@ -8,6 +8,7 @@ jQuery(document).ready(function(){
 			var data = { action: 'ap_save_article_in_session', ap_art: ap_art};
 			jQuery.post(affiliatePower.ajaxurl, data, function(response) {
 				return true;
+				
 			});
 		}
 	});

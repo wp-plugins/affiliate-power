@@ -1,9 +1,9 @@
 === Affiliate Power ===
 Contributors: JonasBreuer
 Donate link: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
-Tags: affiliate, tracking, überblick, provisionen, subid, sales, leads, affili, affili.net, zanox, tradedoubler, belboon, superclix
+Tags: affiliate, tracking, überblick, provisionen, subid, sales, leads, affili, affili.net, zanox, tradedoubler, belboon, superclix, cj, commission junction
 Requires at least: 3.1
-Tested up to: 3.4.2
+Tested up to: 3.5
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -18,10 +18,12 @@ Bei Fragen oder Problemen hinterlasse einfach einen Kommentar auf der [Plugin Se
 
 = Features =
 
-* Aktuell verfügbare Netzwerke: affili.net, belboon, superclix, tradedoubler, zanox
+* Aktuell verfügbare Netzwerke: affili.net, commission junction, belboon, superclix, tradedoubler, zanox
 * Automatische Zuweisung von Einnahmen zu Artikeln und Seiten (auch bei aktiviertem Pretty Link)
 * Filterung des Imports nach Webseiten
-* Übersicht über alle Leads und Sales
+* Übersicht über alle Leads und Sales (ausführlich und als Dashboard-Widget)
+* Automatische Infomail bei neuen oder geänderten Leads und Sales
+* Export aller Leads und Sales als Excel-CSV
 * Statistiken über Artikel, Partner, Netzwerke, Tage, Wochen und Monate
 * Deine Daten bleiben in deiner Datenbank
 
@@ -70,6 +72,14 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 2. Übersicht über die erzielten Provisionen
 
 == Changelog ==
+
+= 0.5.0 =
+* Neues Netzwerk: Commission Junction
+* Optionale Infomail bei neuen oder geänderten Leads und Sales
+* Dashboard-Widget zur Übersicht über die Einnahmen
+* CSV-Export für Excel
+* Wordpress 3.5 Kompatibilität
+* Kleine Usability-Verbesserungen
 
 = 0.4.0 =
 * Neues Netzwerk: Superclix

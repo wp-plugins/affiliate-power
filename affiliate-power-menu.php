@@ -24,9 +24,10 @@ class Affiliate_Power_Menu {
 
 	static public function adminMenu() {
 		add_menu_page('Affiliate Power', 'Affiliate Power', 'manage_options', 'affiliate-power', array('Affiliate_Power_Menu', 'dummyFunction'));
-		add_submenu_page('affiliate-power', 'Affiliate Power Einstellungen', 'Einstellungen', 'manage_options', 'affiliate-power', array('Affiliate_Power_Settings', 'optionsPage') );
-		add_submenu_page('affiliate-power', 'Transaktionen ansehen und analysieren', 'Leads / Sales', 'manage_options', 'affiliate-power-transactions', array('Affiliate_Power_Transactions', 'transactionsPage') );
+		add_submenu_page('affiliate-power', 'Transaktionen ansehen und analysieren', 'Leads / Sales', 'manage_options', 'affiliate-power', array('Affiliate_Power_Transactions', 'transactionsPage') );
 		add_submenu_page('affiliate-power', 'Statistiken einsehen', 'Statistiken', 'manage_options', 'affiliate-power-statistics', array('Affiliate_Power_Statistics', 'statisticsPage') );
+		add_submenu_page('affiliate-power', 'Affiliate Power Einstellungen', 'Einstellungen', 'manage_options', 'affiliate-power-settings', array('Affiliate_Power_Settings', 'optionsPage') );
+		
 	}
 	
 	

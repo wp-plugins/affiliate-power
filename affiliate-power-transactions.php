@@ -1,7 +1,8 @@
 <?php
 
+//for ap_download_transactions see affiliate-power.php
+add_action('wp_ajax_ap_export_csv', array('Affiliate_Power_Transactions', 'exportTransactions'));
 
-add_action('wp_ajax_ap_download_transactions', array('Affiliate_Power_Apis', 'downloadTransactions'));
 
 class Affiliate_Power_Transactions {
 
@@ -22,20 +23,69 @@ class Affiliate_Power_Transactions {
 			</form>
 			
 			<input type="button" id="button_download_transactions" value="Transaktionen aktualisieren" />
+			<input type="button" id="button_export_csv" value="Excel Download" />
+			
 			<script type="text/javascript">
 				jQuery(document).ready(function($) {
-					var data = { action: 'ap_download_transactions'};
+				
 					$("#button_download_transactions").bind("click", function(e){
 						$(this).val('Bitte warten...');
-						$.post(ajaxurl, data, function(response) {
+						$.post(ajaxurl, { action: 'ap_download_transactions'}, function(response) {
 							location.reload();
 						});
 					});
+					
+					$("#button_export_csv").bind("click", function(e){
+						$(this).val('Bitte warten...');
+						$.post(ajaxurl, { action: 'ap_export_csv'}, function(response) {
+							$("#button_export_csv").val('Excel Download');
+							$("body").append("<iframe src='<?php echo plugins_url( "affiliate-power/csv-download.php", dirname(__FILE__ )); ?>' style='display: none;' ></iframe>")
+							
+						});
+					});
+					
 				});
 			</script>
 			
 		</div>
 		<?php
+	}
+	
+	
+	public static function exportTransactions() {
+		
+		global $wpdb;
+		$csv_content = 'Id;Datum;Netzwerk;Merchant;Typ;Einkaufspreis;Provision;Status;ArtikelId;ArtikelName' . "\r\n";
+		
+		$sql = $wpdb->prepare('
+			SELECT 
+				'.$wpdb->prefix.'ap_transaction.ap_transactionID,
+				date_format('.$wpdb->prefix.'ap_transaction.`Date`, "%%d.%%m.%%Y %%T") AS datetime_de,
+				'.$wpdb->prefix.'ap_transaction.network,
+				'.$wpdb->prefix.'ap_transaction.ProgramTitle,
+				'.$wpdb->prefix.'ap_transaction.Transaction,
+				'.$wpdb->prefix.'ap_transaction.Price,
+				'.$wpdb->prefix.'ap_transaction.Commission,
+				'.$wpdb->prefix.'ap_transaction.TransactionStatus,
+				'.$wpdb->prefix.'posts.ID AS postID,
+			    '.$wpdb->posts.'.post_title
+			FROM '.$wpdb->prefix.'ap_transaction
+			LEFT JOIN '.$wpdb->posts.'
+			ON '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'posts.ID
+			ORDER by `Date` ASC
+		');
+		$transactions = $wpdb->get_results($sql, ARRAY_A);
+		
+		foreach ($transactions as $transaction) {
+			$transaction['Price'] = str_replace('.', ',', $transaction['Price']);
+			$transaction['Commission'] = str_replace('.', ',', $transaction['Commission']);
+			$csv_content .= implode(';', $transaction) . "\r\n";
+		}
+		
+		if (!session_id()) session_start();
+		$_SESSION['affiliate-power-csv'] = $csv_content;
+		
+		die();
 	}
 	
 }

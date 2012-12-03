@@ -6,7 +6,7 @@ class Affiliate_Power_Api_Tradedoubler {
 
 	static public function checkLogin($report_key) {
 		
-		$StartDate = date('d.m.y', time()-3600*24);
+		$StartDate = date('d.m.y', time()-3600*24*30);
 		$EndDate = date('d.m.y');
 
 		$report_url = 'http://www.tradedoubler.com/pan/aReport3Key.action';

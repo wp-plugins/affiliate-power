@@ -2,12 +2,24 @@
 
 class Affiliate_Power_Apis {
 
+	static protected $transaction_changes = array(
+			'new' => array(),
+			'confirmed' => array(),
+			'cancelled' => array()
+	);
+	
+	
+	static public function downloadTransactionsQuick() {
+		self::downloadTransactions(3);
+	}
 
-	static public function downloadTransactions() {
-		$fromTS = time()-3600*24*100; //100 Tage in die Verg.
+
+	static public function downloadTransactions($days = 100) {
+		$fromTS = time()-3600*24*$days; //$days Tage in die Verg.
 		$tillTS = time()-3600*2; //Jetzt in UTC
 		
 		$options = get_option('affiliate-power-options');
+		
 
 		//affili
 		if(is_numeric($options['affili-id']) && strlen($options['affili-password']) == 20) {
@@ -16,6 +28,7 @@ class Affiliate_Power_Apis {
 			foreach ($transactions as $transaction) self::handleTransaction($transaction);
 		}
 		
+		
 		//belboon
 		if (isset($options['belboon-username']) && strlen($options['belboon-password']) == 20) {
 			include_once('apis/belboon.php');
@@ -23,6 +36,15 @@ class Affiliate_Power_Apis {
 			foreach ($transactions as $transaction) self::handleTransaction($transaction);
 		}
 		
+		
+		//Commission Junction
+		if(is_numeric($options['cj-id']) && strlen($options['cj-key']) > 20) {
+			include_once('apis/cj.php');
+			$transactions = Affiliate_Power_Api_Cj::downloadTransactions($options['cj-id'], $options['cj-key'], $fromTS, $tillTS);
+			foreach ($transactions as $transaction) self::handleTransaction($transaction);
+		}
+		
+				
 		//superclix
 		if (isset($options['superclix-username']) && isset($options['superclix-password'])) {
 			include_once('apis/superclix.php');
@@ -46,7 +68,44 @@ class Affiliate_Power_Apis {
 		
 		
 		
+		//Send mail to admin
+		if ($options['send-mail-transactions'] == 1) {
 		
+			$list_transactions = '';
+			$type_mapper = array('new' => 'Neue', 'confirmed' => 'Bestätigte', 'cancelled' => 'Stornierte');
+		
+			foreach (self::$transaction_changes as $type => $transactions) {
+			
+				$list_items = '';
+				
+				foreach ($transactions as $transaction) {
+					$list_items .= '<li>'.$transaction['shop_name'].': '.number_format($transaction['commission'], 2, ',', '.').' &euro;</li>';
+				}
+				
+				if ($list_items != '') {
+					$list_transactions .= '
+					<p><strong>'.$type_mapper[$type].' Transaktionen:</strong></p>
+					<ul>'.$list_items.'</ul>';
+				}
+			}
+			
+			//only send if there is any transaction
+			if ($list_transactions != '') {
+			
+				$admin_email = get_option('admin_email');
+				$blogname = get_option('blogname');
+				
+				$mailtext = 
+					'<p>Hallo Admin,</p>
+					<p>dies ist dein täglicher Einnahmen-Report von Affiliate Power für deine Seite <strong>'.$blogname.'</strong>. Du kannst diesen Report jederzeit in den Einstellungen von Affiliate Power deaktivieren, wenn er dich nervt.</p>'.
+					$list_transactions;
+					
+				mail($admin_email, 'Affiliate-Power Report für '.$blogname, $mailtext, 'content-type: text/html; charset=UTF-8');
+				echo $mailtext;
+			}
+		
+		}	
+
 		
 		die(); //for proper AJAX request
 		
@@ -101,6 +160,8 @@ class Affiliate_Power_Apis {
 						'%s' //status
 					) 
 				);
+				
+				self::$transaction_changes['new'][] = $transaction;
 		
 		}
 						
@@ -112,8 +173,8 @@ class Affiliate_Power_Apis {
 			$wpdb->update( 
 				$wpdb->prefix.'ap_transaction', 
 				array( 
-					'Commission' => (float)$transaction['commission'],	
-					'Confirmed' => (float)$transaction['confirmed'],
+					'Commission' => (float)$transaction['Commission'],	
+					'Confirmed' => (float)$transaction['Confirmed'],
 					'TransactionStatus' => $transaction['status']
 				), 
 				array( 'ap_transactionID' => $existing_transaction->ap_transactionID ), 
@@ -124,6 +185,9 @@ class Affiliate_Power_Apis {
 				), 
 				array( '%d' ) //ap_transactionID
 			);
+			
+			if ($transaction['status'] == 'Confirmed') self::$transaction_changes['confirmed'][] = $transaction;
+			elseif($transaction['status'] == 'Cancelled') self::$transaction_changes['cancelled'][] = $transaction;
 		}
 	
 	}

@@ -5,9 +5,9 @@ PLUGIN URI: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 DESCRIPTION: Affiliate Power ermöglicht es, die Affiliate-Einnahmen durch bestimmte Artikel zu ermitteln. 
 AUTHOR: Jonas Breuer
 AUTHOR URI: http://www.j-breuer.de
-VERSION: 0.4.0
+VERSION: 0.5.0
 Min WP Version: 3.1
-Max WP Version: 3.4.2
+Max WP Version: 3.5
 */
 
 
@@ -28,16 +28,18 @@ You should have received a copy of the GNU General Public License
 */
 
 
-
 include_once("affiliate-power-menu.php"); //admin menu
 include_once("affiliate-power-apis.php"); //APIs for transaction download
+include_once("affiliate-power-widget.php"); //dashboard widget, requires apis
 
 register_activation_hook(__FILE__, array('Affiliate_Power', 'activation'));
 register_deactivation_hook(__FILE__, array('Affiliate_Power', 'deactivation'));
 register_uninstall_hook(__FILE__, array('Affiliate_Power', 'uninstall'));
 
 add_action('affiliate_power_daily_event', array('Affiliate_Power_Apis', 'downloadTransactions'));
+add_action('wp_ajax_ap_download_transactions', array('Affiliate_Power_Apis', 'downloadTransactionsQuick'));
 add_filter('the_content', array('Affiliate_Power', 'addSubIds'));
+
 
 //pretty link integration
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
@@ -108,6 +110,12 @@ class Affiliate_Power {
 		//belboon
 		if (isset($options['belboon-username']) && strlen($options['belboon-password']) == 20) {
 			$content = preg_replace("@(['\"]http://www1\.belboon\.de/adtracking/[^'\"]+\.html)(['\"])@", "$1/subid=".$id."$2", $content);
+		}
+		
+		//Commission Junction
+		if (isset($options['cj-id']) && strlen($options['cj-key']) > 20) {
+			$content = preg_replace("@(['\"]http://[^'\"]+click-[0-9]+-[0-9]+)(['\"])@", "$1?SID=".$id."$2", $content);
+			$content = preg_replace("@(['\"]http://[^'\"]+click-[0-9]+-[0-9]+\?cm_mmc=[^'\"]+)(['\"])@", "$1&SID=".$id."$2", $content);
 		}
 		
 		//superclix

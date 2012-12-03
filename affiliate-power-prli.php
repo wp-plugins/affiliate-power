@@ -18,7 +18,7 @@ if ($options['prli-homepage'] == 1 ) {
 class Affiliate_Power_Prli {
 
 	static public function addJs() {
-		wp_enqueue_script('affiliate-power', plugins_url('affiliate-power-pretty-link.js', __FILE__));
+		wp_enqueue_script('affiliate-power', plugins_url('affiliate-power-pretty-link.js', __FILE__), array('jquery'));
 		wp_localize_script( 'affiliate-power', 'affiliatePower', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 	}
 	
@@ -33,6 +33,7 @@ class Affiliate_Power_Prli {
 	
 	
 	static public function saveArticleInSession() {
+		if (!session_id()) session_start();
 		$_SESSION['ap_art'] = (int)$_POST['ap_art'];
 		die();
 	}
@@ -47,7 +48,10 @@ class Affiliate_Power_Prli {
 		
 		$referer = esc_url($_SERVER['HTTP_REFERER']);
 		$id = url_to_postid($referer);
-		if ($id == 0) $id = (int)$_SESSION['ap_art'];
+		if ($id == 0) {
+			if (!session_id()) session_start();
+			$id = (int)$_SESSION['ap_art'];
+		}
 		
 		$link = $arrLinkInfo['url'];
 		
@@ -60,6 +64,12 @@ class Affiliate_Power_Prli {
 		//belboon
 		elseif (strpos($link, "belboon")) {
 			$link .= '/subid='.$id; 
+		}
+		
+		//Commission Junction
+		if (preg_match('@click-[0-9]+-[0-9]+@', $link)) {
+			if (strpos($link, "?")) $link .= '&SID='.$id;
+			else $link .= '?SID='.$id; 
 		}
 		
 		//superclix

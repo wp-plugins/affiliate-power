@@ -71,7 +71,7 @@ class Affiliate_Power_Api_Affili {
 				'PageSettings' => $page_params
 				));
 				
-			//print_r($req);
+			//print_r($req);	
 				
 			//if we only have one transaction, we just get one object. if we have multiplate transactions, we get an array of objects
 			$transactions = $req->TransactionCollection->Transaction;
