@@ -9,7 +9,7 @@ class Affiliate_Power_Statistics {
 		
 		
 		//Top Article/SubIds
-		$sql = $wpdb->prepare('
+		$sql = '
 		SELECT '.$wpdb->prefix.'ap_transaction.SubId AS postID,
 			round(sum('.$wpdb->prefix.'ap_transaction.Commission),2) as commission,
 			round(sum('.$wpdb->prefix.'ap_transaction.Confirmed), 2) as confirmed,
@@ -20,7 +20,7 @@ class Affiliate_Power_Statistics {
 		WHERE TransactionStatus <> "Cancelled" 
 		GROUP BY SubId 
 		ORDER BY sum('.$wpdb->prefix.'ap_transaction.Commission) DESC
-		LIMIT 12');
+		LIMIT 12';
 		$topArticleData = $wpdb->get_results($sql, ARRAY_A);
 		
 		if ($options['add-sub-ids'] === 0) {
@@ -34,7 +34,7 @@ class Affiliate_Power_Statistics {
 		
 		
 		//Top Partner
-		$sql = $wpdb->prepare('
+		$sql = '
 		SELECT concat (ProgramTitle, " (", network, ")") as program,
 			   round(sum(Commission),2) as commission,
 			   round(sum(Confirmed), 2) as confirmed
@@ -42,12 +42,12 @@ class Affiliate_Power_Statistics {
 		WHERE TransactionStatus <> "Cancelled" 
 		GROUP BY ProgramId, network
 		ORDER BY sum(Commission) DESC
-		LIMIT 12');
+		LIMIT 12';
 		$topPartnerData = $wpdb->get_results($sql, ARRAY_A);
 		
 		
 		//Networks
-		$sql = $wpdb->prepare('
+		$sql = '
 		SELECT network,
 			   round(sum(Commission),2) as commission,
 			   round(sum(Confirmed), 2) as confirmed
@@ -55,12 +55,12 @@ class Affiliate_Power_Statistics {
 		WHERE TransactionStatus <> "Cancelled" 
 		GROUP BY network
 		ORDER BY sum(Commission) DESC
-		LIMIT 12');
+		LIMIT 12';
 		$networkData = $wpdb->get_results($sql, ARRAY_A);
 		
 		
 		//Last Days
-		$sql = $wpdb->prepare('
+		$sql = '
 		SELECT date_format(date, "%%d.%%m.%%Y") as date_de,
 			   round(sum(Commission),2) as commission,
 			   round(sum(Confirmed), 2) as confirmed
@@ -68,11 +68,11 @@ class Affiliate_Power_Statistics {
 		WHERE TransactionStatus <> "Cancelled" 
 		GROUP BY date(date)
 		ORDER BY date DESC
-		LIMIT 12');
+		LIMIT 12';
 		$dayData = $wpdb->get_results($sql, ARRAY_A);
 		
 		//Last Weeks
-		$sql = $wpdb->prepare('
+		$sql = '
 		SELECT concat ("KW ", weekofyear(date)) as week,
 			   round(sum(Commission),2) as commission,
 			   round(sum(Confirmed), 2) as confirmed
@@ -80,13 +80,13 @@ class Affiliate_Power_Statistics {
 		WHERE TransactionStatus <> "Cancelled" 
 		GROUP BY weekofyear(date)
 		ORDER BY date DESC
-		LIMIT 12');
+		LIMIT 12';
 		$weekData = $wpdb->get_results($sql, ARRAY_A);
 		
 		
 		
 		//Last Months
-		$sql = $wpdb->prepare('
+		$sql = '
 		SELECT concat (monthname(date), " ", year(date)) as month_year,
 			   round(sum(Commission),2) as commission,
 			   round(sum(Confirmed), 2) as confirmed
@@ -95,7 +95,7 @@ class Affiliate_Power_Statistics {
 		GROUP BY month(date), year(date)
 		ORDER BY year(date) DESC,
 				 month(date) DESC
-		LIMIT 12');
+		LIMIT 12';
 		$monthData = $wpdb->get_results($sql, ARRAY_A);
 		
 		?>

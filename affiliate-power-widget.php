@@ -14,33 +14,33 @@ class Affiliate_Power_Widget {
 		
 		
 		//today
-		$sql = $wpdb->prepare('
+		$sql = '
 			SELECT sum(Commission)
 			FROM '.$wpdb->prefix.'ap_transaction
 			WHERE date(`Date`) = date(now())
 			AND TransactionStatus <> "Cancelled"
-		');
+		';
 		$sum_today = $wpdb->get_var($sql);
 		
 		
 		//yesterday
-		$sql = $wpdb->prepare('
+		$sql = '
 			SELECT sum(Commission)
 			FROM '.$wpdb->prefix.'ap_transaction
 			WHERE date(`Date`) = date(now() - interval 1 day)
 			AND TransactionStatus <> "Cancelled"
-		');
+		';
 		$sum_yesterday = $wpdb->get_var($sql);
 		
 		
 		//this month
-		$sql = $wpdb->prepare('
+		$sql = '
 			SELECT sum(Commission)
 			FROM '.$wpdb->prefix.'ap_transaction
 			WHERE month(`Date`) = month(now())
 			AND year(`Date`) = year(now())
 			AND TransactionStatus <> "Cancelled"
-		');
+		';
 		$sum_this_month = $wpdb->get_var($sql);
 		
 		
@@ -49,22 +49,22 @@ class Affiliate_Power_Widget {
 		$year = date('Y');
 		if ($month == 0) {$month=12; $year--;}
 		
-		$sql = $wpdb->prepare('
+		$sql = '
 			SELECT sum(Commission)
 			FROM '.$wpdb->prefix.'ap_transaction
 			WHERE month(`Date`) = '.$month.'
 			AND year(`Date`) = '.$year.'
 			AND TransactionStatus <> "Cancelled"
-		');
+		';
 		$sum_last_month = $wpdb->get_var($sql);
 		
 		
 		//total
-		$sql = $wpdb->prepare('
+		$sql = '
 			SELECT sum(Commission)
 			FROM '.$wpdb->prefix.'ap_transaction
 			WHERE TransactionStatus <> "Cancelled"
-		');
+		';
 		$sum_total = $wpdb->get_var($sql);
 		
 		$refresh_button = '<input type="button" id="button_download_transactions" value="Aktualisieren" />
