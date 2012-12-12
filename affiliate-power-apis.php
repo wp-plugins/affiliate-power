@@ -173,8 +173,8 @@ class Affiliate_Power_Apis {
 			$wpdb->update( 
 				$wpdb->prefix.'ap_transaction', 
 				array( 
-					'Commission' => (float)$transaction['Commission'],	
-					'Confirmed' => (float)$transaction['Confirmed'],
+					'Commission' => (float)$transaction['commission'],	
+					'Confirmed' => (float)$transaction['confirmed'],
 					'TransactionStatus' => $transaction['status']
 				), 
 				array( 'ap_transactionID' => $existing_transaction->ap_transactionID ), 

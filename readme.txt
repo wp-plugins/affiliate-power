@@ -73,6 +73,9 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 
 == Changelog ==
 
+= 0.5.1 =
+* Bug gefixt, bei dem Leads und Sales bei Bestätigung auf 0€ gesetzt wurden (Hotfix)
+
 = 0.5.0 =
 * Neues Netzwerk: Commission Junction
 * Optionale Infomail bei neuen oder geänderten Leads und Sales
