@@ -101,7 +101,6 @@ class Affiliate_Power_Apis {
 					$list_transactions;
 					
 				mail($admin_email, 'Affiliate-Power Report für '.$blogname, $mailtext, 'content-type: text/html; charset=UTF-8');
-				echo $mailtext;
 			}
 		
 		}	
