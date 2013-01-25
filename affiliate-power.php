@@ -7,7 +7,7 @@ AUTHOR: Jonas Breuer
 AUTHOR URI: http://www.j-breuer.de
 VERSION: 0.5.1
 Min WP Version: 3.1
-Max WP Version: 3.5
+Max WP Version: 3.5.1
 */
 
 
