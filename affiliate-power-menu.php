@@ -6,6 +6,7 @@ include_once("affiliate-power-statistics.php");
 
 
 add_action('admin_menu', array('Affiliate_Power_Menu', 'adminMenu'));
+add_action( 'admin_enqueue_scripts', array('Affiliate_Power_Menu', 'addJs') );
 
 $options = get_option('affiliate-power-options');
 if ($options['add-sub-ids'] !== 0) {
@@ -27,12 +28,25 @@ class Affiliate_Power_Menu {
 		add_submenu_page('affiliate-power', 'Transaktionen ansehen und analysieren', 'Leads / Sales', 'manage_options', 'affiliate-power', array('Affiliate_Power_Transactions', 'transactionsPage') );
 		add_submenu_page('affiliate-power', 'Statistiken einsehen', 'Statistiken', 'manage_options', 'affiliate-power-statistics', array('Affiliate_Power_Statistics', 'statisticsPage') );
 		add_submenu_page('affiliate-power', 'Affiliate Power Einstellungen', 'Einstellungen', 'manage_options', 'affiliate-power-settings', array('Affiliate_Power_Settings', 'optionsPage') );
-		
 	}
 	
 	
 	
 	static public function dummyFunction() {
+	}
+	
+	
+	static public function addJs() {
+		wp_enqueue_script(
+			'affiliate-power-menu',
+			plugins_url('affiliate-power-menu.js', __FILE__),
+			array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'),
+			time(),
+			true
+		);	
+
+		//wp_enqueue_style( 'wp-jquery-ui-datepicker' );
+		wp_enqueue_style('jquery-ui-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
 	}
 	
 
@@ -50,7 +64,15 @@ class Affiliate_Power_Menu {
 		if ( $column_name == 'earnings' ) {
 		
 			global $wpdb;
-			$sql = $wpdb->prepare('SELECT sum(Commission), sum(Confirmed) FROM '.$wpdb->prefix.'ap_transaction WHERE SubId = %d AND TransactionStatus <> "Cancelled"', $id);
+			$sql = $wpdb->prepare('
+				SELECT sum(Commission), sum(Confirmed) 
+				FROM '.$wpdb->prefix.'ap_transaction
+				LEFT JOIN '.$wpdb->prefix.'ap_clickout
+				ON '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'ap_clickout.ap_clickoutID
+				WHERE '.$wpdb->prefix.'ap_clickout.postID = %d
+				OR '.$wpdb->prefix.'ap_transaction.SubId = %d 
+				AND TransactionStatus <> "Cancelled"', 
+				$id, $id);
 			$arr_earnings = $wpdb->get_row($sql, ARRAY_N);
 			
 			$total_earning = number_format($arr_earnings[0], 2, ',', '.');

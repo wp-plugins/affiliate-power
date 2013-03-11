@@ -70,7 +70,7 @@ class Affiliate_Power_Widget {
 		$refresh_button = '<input type="button" id="button_download_transactions" value="Aktualisieren" />
 			<script type="text/javascript">
 				jQuery(document).ready(function($) {
-					var data = { action: \'ap_download_transactions\'};
+					var data = { action: \'ap_download_transactions\', nonce: \'' . wp_create_nonce( 'affiliate-power-download-transactions' ) . '\'};
 					$("#button_download_transactions").bind("click", function(e){
 						$(this).val(\'Bitte warten...\');
 						$.post(ajaxurl, data, function(response) {
@@ -88,7 +88,8 @@ class Affiliate_Power_Widget {
 				<tr><td>Dieser Monat:</td><td style="text-align:right">'.number_format($sum_this_month, 2, ',', '.').' €</td></tr>
 				<tr><td>Letzter Monat:</td><td style="text-align:right">'.number_format($sum_last_month, 2, ',', '.').' €</td></tr>
 				<tr><td>Gesamt:</td><td style="text-align:right">'.number_format($sum_total, 2, ',', '.').' €</td></tr>
-			</table>';
+			</table>
+			<a href="admin.php?page=affiliate-power">Detailansicht</a>';
 		
 	}
 	

@@ -10,16 +10,17 @@ class Affiliate_Power_Apis {
 	
 	
 	static public function downloadTransactionsQuick() {
+		check_ajax_referer( 'affiliate-power-download-transactions', 'nonce' );
 		self::downloadTransactions(3);
 	}
 
 
 	static public function downloadTransactions($days = 100) {
-		$fromTS = time()-3600*24*$days; //$days Tage in die Verg.
+		$fromTS = time()-3600*2-3600*24*$days; //$days Tage in die Verg.
 		$tillTS = time()-3600*2; //Jetzt in UTC
 		
 		$options = get_option('affiliate-power-options');
-		
+				
 
 		//affili
 		if(is_numeric($options['affili-id']) && strlen($options['affili-password']) == 20) {
@@ -119,11 +120,11 @@ class Affiliate_Power_Apis {
 			Commission, 
 			TransactionStatus 
 			FROM '.$wpdb->prefix.'ap_transaction
-			WHERE TransactionId_network="'.$transaction['number'].'"
-			AND network="'.$transaction['network'].'"
+			WHERE TransactionId_network = %s
+			AND network = %s
 			LIMIT 1';
 		
-		$existing_transaction = $wpdb->get_row( $wpdb->prepare( $sql ) );
+		$existing_transaction = $wpdb->get_row( $wpdb->prepare($sql, $transaction['number'], $transaction['network']) );
 		
 		
 		//Transaktion existiert noch nicht => INSERT
@@ -190,7 +191,67 @@ class Affiliate_Power_Apis {
 		}
 	
 	}
+	
+	
+	static public function checkLicenceKey ($licence_key) {
+		
+		$licence_key_hash = md5($licence_key);
+		$http_answer = wp_remote_post('http://www.j-breuer.de/ap-api/api.php', array(
+			'headers' => array('referer' => $_SERVER['HTTP_HOST']),
+			'body' => array('action' => 'check', 'key' => $licence_key_hash)
+		));
+		if (is_wp_error($http_answer) || $http_answer['response']['code'] != 200) return false;
+		
+		return $http_answer['body'];
+	}
+	
+	
+	static public function checkVersion($transient) {
+	
+		if (empty($transient->checked)) {  
+			return $transient;  
+		}
+		
+		$options = get_option('affiliate-power-options');
+		if (isset($options['licence-key']) && !empty($options['licence-key'])) {
+			$licence_status = self::checkLicenceKey($options['licence-key']);
+			if ($licence_status == 'ok') $premium = true;
+			else return $transient;  
+		}
+		else return $transient;
+		
+		if (!AFFILIATE_POWER_PREMIUM) $updating_to_premium = true;
+		else $updating_to_premium = false;
+	
+		$http_answer = wp_remote_post('http://www.j-breuer.de/ap-api/api.php', array('body' => array('action' => 'version')));
+		if (is_wp_error($http_answer) || $http_answer['response']['code'] != 200) return $transient;
+		$new_version = $http_answer['body'];
+		
+	    if (version_compare(AFFILIATE_POWER_VERSION, $new_version, '<') || $updating_to_premium) {  
+            $obj = new stdClass();  
+            $obj->slug = 'affiliate-power';
+            $obj->new_version = $new_version;  
+            $obj->url = 'http://www.j-breuer.de/ap-api/api.php';  
+            $obj->package = 'http://www.j-breuer.de/ap-api/api.php?key=' . md5($options['licence-key']);
+            $transient->response['affiliate-power/affiliate-power.php'] = $obj;  
+        }  
+	
+        return $transient;
+    }  
 
+
+	static public function getNewVersionInfo($false, $action, $arg) {
+		
+		if (isset($arg->slug) && $arg->slug == 'affiliate-power') {  
+			
+			$http_answer = wp_remote_post('http://www.j-breuer.de/ap-api/api.php', array('body' => array('action' => 'info')));  
+			if (is_wp_error($http_answer) || $http_answer['response']['code'] != 200) return $false;
+			
+			$information = unserialize($http_answer['body']);
+			return $information;  
+		}  
+		return $false;  
+	}
 
 }
 ?>

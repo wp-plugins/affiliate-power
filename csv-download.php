@@ -6,6 +6,6 @@ header('Content-Disposition: attachment; filename="'.date('Y-m-d').'-affiliate-p
 
 if (!session_id()) session_start();
 echo $_SESSION['affiliate-power-csv'];
-session_destroy();
+//session_destroy();
 
 ?>

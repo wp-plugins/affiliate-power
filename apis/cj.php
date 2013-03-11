@@ -29,9 +29,9 @@ class Affiliate_Power_Api_Cj {
 	static public function downloadTransactions($website_id, $auth_key, $fromTS, $tillTS) {
 	
 		$fromTS_temp = $fromTS;
-		$tillTS_temp = $fromTS + 3600*24*30; //cj does not allow more than 30 days
+		$tillTS_temp = $fromTS + 3600*24*25; //cj does not allow more than 30 days
 		
-		while ($tillTS_temp < $tillTS) {
+		while ($tillTS_temp <= $tillTS) {
 		
 			$StartDate = date('Y-m-d', $fromTS_temp);
 			$EndDate = date('Y-m-d', $tillTS_temp);
@@ -43,6 +43,7 @@ class Affiliate_Power_Api_Cj {
 			$report_url .= '&website-ids='.$website_id;
 
 			$http_params = array (
+				'timeout' => 10,
 				'headers' => array('Authorization' => $auth_key)
 			);
 			
@@ -72,16 +73,12 @@ class Affiliate_Power_Api_Cj {
 				$shop_name = $transaction->getElementsByTagName('advertiser-name')->item(0)->nodeValue;
 				$price = $transaction->getElementsByTagName('sale-amount')->item(0)->nodeValue;
 				$commission = $transaction->getElementsByTagName('commission-amount')->item(0)->nodeValue;
-				$checkdatetime = $transaction->getElementsByTagName('locking-date')->item(0)->nodeValue;
+				$checkdatetime_db = $transaction->getElementsByTagName('locking-date')->item(0)->nodeValue;
 				$status = $transaction->getElementsByTagName('action-status')->item(0)->nodeValue;
 				
 				$arr_datetime= explode("T", $datetime);
 				$arr_datetime[1] = substr($arr_datetime[1], 0, 8); //ms und +2 abschneiden
 				$datetime_db = implode(" ", $arr_datetime);
-				
-				$arr_checkdatetime= explode("T", $checkdatetime);
-				$arr_checkdatetime[1] = substr($arr_checkdatetime[1], 0, 8); //ms und +2 abschneiden
-				$checkdatetime_db = implode(" ", $arr_checkdatetime);
 				
 				if ($price == '' || $price == 0)$transaction_type = 'L';
 				else $transaction_type = 'S';
@@ -114,7 +111,7 @@ class Affiliate_Power_Api_Cj {
 			
 			//prepare next request
 			$fromTS_temp = $tillTS_temp;
-			$tillTS_temp += 3600*24*30;
+			$tillTS_temp += 3600*24*25;
 		}
 		
 		return $output_transactions;

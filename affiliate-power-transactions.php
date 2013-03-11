@@ -30,14 +30,14 @@ class Affiliate_Power_Transactions {
 				
 					$("#button_download_transactions").bind("click", function(e){
 						$(this).val('Bitte warten...');
-						$.post(ajaxurl, { action: 'ap_download_transactions'}, function(response) {
+						$.post(ajaxurl, { action: 'ap_download_transactions', nonce: '<?php echo wp_create_nonce( 'affiliate-power-download-transactions' ) ?>' }, function(response) {
 							location.reload();
 						});
 					});
 					
 					$("#button_export_csv").bind("click", function(e){
 						$(this).val('Bitte warten...');
-						$.post(ajaxurl, { action: 'ap_export_csv'}, function(response) {
+						$.post(ajaxurl, { action: 'ap_export_csv', nonce: '<?php echo wp_create_nonce( 'affiliate-power-export-csv' ) ?>'}, function(response) {
 							$("#button_export_csv").val('Excel Download');
 							$("body").append("<iframe src='<?php echo plugins_url( "affiliate-power/csv-download.php", dirname(__FILE__ )); ?>' style='display: none;' ></iframe>")
 							
@@ -53,6 +53,8 @@ class Affiliate_Power_Transactions {
 	
 	
 	public static function exportTransactions() {
+	
+		check_ajax_referer( 'affiliate-power-export-csv', 'nonce' );
 		
 		global $wpdb;
 		$csv_content = 'Id;Datum;Netzwerk;Merchant;Typ;Einkaufspreis;Provision;Status;ArtikelId;ArtikelName' . "\r\n";
@@ -70,8 +72,11 @@ class Affiliate_Power_Transactions {
 				'.$wpdb->prefix.'posts.ID AS postID,
 			    '.$wpdb->posts.'.post_title
 			FROM '.$wpdb->prefix.'ap_transaction
+			LEFT JOIN '.$wpdb->prefix.'ap_clickout
+			ON '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'ap_clickout.ap_clickoutID
 			LEFT JOIN '.$wpdb->posts.'
-			ON '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'posts.ID
+			ON '.$wpdb->prefix.'ap_clickout.postID = '.$wpdb->prefix.'posts.ID
+			OR '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'posts.ID AND '.$wpdb->prefix.'posts.ID < 1000000
 			ORDER by `Date` ASC
 		');
 		$transactions = $wpdb->get_results($sql, ARRAY_A);
@@ -167,6 +172,11 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 					);
 				}
 				break;
+			
+			case 'referer' :
+				$value = '<a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power/#premium" target="_blank">Nur in der Premium Version</a>';
+				break;
+				
 				
 			default :
 				$value = $item[$column_name];
@@ -197,7 +207,8 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 			'Price' => 'Einkaufswert',
 			'Commission'  => 'Provision',
 			'TransactionStatus' => 'Status',
-			'post_title' => $post_title_text
+			'post_title' => $post_title_text,
+			'referer' => 'Besucherquelle',
         );
         return $columns;
     }
@@ -212,7 +223,8 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 			'Price'  => array('Price',false),
 			'Commission'  => array('Commission',false),
 			'TransactionStatus'  => array('TransactionStatus',false),
-			'post_title'  => array('post_title',false)
+			'post_title'  => array('post_title',false),
+			'referer' => array('referer',false)
 			
         );
         return $sortable_columns;
@@ -250,7 +262,7 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
         
         
 		$orderby = (!empty($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : 'Date'; //If no sort, default to date, todo: whitelist
-        $order = ($_REQUEST['order'] == 'asc') ?  'asc' : 'desc'; //If no order, default to asc
+        $order = (isset($_REQUEST['order']) && $_REQUEST['order'] == 'asc') ?  'asc' : 'desc'; //If no order, default to asc
 			
         global $wpdb;
 	
@@ -266,11 +278,15 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 			   '.$wpdb->prefix.'ap_transaction.Commission,
 			   '.$wpdb->prefix.'ap_transaction.Confirmed,
 			   '.$wpdb->prefix.'ap_transaction.TransactionStatus,
+			   "" AS referer,
 			   '.$wpdb->prefix.'posts.ID AS postID,
 			   '.$wpdb->posts.'.post_title
 		FROM '.$wpdb->prefix.'ap_transaction
+		LEFT JOIN '.$wpdb->prefix.'ap_clickout
+		ON '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'ap_clickout.ap_clickoutID
 		LEFT JOIN '.$wpdb->posts.'
-		ON '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'posts.ID
+		ON '.$wpdb->prefix.'ap_clickout.postID = '.$wpdb->prefix.'posts.ID
+		OR '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'posts.ID AND '.$wpdb->prefix.'posts.ID < 1000000
 		ORDER BY '.$orderby.' '.$order;
 		
 		$transactionData = $wpdb->get_results($sql, ARRAY_A);

@@ -7,61 +7,75 @@ class Affiliate_Power_Statistics {
 		global $wpdb;
 		$options = get_option('affiliate-power-options');
 		
+		$date_from = isset($_POST['date_from']) && preg_match("/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/", $_POST['date_from']) ? $_POST['date_from'] : date('d.m.Y', time()-86400*30);
+		$date_to = isset($_POST['date_to']) && preg_match("/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/", $_POST['date_to']) ? $_POST['date_to'] : date('d.m.Y');
+		$arr_date_from = explode('.', $date_from);
+		$arr_date_to = explode('.', $date_to);
+		$date_from_db = $arr_date_from[2].'-'.$arr_date_from[1].'-'.$arr_date_from[0];
+		$date_to_db = $arr_date_to[2].'-'.$arr_date_to[1].'-'.$arr_date_to[0] . ' 23:59:59';
 		
-		//Top Article/SubIds
-		$sql = '
-		SELECT '.$wpdb->prefix.'ap_transaction.SubId AS postID,
+		
+		//Top Articles
+		$sql = $wpdb->prepare('
+		SELECT
 			round(sum('.$wpdb->prefix.'ap_transaction.Commission),2) as commission,
 			round(sum('.$wpdb->prefix.'ap_transaction.Confirmed), 2) as confirmed,
-			'.$wpdb->posts.'.post_title
+			'.$wpdb->posts.'.ID AS postID,
+			ifnull('.$wpdb->posts.'.post_title, "- unbekannt -") as name
 		FROM '.$wpdb->prefix.'ap_transaction 
+		LEFT JOIN '.$wpdb->prefix.'ap_clickout
+		ON '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'ap_clickout.ap_clickoutID
 		LEFT JOIN '.$wpdb->posts.'
-		ON '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'posts.ID
-		WHERE TransactionStatus <> "Cancelled" 
-		GROUP BY SubId 
+		ON '.$wpdb->prefix.'ap_clickout.postID = '.$wpdb->prefix.'posts.ID
+		OR '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'posts.ID AND '.$wpdb->prefix.'posts.ID < 1000000
+		WHERE TransactionStatus <> "Cancelled"
+		AND date BETWEEN %s and %s
+		GROUP BY name 
 		ORDER BY sum('.$wpdb->prefix.'ap_transaction.Commission) DESC
-		LIMIT 12';
+		LIMIT 12', $date_from_db, $date_to_db);
 		$topArticleData = $wpdb->get_results($sql, ARRAY_A);
-		
-		if ($options['add-sub-ids'] === 0) {
-			$topArticleHeadline = 'Top SubIds';
-			$topArticelRowHeadline = 'SubId';
-		}
-		else {
-			$topArticleHeadline = 'Top Artikel / Seiten';
-			$topArticelRowHeadline = 'Artikel';
-		}
 		
 		
 		//Top Partner
-		$sql = '
-		SELECT concat (ProgramTitle, " (", network, ")") as program,
+		$sql = $wpdb->prepare('
+		SELECT concat (ProgramTitle, " (", network, ")") as name,
 			   round(sum(Commission),2) as commission,
 			   round(sum(Confirmed), 2) as confirmed
 		FROM '.$wpdb->prefix.'ap_transaction 
 		WHERE TransactionStatus <> "Cancelled" 
+		AND date BETWEEN %s and %s
 		GROUP BY ProgramId, network
 		ORDER BY sum(Commission) DESC
-		LIMIT 12';
+		LIMIT 12', $date_from_db, $date_to_db);
 		$topPartnerData = $wpdb->get_results($sql, ARRAY_A);
 		
 		
 		//Networks
-		$sql = '
-		SELECT network,
+		$sql = $wpdb->prepare('
+		SELECT network as name,
 			   round(sum(Commission),2) as commission,
 			   round(sum(Confirmed), 2) as confirmed
 		FROM '.$wpdb->prefix.'ap_transaction 
 		WHERE TransactionStatus <> "Cancelled" 
+		AND date BETWEEN %s and %s
 		GROUP BY network
 		ORDER BY sum(Commission) DESC
-		LIMIT 12';
+		LIMIT 12', $date_from_db, $date_to_db);
 		$networkData = $wpdb->get_results($sql, ARRAY_A);
 		
 		
+		$landingData = $refererData = $keywordData = array(
+			array(
+				'name' => '<a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power/#premium" target="_blank">Nur in der Premium Version</a>',
+				'commission' => '0',
+				'confirmed' => '0'
+			)
+		);
+
+		/*
 		//Last Days
 		$sql = '
-		SELECT date_format(date, "%%d.%%m.%%Y") as date_de,
+		SELECT date_format(date, "%d.%m.%Y") as name,
 			   round(sum(Commission),2) as commission,
 			   round(sum(Confirmed), 2) as confirmed
 		FROM '.$wpdb->prefix.'ap_transaction 
@@ -73,7 +87,7 @@ class Affiliate_Power_Statistics {
 		
 		//Last Weeks
 		$sql = '
-		SELECT concat ("KW ", weekofyear(date)) as week,
+		SELECT concat ("KW ", weekofyear(date)) as name,
 			   round(sum(Commission),2) as commission,
 			   round(sum(Confirmed), 2) as confirmed
 		FROM '.$wpdb->prefix.'ap_transaction 
@@ -87,7 +101,7 @@ class Affiliate_Power_Statistics {
 		
 		//Last Months
 		$sql = '
-		SELECT concat (monthname(date), " ", year(date)) as month_year,
+		SELECT concat (monthname(date), " ", year(date)) as name,
 			   round(sum(Commission),2) as commission,
 			   round(sum(Confirmed), 2) as confirmed
 		FROM '.$wpdb->prefix.'ap_transaction 
@@ -97,202 +111,69 @@ class Affiliate_Power_Statistics {
 				 month(date) DESC
 		LIMIT 12';
 		$monthData = $wpdb->get_results($sql, ARRAY_A);
+		*/
 		
-		?>
-		<h2>Statistiken</h2>
-		<div style="width:30%; float:left; margin-right:20px;">
-		<h3><?php echo $topArticleHeadline; ?></h3>
-		<table class="widefat">
-			<thead>
-				<tr>
-					<th><?php echo $topArticelRowHeadline; ?></th>
-					<th>Einnahmen</th>      
-				</tr>
-			</thead>
-			<tfoot>
-				<tr>
-					<th><?php echo $topArticelRowHeadline; ?></th>
-					<th>Einnahmen</th>
-				</tr>
-			</tfoot>
-			<tbody>
-			   <?php 
-			   foreach ($topArticleData as $article) {
-				 if ($options['add-sub-ids'] === 0) {
-					$output_post = $article['postID'];
-				 }
-				 else {
-					 if ($article['post_title'] == '') {
-						$output_post = '- unbekannt - <span style="color:silver">(Id: '.$article['postID'].')</span>';
-					 } else {
-						$permalink = get_permalink($article['postID']);
-						$output_post = sprintf('<a href="%s" target="_blank">%s</a>',$permalink, $article['post_title']);
-					 }
-				}
+
 		
-				 $total_earning = number_format($article['commission'], 2, ',', '.');
-				 $confirmed_earning = number_format($article['confirmed'], 2, ',', '.');
-				 $output_earning = $total_earning . ' € (<span style="color:green;">'.$confirmed_earning.' €</span>)';
-				 
-				 echo ('<tr><td>'.$output_post.'</td><td>'.$output_earning.'</td></tr>');
-			   }
-			   ?>
-			</tbody>
-		</table>
-		</div>
+		//statistics to create
+		$arr_statistics = array(
+			'Artikel' => $topArticleData,
+			'Partner' => $topPartnerData,
+			'Netzwerk' => $networkData,
+			'Einstiegsseite' => $landingData,
+			'Besucherquelle' => $refererData,
+			'Keyword' => $keywordData
+		);
+		
+		$statisticHtml = '';
+		$i = 1;
+		foreach ($arr_statistics as $headline => $statistic) {
+			$statisticHtml .= self::getStatisticHtml($headline, $statistic);
+			if ($i % 3 == 0) $statisticHtml .= '<div style="clear:both;">&nbsp;</div>';
+			$i += 1;
+		}
+		echo '<h2>Statistiken</h2>';
 		
 		
-		<div style="width:30%; float:left; margin-right:20px;">
-		<h3>Top Partner</h3>
-		<table class="widefat">
-			<thead>
-				<tr>
-					<th>Partner</th>
-					<th>Einnahmen</th>      
-				</tr>
-			</thead>
-			<tfoot>
-				<tr>
-					<th>Partner</th>
-					<th>Einnahmen</th>
-				</tr>
-			</tfoot>
-			<tbody>
-			   <?php 
-			   foreach ($topPartnerData as $partner) {
-			     $total_earning = number_format($partner['commission'], 2, ',', '.');
-				 $confirmed_earning = number_format($partner['confirmed'], 2, ',', '.');
-				 $output_earnings = $total_earning . ' € (<span style="color:green;">'.$confirmed_earning.' €</span>)';
-			     echo ('<tr><td>'.$partner['program'].'</td><td>'.$output_earnings.'</td></tr>');
-			   }
-			   ?>
-			</tbody>
-		</table>
-		</div>
-		
-		
-		<div style="width:30%; float:left; margin-right:20px;">
-		<h3>Netzwerke</h3>
-		<table class="widefat">
-			<thead>
-				<tr>
-					<th>Netzwerk</th>
-					<th>Einnahmen</th>      
-				</tr>
-			</thead>
-			<tfoot>
-				<tr>
-					<th>Netzwerk</th>
-					<th>Einnahmen</th>
-				</tr>
-			</tfoot>
-			<tbody>
-			   <?php 
-			   foreach ($networkData as $network) {
-			     $total_earning = number_format($network['commission'], 2, ',', '.');
-				 $confirmed_earning = number_format($network['confirmed'], 2, ',', '.');
-				 $output_earnings = $total_earning . ' € (<span style="color:green;">'.$confirmed_earning.' €</span>)';
-			     echo ('<tr><td>'.$network['network'].'</td><td>'.$output_earnings.'</td></tr>');
-			   }
-			   ?>
-			</tbody>
-		</table>
-		</div>
-		
-		<div style="clear:both;">&nbsp;</div>
-		
-		<div style="width:30%; float:left; margin-right:20px;">
-		<h3>Die letzten Tage</h3>
-		<table class="widefat">
-			<thead>
-				<tr>
-					<th>Tag</th>
-					<th>Einnahmen</th>      
-				</tr>
-			</thead>
-			<tfoot>
-				<tr>
-					<th>Tag</th>
-					<th>Einnahmen</th>
-				</tr>
-			</tfoot>
-			<tbody>
-			   <?php 
-			   foreach ($dayData as $day) {
-			     $total_earning = number_format($day['commission'], 2, ',', '.');
-				 $confirmed_earning = number_format($day['confirmed'], 2, ',', '.');
-				 $output_earnings = $total_earning . ' € (<span style="color:green;">'.$confirmed_earning.' €</span>)';
-			     echo ('<tr><td>'.$day['date_de'].'</td><td>'.$output_earnings.'</td></tr>');
-			   }
-			   ?>
-			</tbody>
-		</table>
-		</div>
-		
-		<div style="width:30%; float:left; margin-right:20px;">
-		<h3>Die letzten Wochen</h3>
-		<table class="widefat">
-			<thead>
-				<tr>
-					<th>Woche</th>
-					<th>Einnahmen</th>      
-				</tr>
-			</thead>
-			<tfoot>
-				<tr>
-					<th>Woche</th>
-					<th>Einnahmen</th>
-				</tr>
-			</tfoot>
-			<tbody>
-			   <?php 
-			   foreach ($weekData as $week) {
-			     $total_earning = number_format($week['commission'], 2, ',', '.');
-				 $confirmed_earning = number_format($week['confirmed'], 2, ',', '.');
-				 $output_earnings = $total_earning . ' € (<span style="color:green;">'.$confirmed_earning.' €</span>)';
-			     echo ('<tr><td>'.$week['week'].'</td><td>'.$output_earnings.'</td></tr>');
-			   }
-			   ?>
-			</tbody>
-		</table>
-		</div>
-		
-		
-		<div style="width:30%; float:left; margin-right:20px;">
-		<h3>Die letzten Monate</h3>
-		<table class="widefat">
-			<thead>
-				<tr>
-					<th>Monat</th>
-					<th>Einnahmen</th>      
-				</tr>
-			</thead>
-			<tfoot>
-				<tr>
-					<th>Monat</th>
-					<th>Einnahmen</th>
-				</tr>
-			</tfoot>
-			<tbody>
-			   <?php 
-			   foreach ($monthData as $month) {
-			     $total_earning = number_format($month['commission'], 2, ',', '.');
-				 $confirmed_earning = number_format($month['confirmed'], 2, ',', '.');
-				 $output_earnings = $total_earning . ' € (<span style="color:green;">'.$confirmed_earning.' €</span>)';
-			     echo ('<tr><td>'.$month['month_year'].'</td><td>'.$output_earnings.'</td></tr>');
-			   }
-			   ?>
-			</tbody>
-		</table>
-		</div>
-			
-		<?php
+		echo '<form method="post" action=""><p>Von: <input type="date" name="date_from" class="datepicker" value="'.esc_attr($date_from).'" /> Bis:  <input type="date" name="date_to" class="datepicker" value="'.esc_attr($date_to).'" /> <input type="submit" value="OK" /></p></form>';
+		echo $statisticHtml;
+	
 	}
-
-
+	
+	
+	function getStatisticHtml($headline, $statistic) {
+		$html = ' 
+			<div style="width:30%; float:left; margin-right:20px;">
+				<h3>'.$headline.'</h3>
+				<table class="widefat">
+					<thead>
+						<tr>
+							<th>'.$headline.'</th>
+							<th>Einnahmen</th>      
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<th>'.$headline.'</th>
+							<th>Einnahmen</th>
+						</tr>
+					</tfoot>
+					<tbody>';
+		   
+		foreach ($statistic as $row) {
+		    $total_earning = number_format($row['commission'], 2, ',', '.');
+			$confirmed_earning = number_format($row['confirmed'], 2, ',', '.');
+			$output_earnings = $total_earning . ' € (<span style="color:green;">'.$confirmed_earning.' €</span>)';
+		    $html .= '<tr><td>'.$row['name'].'</td><td>'.$output_earnings.'</td></tr>';
+		}
+			
+		$html .= '
+					</tbody>
+				</table>
+			</div>';
+			
+		return $html;
+	}
 }
-
-
-
-
+		
 ?>

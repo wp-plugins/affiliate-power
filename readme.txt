@@ -1,4 +1,4 @@
-﻿=== Affiliate Power ===
+=== Affiliate Power ===
 Contributors: JonasBreuer
 Donate link: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 Tags: affiliate, tracking, überblick, provisionen, subid, sales, leads, affili, affili.net, zanox, tradedoubler, belboon, superclix, cj, commission junction
@@ -8,7 +8,8 @@ Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Finde automatisch heraus, welche Artikel zu welchen Affiliate-Einnahmen geführt haben.
+
+Finde automatisch heraus welche Artikel, Besucherquellen, Keywords etc. zu welchen Affiliate-Einnahmen geführt haben.
 
 == Description ==
 
@@ -16,15 +17,21 @@ Mit Affiliate Power werden deine erzielten Affiliate-Einnahmen automatisch deine
 
 Bei Fragen oder Problemen hinterlasse einfach einen Kommentar auf der [Plugin Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power/). Ich helfe gerne.
 
+= Premium Version =
+
+Zusätzlich zur kostenlosen Basic-Version gibt es eine Premium-Version des Plugins. Da sich das Plugin in der Beta-Phase befindet ist auch die Premium-Version momentan kostenlos. Mehr Infos zur Teilnahme am Betatest gibt es auf der [Plugin Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power/#premium).
+
 = Features =
 
+Features die nur in der Premium-Version verfügbar sind, sind *kursiv*
+
 * Aktuell verfügbare Netzwerke: affili.net, commission junction, belboon, superclix, tradedoubler, zanox
-* Automatische Zuweisung von Einnahmen zu Artikeln und Seiten (auch bei aktiviertem Pretty Link)
+* Automatische Zuweisung von Einnahmen zu Artikeln, Seiten, *Landing-Pages, Besucherquellen und Keywords*
 * Filterung des Imports nach Webseiten
 * Übersicht über alle Leads und Sales (ausführlich und als Dashboard-Widget)
 * Automatische Infomail bei neuen oder geänderten Leads und Sales
 * Export aller Leads und Sales als Excel-CSV
-* Statistiken über Artikel, Partner, Netzwerke, Tage, Wochen und Monate
+* Statistiken über einen frei wählbaren Zeitraum sortiert nach Artikeln, Partnern, Netzwerken, *Landing-Pages, Besucherquellen und Keywords*
 * Deine Daten bleiben in deiner Datenbank
 
 
@@ -72,6 +79,13 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 2. Übersicht über die erzielten Provisionen
 
 == Changelog ==
+
+= 0.6.0 =
+* Frei wählbarer Zeitraum bei den Statistiken
+* Robusteres Tracking
+* Einführung Premium-Version
+* Code aufgeräumt
+* Kleine Bugfixes
 
 = 0.5.1 =
 * Bug gefixt, bei dem Leads und Sales bei Bestätigung auf 0€ gesetzt wurden (Hotfix)

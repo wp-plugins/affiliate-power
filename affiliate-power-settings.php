@@ -10,9 +10,10 @@ class Affiliate_Power_Settings {
 		register_setting( 'affiliate-power-options', 'affiliate-power-options', array('Affiliate_Power_Settings', 'optionsValidate') );
 		
 		add_settings_section('affiliate-power-main', 'Grundeinstellungen', array('Affiliate_Power_Settings', 'optionsMainText'), 'affiliate-power-options');
-		add_settings_field('affiliate-power-add-sub-ids', 'Artikel Tracking aktiv', array('Affiliate_Power_Settings', 'addSubIdsField'), 'affiliate-power-options', 'affiliate-power-main');
-		add_settings_field('affiliate-power-prli-homepage', 'Pretty Link Startseiten Integration', array('Affiliate_Power_Settings', 'addPrliHomepageField'), 'affiliate-power-options', 'affiliate-power-main');
+		add_settings_field('affiliate-power-add-sub-ids', 'Tracking aktiv', array('Affiliate_Power_Settings', 'addSubIdsField'), 'affiliate-power-options', 'affiliate-power-main');
+		//add_settings_field('affiliate-power-prli-homepage', 'Startseiten Integration', array('Affiliate_Power_Settings', 'addHomepageField'), 'affiliate-power-options', 'affiliate-power-main');
 		add_settings_field('affiliate-power-send-mail-transactions', 'Täglicher E-Mail Report', array('Affiliate_Power_Settings', 'addSendMailTransactionsField'), 'affiliate-power-options', 'affiliate-power-main');
+		add_settings_field('affiliate-power-licence-key', 'Lizenzschlüssel', array('Affiliate_Power_Settings', 'addLicenceKeyField'), 'affiliate-power-options', 'affiliate-power-main');
 		
 		//add_settings_field('affiliate-power-download-method', 'Methode Sale/Lead Download', array('Affiliate_Power_Settings', 'downloadMethod'), 'affiliate-power-options', 'affiliate-power-main');
 		
@@ -66,7 +67,7 @@ class Affiliate_Power_Settings {
 		?>
 		<div class="wrap">
 		<h2>Affiliate Power</h2>
-		<p>Herzlich Willkommen bei der Beta-Version von Affiliate Power. Das Plugin befindet sich noch in der Entwicklung. Sollte du Probleme und Vorschläge für neue Features haben, freue ich mich über einen Kommentar auf der <a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power/" target="_blank">Plugin Seite</a>. Sollte dir das Plugin gefallen und du einen Blog haben, wo es thematisch passt, würde ich mich über eine Vorstellung des Plugins sehr freuen.</p>
+		<p>Herzlich Willkommen bei der Beta-Version von Affiliate Power Pro. Das Plugin befindet sich noch in der Entwicklung. Sollte du Probleme und Vorschläge für neue Features haben, freue ich mich über einen Kommentar auf der <a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power/" target="_blank">Plugin Seite</a>. Sollte dir das Plugin gefallen und du einen Blog haben, wo es thematisch passt, würde ich mich über eine Vorstellung des Plugins sehr freuen.</p>
 		
 		<p>Auf dieser Seite kannst du die Einstellungen von Affiliate Power bearbeiten. Bitte habe etwas Geduld beim Speichern der Daten. Das Plugin führt einen Testlogin bei den Netzwerken durch.</p>
 		
@@ -104,17 +105,18 @@ class Affiliate_Power_Settings {
 		$checked = $options['add-sub-ids'] ? ' checked' : '';
 		echo "<input type='checkbox' id='affiliate-power-add-sub-ids' name='affiliate-power-options[add-sub-ids]' value='1' ".$checked." /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_sub_id_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_sub_id_info' style='display:none;'>Mit dem Artikel Tracking kannst du herausfinden, welcher Artikel zu welchen Einnahmen geführt hat. Einnahmen, die du vor der Installation des Plugins erzielt hast, können nicht zugeordnet werden. Du solltest diese Option nicht aktivieren, falls du ein eigenes SubId-Tracking durchführst.</div>";
+		echo "<div id='ap_sub_id_info' style='display:none;'>Mit dem Tracking kannst du herausfinden, welche Artikel/Referer/Keywords etc. zu welchen Einnahmen geführt haben. Einnahmen, die du vor der Installation des Plugins erzielt hast, können nicht zugeordnet werden. Diese Option macht für fast alle Benutzer des Plugins Sinn.</div>";
 	}
 	
-	
-	static public function addprliHomepageField() {
+	/*
+	static public function addHomepageField() {
 		$options = get_option('affiliate-power-options');
-		$checked = $options['prli-homepage'] ? ' checked' : '';
-		echo "<input type='checkbox' id='affiliate-power-prli-homepage' name='affiliate-power-options[prli-homepage]' value='1' ".$checked." /> ";
+		$checked = $options['homepage-tracking'] ? ' checked' : '';
+		echo "<input type='checkbox' id='affiliate-power-prli-homepage' name='affiliate-power-options[homepage-tracking]' value='1' ".$checked." /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_prli_homepage_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_prli_homepage_info' style='display:none;'>Diese Option solltest du aktivieren, wenn du das Plugin Pretty Link zur Verschleierung deiner Affiliate-Links benutzt und Affiliate-Links auf der Startseite sichtbar sind.</div>";
+		echo "<div id='ap_prli_homepage_info' style='display:none;'>Diese Option solltest du aktivieren, wenn auf deiner Startseite mehrere Artikel mit Affiliate-Links angezeigt werden.</div>";
 	}
+	*/
 	
 	static public function addSendMailTransactionsField() {
 		$options = get_option('affiliate-power-options');
@@ -122,6 +124,13 @@ class Affiliate_Power_Settings {
 		echo "<input type='checkbox' id='affiliate-power-send-mail-transactions' name='affiliate-power-options[send-mail-transactions]' value='1' ".$checked." /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_send_mail_transactions_info\").style.display=\"block\"; return false;'>[?]</a></span>";
 		echo "<div id='ap_send_mail_transactions_info' style='display:none;'>Du bekommst täglich eine E-Mail mit den am letzten Tag neuen oder geänderten Transaktionen. Wenn es keine neuen oder geänderten Transaktionen gibt, wird auch keine E-Mail verschickt.</div>";
+	}
+	
+	static public function addLicenceKeyField() {
+		$options = get_option('affiliate-power-options');
+		echo "<input type='text' id='affiliate-power-licence-key' name='affiliate-power-options[licence-key]' size='40' value='".$options['licence-key']."' /> ";
+		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_licence_key_info\").style.display=\"block\"; return false;'>[?]</a></span>";
+		echo "<div id='ap_licence_key_info' style='display:none;'>Affiliate-Power gibt es auch als Premium-Version, für die ein Lizenzschlüssel benötigt wird. Momentan ist das Plugin noch in der Beta-Phase und die Premium Version ist komplett kostenlos. Wenn du am Betatest teilnehmen möchtest, <a href='http://www.j-breuer.de/kontakt/' target='_blank'>schreib mir</a>. Mehr Infos zur Premium-Version gibt es <a href='http://www.j-breuer.de/wordpress-plugins/affiliate-power/#premium' target='_blank'>auf der Plugin Seite</a>. Für die Nutzung der Basis-Version kann dieses Feld leer bleiben.</div>";
 	}
 	
 	
@@ -277,11 +286,20 @@ class Affiliate_Power_Settings {
 		$whitelist['add-sub-ids'] = $input['add-sub-ids'];
 		if ($whitelist['add-sub-ids'] != 1) $whitelist['add-sub-ids'] = 0;
 		
-		$whitelist['prli-homepage'] = $input['prli-homepage'];
-		if ($whitelist['prli-homepage'] != 1) $whitelist['prli-homepage'] = 0;
+		//$whitelist['homepage-tracking'] = $input['homepage-tracking'];
+		//if ($whitelist['homepage-tracking'] != 1) $whitelist['homepage-tracking'] = 0;
 		
 		$whitelist['send-mail-transactions'] = $input['send-mail-transactions'];
 		if ($whitelist['send-mail-transactions'] != 1) $whitelist['send-mail-transactions'] = 0;
+
+		if (isset($input['licence-key']) && ctype_alnum($input['licence-key'])) {
+			$check_result = Affiliate_Power_Apis::checkLicenceKey($input['licence-key']);
+			if ($check_result == false || $check_result == 'database_error' || $check_result == 'database_charset_error') add_settings_error('affiliate-power-options', 'affiliate-power-error-licence-key', 'Der Lizenzschlüssel konnte nicht überprüft werden. Bitte versuche es später nochmal und <a href="http://www.j-breuer.de/kontakt/" target="_blank">sag mir Bescheid</a> falls es noch immer nicht geht.');
+			elseif ($check_result == 'outdated_key') add_settings_error('affiliate-power-options', 'affiliate-power-error-licence-key', 'Der Lizenzschlüssel ist abgelaufen. Bitte erneuere den Lizenzschlüssel.');
+			elseif ($check_result == 'invalid_key_format' || $check_result == 'invalid_key') add_settings_error('affiliate-power-options', 'affiliate-power-error-licence-key', 'Der Lizenzschlüssel ist ungültig. Bitte überprüfe deine Eingabe. Falls du sicher bist, dass du den Schlüssel richtig eingegeben hast, <a href="http://www.j-breuer.de/kontakt/" target="_blank">sag mir Bescheid</a>, dann überprüfe ich das.');
+			elseif ($check_result == 'ok') $whitelist['licence-key'] = $input['licence-key'];
+		}
+		elseif (!empty($input['licence-key'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-licence-key', 'Ungültiger Lizenzschlüssel. Der Schlüssel sollte nur aus Zahlen und Buchstaben bestehen.');
 		
 		//if (is_numeric($input['download-method'])) $whitelist['download-method'] = (int)$input['download-method'];
 		

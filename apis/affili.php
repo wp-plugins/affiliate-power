@@ -87,12 +87,14 @@ class Affiliate_Power_Api_Affili {
 					$number = $obj_transaction->TransactionId;
 					$sub_id = $obj_transaction->SubId;
 					$shop_id = $obj_transaction->ProgramId;
-					$shop_name = mysql_real_escape_string($obj_transaction->ProgramTitle);
-					$transaction_fulltext = $obj_transaction->RateInfo->RateMode;
+					$shop_name = $obj_transaction->ProgramTitle;
 					$price = $obj_transaction->NetPrice;
 					$commission = $obj_transaction->PublisherCommission;
 					$status = $obj_transaction->TransactionStatus;
 					$checkdate = $obj_transaction->CheckDate;
+					
+					if (is_object($obj_transaction->RateInfo)) $transaction_fulltext = $obj_transaction->RateInfo->RateMode;
+					else $transaction_fulltext = 'PayPerLead';
 					
 					$datetime_db = str_replace("T", " ", $date);
 					$checkdatetime_db = str_replace("T", " ", $checkdate);
