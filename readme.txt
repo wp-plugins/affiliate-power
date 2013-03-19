@@ -80,6 +80,10 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 
 == Changelog ==
 
+= 0.6.2 =
+* Bug gefixt, durch den die SubId bei Belboon Deeplinks nicht richtig angehängt wurde
+* Performance-Verbesserung bei Sales-Übersicht und Statistik
+
 = 0.6.0 =
 * Frei wählbarer Zeitraum bei den Statistiken
 * Robusteres Tracking

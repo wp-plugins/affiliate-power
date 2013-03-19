@@ -5,7 +5,7 @@ PLUGIN URI: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 DESCRIPTION: Affiliate Power ermöglicht es, Affiliate-Einnahmen nach Artikeln, Besucherquellen, Keywords etc. zu analyisren
 AUTHOR: Jonas Breuer
 AUTHOR URI: http://www.j-breuer.de
-VERSION: 0.6.0
+VERSION: 0.6.2
 Min WP Version: 3.1
 Max WP Version: 3.5.1
 */
@@ -28,7 +28,7 @@ You should have received a copy of the GNU General Public License
 */
 
 
-define('AFFILIATE_POWER_VERSION', '0.6.0');
+define('AFFILIATE_POWER_VERSION', '0.6.2');
 define('AFFILIATE_POWER_PREMIUM', false);
 
 include_once("affiliate-power-menu.php"); //admin menu
@@ -239,7 +239,10 @@ class Affiliate_Power {
 		$subid = $wpdb->insert_id;
 	
 		if ($network == 'affili') $target_url .= '&subid='.$subid;
-		elseif ($network == 'belboon') $target_url .= '/subid='.$subid;
+		elseif ($network == 'belboon') {
+			if (strpos($target_url, "/&deeplink") !== false) $target_url = str_replace("/&deeplink", '/subid='.$subid."&deeplink", $target_url);
+			else $target_url .= '/subid='.$subid;
+		}
 		elseif ($network == 'superclix') $target_url .= '&subid='.$subid;
 		elseif ($network == 'tradedoubler') $target_url .= '&epi='.$subid;
 		elseif ($network == 'zanox') $target_url = str_replace("T", "S".$subid."T", $target_url);

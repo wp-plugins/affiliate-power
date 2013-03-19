@@ -62,7 +62,8 @@ class Affiliate_Power_Transactions {
 		$sql = $wpdb->prepare('
 			SELECT 
 				'.$wpdb->prefix.'ap_transaction.ap_transactionID,
-				date_format('.$wpdb->prefix.'ap_transaction.`Date`, "%%d.%%m.%%Y %%T") AS datetime_de,
+				'.$wpdb->prefix.'ap_transaction.Date,
+				date_format('.$wpdb->prefix.'ap_transaction.Date, "%%d.%%m.%%Y %%T") AS datetime_de,
 				'.$wpdb->prefix.'ap_transaction.network,
 				'.$wpdb->prefix.'ap_transaction.ProgramTitle,
 				'.$wpdb->prefix.'ap_transaction.Transaction,
@@ -76,14 +77,32 @@ class Affiliate_Power_Transactions {
 			ON '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'ap_clickout.ap_clickoutID
 			LEFT JOIN '.$wpdb->posts.'
 			ON '.$wpdb->prefix.'ap_clickout.postID = '.$wpdb->prefix.'posts.ID
-			OR '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'posts.ID AND '.$wpdb->prefix.'posts.ID < 1000000
-			ORDER by `Date` ASC
+			WHERE '.$wpdb->prefix.'ap_transaction.SubId >= 1000000
+			UNION
+			SELECT 
+				'.$wpdb->prefix.'ap_transaction.ap_transactionID,
+				'.$wpdb->prefix.'ap_transaction.Date,
+				date_format('.$wpdb->prefix.'ap_transaction.Date, "%%d.%%m.%%Y %%T") AS datetime_de,
+				'.$wpdb->prefix.'ap_transaction.network,
+				'.$wpdb->prefix.'ap_transaction.ProgramTitle,
+				'.$wpdb->prefix.'ap_transaction.Transaction,
+				'.$wpdb->prefix.'ap_transaction.Price,
+				'.$wpdb->prefix.'ap_transaction.Commission,
+				'.$wpdb->prefix.'ap_transaction.TransactionStatus,
+				'.$wpdb->prefix.'posts.ID AS postID,
+			    '.$wpdb->posts.'.post_title
+			FROM '.$wpdb->prefix.'ap_transaction
+			LEFT JOIN '.$wpdb->posts.'
+			ON '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'posts.ID
+			WHERE '.$wpdb->prefix.'ap_transaction.SubId < 1000000
+			ORDER by Date ASC
 		');
 		$transactions = $wpdb->get_results($sql, ARRAY_A);
 		
 		foreach ($transactions as $transaction) {
 			$transaction['Price'] = str_replace('.', ',', $transaction['Price']);
 			$transaction['Commission'] = str_replace('.', ',', $transaction['Commission']);
+			unset($transaction['Date']); //this was just for order by
 			$csv_content .= implode(';', $transaction) . "\r\n";
 		}
 		
@@ -278,7 +297,7 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 			   '.$wpdb->prefix.'ap_transaction.Commission,
 			   '.$wpdb->prefix.'ap_transaction.Confirmed,
 			   '.$wpdb->prefix.'ap_transaction.TransactionStatus,
-			   "" AS referer,
+			   "- unbekannt -" as referer,
 			   '.$wpdb->prefix.'posts.ID AS postID,
 			   '.$wpdb->posts.'.post_title
 		FROM '.$wpdb->prefix.'ap_transaction
@@ -286,7 +305,26 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 		ON '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'ap_clickout.ap_clickoutID
 		LEFT JOIN '.$wpdb->posts.'
 		ON '.$wpdb->prefix.'ap_clickout.postID = '.$wpdb->prefix.'posts.ID
-		OR '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'posts.ID AND '.$wpdb->prefix.'posts.ID < 1000000
+		WHERE '.$wpdb->prefix.'ap_transaction.SubId >= 1000000
+		UNION
+		SELECT '.$wpdb->prefix.'ap_transaction.ap_transactionID,
+			   '.$wpdb->prefix.'ap_transaction.network,
+			   '.$wpdb->prefix.'ap_transaction.Date,
+			   date_format('.$wpdb->prefix.'ap_transaction.Date, "%d.%m.%Y - %T") AS germanDate,
+			   '.$wpdb->prefix.'ap_transaction.SubId,
+			   '.$wpdb->prefix.'ap_transaction.ProgramTitle,
+			   '.$wpdb->prefix.'ap_transaction.Transaction,
+			   '.$wpdb->prefix.'ap_transaction.Price,
+			   '.$wpdb->prefix.'ap_transaction.Commission,
+			   '.$wpdb->prefix.'ap_transaction.Confirmed,
+			   '.$wpdb->prefix.'ap_transaction.TransactionStatus,
+			   "- unbekannt -" as referer,
+			   '.$wpdb->prefix.'posts.ID AS postID,
+			   '.$wpdb->posts.'.post_title
+		FROM '.$wpdb->prefix.'ap_transaction
+		LEFT JOIN '.$wpdb->posts.'
+		ON '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'posts.ID
+		WHERE '.$wpdb->prefix.'ap_transaction.SubId < 1000000
 		ORDER BY '.$orderby.' '.$order;
 		
 		$transactionData = $wpdb->get_results($sql, ARRAY_A);

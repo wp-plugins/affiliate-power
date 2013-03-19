@@ -17,22 +17,36 @@ class Affiliate_Power_Statistics {
 		
 		//Top Articles
 		$sql = $wpdb->prepare('
-		SELECT
+		(SELECT
 			round(sum('.$wpdb->prefix.'ap_transaction.Commission),2) as commission,
 			round(sum('.$wpdb->prefix.'ap_transaction.Confirmed), 2) as confirmed,
 			'.$wpdb->posts.'.ID AS postID,
-			ifnull('.$wpdb->posts.'.post_title, "- unbekannt -") as name
+			if (postID = -1, "- Startseite -", ifnull('.$wpdb->posts.'.post_title, "- unbekannt -")) as name
 		FROM '.$wpdb->prefix.'ap_transaction 
 		LEFT JOIN '.$wpdb->prefix.'ap_clickout
 		ON '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'ap_clickout.ap_clickoutID
 		LEFT JOIN '.$wpdb->posts.'
 		ON '.$wpdb->prefix.'ap_clickout.postID = '.$wpdb->prefix.'posts.ID
-		OR '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'posts.ID AND '.$wpdb->prefix.'posts.ID < 1000000
-		WHERE TransactionStatus <> "Cancelled"
+		WHERE '.$wpdb->prefix.'ap_transaction.SubId >= 1000000
+		AND TransactionStatus <> "Cancelled"
+		AND date BETWEEN %s and %s 
+		GROUP BY name )
+		UNION
+		(SELECT
+			round(sum('.$wpdb->prefix.'ap_transaction.Commission),2) as commission,
+			round(sum('.$wpdb->prefix.'ap_transaction.Confirmed), 2) as confirmed,
+			'.$wpdb->posts.'.ID AS postID,
+			ifnull('.$wpdb->posts.'.post_title, "- unbekannt -") as name
+		FROM '.$wpdb->prefix.'ap_transaction 
+		LEFT JOIN '.$wpdb->posts.'
+		ON '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'posts.ID
+		WHERE '.$wpdb->prefix.'ap_transaction.SubId < 1000000
+		AND TransactionStatus <> "Cancelled"
 		AND date BETWEEN %s and %s
-		GROUP BY name 
-		ORDER BY sum('.$wpdb->prefix.'ap_transaction.Commission) DESC
-		LIMIT 12', $date_from_db, $date_to_db);
+		GROUP BY name )
+		ORDER BY commission DESC
+		LIMIT 12', $date_from_db, $date_to_db, $date_from_db, $date_to_db);
+		
 		$topArticleData = $wpdb->get_results($sql, ARRAY_A);
 		
 		
