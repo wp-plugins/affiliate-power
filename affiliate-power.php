@@ -5,7 +5,7 @@ PLUGIN URI: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 DESCRIPTION: Affiliate Power ermöglicht es, Affiliate-Einnahmen nach Artikeln, Besucherquellen, Keywords etc. zu analyisren
 AUTHOR: Jonas Breuer
 AUTHOR URI: http://www.j-breuer.de
-VERSION: 0.7.0
+VERSION: 0.7.1
 Min WP Version: 3.1
 Max WP Version: 3.5.1
 */
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) die; //no direct access
 
 
 
-define('AFFILIATE_POWER_VERSION', '0.7.0');
+define('AFFILIATE_POWER_VERSION', '0.7.1');
 define('AFFILIATE_POWER_PREMIUM', false);
 
 include_once("affiliate-power-menu.php"); //admin menu
@@ -78,7 +78,7 @@ class Affiliate_Power {
 				CheckDate datetime NOT NULL,
 				TransactionStatus varchar(64) NOT NULL,
 				PRIMARY KEY  (ap_transactionID),
-				UNIQUE KEY uniIdNetwork (TransactionId_network, network),
+				UNIQUE KEY uniIdNetwork (TransactionId_network,network),
 				KEY SubId (SubId),
 				KEY TransactionStatus (TransactionStatus),
 				KEY ProgramId (ProgramId),
