@@ -1,7 +1,7 @@
 === Affiliate Power ===
 Contributors: JonasBreuer
 Donate link: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
-Tags: affiliate, tracking, überblick, provisionen, subid, sales, leads, affili, affili.net, zanox, tradedoubler, belboon, superclix, cj, commission junction
+Tags: affiliate, tracking, überblick, provisionen, subid, sales, leads, affili, affili.net, zanox, tradedoubler, belboon, superclix, cj, commission junction, adcell
 Requires at least: 3.1
 Tested up to: 3.5.1
 Stable tag: trunk
@@ -25,13 +25,13 @@ Zusätzlich zur kostenlosen Basic-Version gibt es eine Premium-Version des Plugi
 
 Features die nur in der Premium-Version verfügbar sind, sind *kursiv*
 
-* Aktuell verfügbare Netzwerke: affili.net, commission junction, belboon, superclix, tradedoubler, zanox
-* Automatische Zuweisung von Einnahmen zu Artikeln, Seiten, *Landing-Pages, Besucherquellen und Keywords*
+* Aktuell verfügbare Netzwerke: adcell, affili.net, commission junction, belboon, superclix, tradedoubler, zanox
+* Automatische Zuweisung von Einnahmen zu Artikeln, Seiten, *Landing-Pages, Besucherquellen, Keywords und URL-Parametern wie utm_campaign*
 * Filterung des Imports nach Webseiten
 * Übersicht über alle Leads und Sales (ausführlich und als Dashboard-Widget)
 * Automatische Infomail bei neuen oder geänderten Leads und Sales
 * Export aller Leads und Sales als Excel-CSV
-* Statistiken über einen frei wählbaren Zeitraum sortiert nach Artikeln, Partnern, Netzwerken, *Landing-Pages, Besucherquellen und Keywords*
+* Statistiken über einen frei wählbaren Zeitraum sortiert nach Artikeln, Partnern, Netzwerken, Tagen, Wochen, Monaten, *Landing-Pages, Besucherquellen, Keywords und URL-Parametern*
 * Deine Daten bleiben in deiner Datenbank
 
 
@@ -79,6 +79,17 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 2. Übersicht über die erzielten Provisionen
 
 == Changelog ==
+
+= 0.7.0 =
+* Adcell integriert
+* *frei definierbare URL-Parameter*
+* Schnellauswahl heute/gestern/letzte 7 Tage/letzte 30 Tage/gesamt in den Statistiken
+* Statistik nach Tagen/Wochen/Monat wieder eingebaut
+* Datum im E-Mail-Report
+* Beim ersten Sales-Download 100 Tage überprüfen 
+* Artikel-Tracking automatisch aktivieren bei Neuinstallation
+* Startseite in Statistik extra erwähnen 
+* Diverse Bugfixes und Performance-Verbesserungen
 
 = 0.6.2 =
 * Bug gefixt, durch den die SubId bei Belboon Deeplinks nicht richtig angehängt wurde

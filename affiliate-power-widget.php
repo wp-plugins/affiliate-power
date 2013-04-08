@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) die; //no direct access
 
 add_action('wp_dashboard_setup', array('Affiliate_Power_Widget', 'add') );
 
@@ -6,7 +7,9 @@ add_action('wp_dashboard_setup', array('Affiliate_Power_Widget', 'add') );
 class Affiliate_Power_Widget {
 
 	static public function add() {
-		wp_add_dashboard_widget('affiliate-power', 'Affiliate Einnahmen', array('Affiliate_Power_Widget', 'getContent'));	
+		if ( current_user_can('manage_options') ) {
+			wp_add_dashboard_widget('affiliate-power', 'Affiliate Einnahmen', array('Affiliate_Power_Widget', 'getContent'));	
+		}
 	}
 	
 	static public function getContent() {

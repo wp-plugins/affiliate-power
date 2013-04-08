@@ -5,30 +5,16 @@ PLUGIN URI: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 DESCRIPTION: Affiliate Power ermöglicht es, Affiliate-Einnahmen nach Artikeln, Besucherquellen, Keywords etc. zu analyisren
 AUTHOR: Jonas Breuer
 AUTHOR URI: http://www.j-breuer.de
-VERSION: 0.6.2
+VERSION: 0.7.0
 Min WP Version: 3.1
 Max WP Version: 3.5.1
 */
+if (!defined('ABSPATH')) die; //no direct access
 
 
-/* Copyright 2013 Jonas Breuer (email : kontakt@j-breuer.de)
- 
-This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License, version 3, as
- published by the Free Software Foundation.
- 
-This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- GNU General Public License for more details.
- 
-You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
-*/
 
 
-define('AFFILIATE_POWER_VERSION', '0.6.2');
+define('AFFILIATE_POWER_VERSION', '0.7.0');
 define('AFFILIATE_POWER_PREMIUM', false);
 
 include_once("affiliate-power-menu.php"); //admin menu
@@ -43,8 +29,6 @@ $options = get_option('affiliate-power-options');
 
 if ($options['add-sub-ids'] == 1 ) add_action('wp_enqueue_scripts', array('Affiliate_Power', 'addJs'));
 add_action('init', array('Affiliate_Power', 'init'));
-
-//if ($options['homepage-tracking'] == 1 ) add_filter('the_content', array('Affiliate_Power', 'addArtId'));
 
 add_action('affiliate_power_daily_event', array('Affiliate_Power_Apis', 'downloadTransactions'));
 add_action('wp_ajax_ap_download_transactions', array('Affiliate_Power_Apis', 'downloadTransactionsQuick'));
@@ -62,6 +46,7 @@ if(is_plugin_active('pretty-link/pretty-link.php') && $options['add-sub-ids'] ==
 	include_once("affiliate-power-prli.php");
 }
 
+//Affiliate_Power_Apis::downloadTransactions(10);
 
 class Affiliate_Power {
 
@@ -73,7 +58,12 @@ class Affiliate_Power {
 			wp_schedule_event( current_time( 'timestamp' ), 'daily', 'affiliate_power_daily_event');
 		}
 		
-		$sql = 'CREATE TABLE IF NOT EXISTS '.$wpdb->prefix.'ap_transaction (
+		//standard options if this is a new installation
+		if (!get_option('affiliate-power-options')) {
+			$options = array('add-sub-ids' => 1);
+			update_option('affiliate-power-options', $options);
+		}
+		$sql = 'CREATE TABLE '.$wpdb->prefix.'ap_transaction (
 				ap_transactionID bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 				network varchar(32) NOT NULL,
 				TransactionId_network varchar(128) NOT NULL,
@@ -88,6 +78,7 @@ class Affiliate_Power {
 				CheckDate datetime NOT NULL,
 				TransactionStatus varchar(64) NOT NULL,
 				PRIMARY KEY  (ap_transactionID),
+				UNIQUE KEY uniIdNetwork (TransactionId_network, network),
 				KEY SubId (SubId),
 				KEY TransactionStatus (TransactionStatus),
 				KEY ProgramId (ProgramId),
@@ -96,16 +87,29 @@ class Affiliate_Power {
 			);';
 		dbDelta($sql);
 		
-		$sql = 'CREATE TABLE IF NOT EXISTS '.$wpdb->prefix.'ap_clickout (
+		$sql = 'CREATE TABLE '.$wpdb->prefix.'ap_clickout (
 				ap_clickoutID bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 				ap_visitID bigint(20) unsigned NOT NULL,
 				clickout_datetime datetime NOT NULL,
-				postID bigint(20) unsigned NOT NULL,
+				postID bigint(20) signed NOT NULL,
 				source_url varchar(512) NOT NULL,
 				target_url varchar(512) NOT NULL,
 				PRIMARY KEY  (ap_clickoutID)
 				)AUTO_INCREMENT=1000001;';
 		dbDelta($sql);
+		
+		//version pre 0.7.0? update homepage postIDs
+		$version = get_option('affiliate-power-version', '0.0.0');
+		if (version_compare($version, '0.7.0', '<')) {
+			$wpdb->query(
+				$wpdb->prepare('
+					UPDATE '.$wpdb->prefix.'ap_clickout
+					SET postID = -1
+					WHERE source_url = %s',
+					home_url('/')
+				)
+			);
+		}
 	}
 	
 	static public function deactivation() {
@@ -143,28 +147,18 @@ class Affiliate_Power {
 		
 		wp_localize_script( 'affiliate-power', 'affiliatePower', 
 			array( 
-				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'nonce_clickout' => wp_create_nonce( 'affiliate-power-clickout' )
+				'ajaxurl' => admin_url( 'admin-ajax.php' )
 			)
 		);
 	}
 	
-	/*
-	static public function addArtId ($content) {
-		
-		$id = get_the_ID();
-		$content = preg_replace("@<a(.*?)>@i", "<a$1 ap_art=\"".$id."\">", $content);
-		return $content;
-	}
-	*/
 
 	
 	static public function clickoutAjax() {
-	
-		//check nonce and create a new if the user wants to make another clickout on the same page
-		check_ajax_referer( 'affiliate-power-clickout', 'nonce' );
-		$new_nonce = wp_create_nonce( 'affiliate-power-clickout' );
+
 		
+		//ignore bots
+		if (strpos($_SERVER['HTTP_USER_AGENT'], 'Googlebot') !== false) die;
 		//sanitize
 		$target_url = esc_url_raw($_POST['target_url']);
 		$source_url = esc_url_raw($_POST['source_url']);
@@ -174,14 +168,6 @@ class Affiliate_Power {
 		$arr_target_url = parse_url($target_url);
 		$arr_source_url = parse_url($source_url);
 		
-		//internal: just save ap_art in session in case this is a pretty link
-		/*
-		if ($arr_target_url['host'] == $arr_source_url['host']) {
-			if (!session_id()) session_start();
-			$_SESSION['ap_art'] = $ap_art;
-			$new_target_url = $target_url;
-		}
-		*/
 		
 		$new_target_url = self::saveClickout($source_url, $target_url);
 		
@@ -195,6 +181,7 @@ class Affiliate_Power {
 		//is this an affiliate link?
 		$network = false;
 		$affiliate_strings = array(
+			'adcell' => array('adcell', 'string'),
 			'affili' => array('webmasterplan.com', 'string'),
 			'belboon' => array('belboon', 'string'),
 			'superclix' => array('superclix', 'string'),
@@ -220,10 +207,9 @@ class Affiliate_Power {
 		
 		//save clickout in db and use as subid
 		global $wpdb;
-		if (!session_id()) session_start();
 		
 		$post_id = url_to_postid($source_url);
-		//if ($post_id == 0) $post_id = (int)$ap_art;
+		if ($post_id == 0 && $source_url == home_url('/')) $post_id = -1;  //-1 = Homepage
 		
 		$wpdb->insert(
 			$wpdb->prefix.'ap_clickout',
@@ -238,6 +224,7 @@ class Affiliate_Power {
 		);
 		$subid = $wpdb->insert_id;
 	
+		if ($network == 'adcell') $target_url = preg_replace('/bid=([0-9]+)\-([0-9]+)/', 'bid=${1}-${2}-'.$subid, $target_url);
 		if ($network == 'affili') $target_url .= '&subid='.$subid;
 		elseif ($network == 'belboon') {
 			if (strpos($target_url, "/&deeplink") !== false) $target_url = str_replace("/&deeplink", '/subid='.$subid."&deeplink", $target_url);
@@ -245,7 +232,7 @@ class Affiliate_Power {
 		}
 		elseif ($network == 'superclix') $target_url .= '&subid='.$subid;
 		elseif ($network == 'tradedoubler') $target_url .= '&epi='.$subid;
-		elseif ($network == 'zanox') $target_url = str_replace("T", "S".$subid."T", $target_url);
+		elseif ($network == 'zanox') $target_url .= '&SIDE=[['.$subid.']]';
 		elseif ($network == 'CJ') {
 			if (strpos($target_url, "?") !== false) $target_url .= '&SID='.$subid;
 			else $target_url .= '?SID='.$subid; 

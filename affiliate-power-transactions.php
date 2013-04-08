@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) die; //no direct access
 
 //for ap_download_transactions see affiliate-power.php
 add_action('wp_ajax_ap_export_csv', array('Affiliate_Power_Transactions', 'exportTransactions'));
@@ -10,6 +11,12 @@ class Affiliate_Power_Transactions {
 		
 		$transactionList = new Affiliate_Power_Transaction_List();
 		$transactionList->prepare_items();
+		
+		//Check Licence
+		$options = get_option('affiliate-power-options');
+		if (isset($options['licence-key'])) {
+			echo '<div class="error"><p><strong>Du hast einen gültigen Lizenzschlüssel eingegeben, aber die Premium-Version noch nicht heruntergeladen. Bitte begib dich zur <a href="update-core.php">Update Seite</a> und aktualisiere auf die Premium-Version. Unter Umständen  kann es bis zu 5 Minuten dauern, bis Wordpress die neue Version meldet.</strong></p></div>';
+		}
 		
 		?>
 		<div class="wrap">

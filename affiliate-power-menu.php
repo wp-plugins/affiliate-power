@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) die; //no direct access
 
 include_once("affiliate-power-settings.php");
 include_once('affiliate-power-transactions.php');

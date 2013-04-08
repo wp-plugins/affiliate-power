@@ -15,7 +15,7 @@ jQuery(document).ready(function(){
 		//if (ap_art == undefined) ap_art = 0;
 		if (e.target.hasAttribute("target")) var new_window = window.open('about:blank', '_blank');
 		
-		var data = { action: 'ap_save_clickout', nonce: affiliatePower.nonce_clickout, source_url: source_url, target_url: target_url};
+		var data = { action: 'ap_save_clickout', source_url: source_url, target_url: target_url};
 		jQuery.post(affiliatePower.ajaxurl, data, function(response) {
 			var arr_response = response.split('~');
 			affiliatePower.nonce_clickout = arr_response[0];

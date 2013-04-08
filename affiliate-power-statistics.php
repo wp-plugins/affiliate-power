@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) die; //no direct access
 
 class Affiliate_Power_Statistics {
 
@@ -7,8 +8,9 @@ class Affiliate_Power_Statistics {
 		global $wpdb;
 		$options = get_option('affiliate-power-options');
 		
+		//convert dates for db
 		$date_from = isset($_POST['date_from']) && preg_match("/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/", $_POST['date_from']) ? $_POST['date_from'] : date('d.m.Y', time()-86400*30);
-		$date_to = isset($_POST['date_to']) && preg_match("/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/", $_POST['date_to']) ? $_POST['date_to'] : date('d.m.Y');
+		$date_to = isset($_POST['date_to']) && preg_match("/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/", $_POST['date_to']) ? $_POST['date_to'] : date('d.m.Y', time()-86400);
 		$arr_date_from = explode('.', $date_from);
 		$arr_date_to = explode('.', $date_to);
 		$date_from_db = $arr_date_from[2].'-'.$arr_date_from[1].'-'.$arr_date_from[0];
@@ -86,46 +88,54 @@ class Affiliate_Power_Statistics {
 			)
 		);
 
-		/*
-		//Last Days
-		$sql = '
-		SELECT date_format(date, "%d.%m.%Y") as name,
+		//Days
+		$sql = $wpdb->prepare('
+		SELECT date_format(date, "%%d.%%m.%%Y") as name,
 			   round(sum(Commission),2) as commission,
 			   round(sum(Confirmed), 2) as confirmed
 		FROM '.$wpdb->prefix.'ap_transaction 
 		WHERE TransactionStatus <> "Cancelled" 
+		AND date BETWEEN %s and %s
 		GROUP BY date(date)
-		ORDER BY date DESC
-		LIMIT 12';
+		ORDER BY date DESC',
+		$date_from_db, $date_to_db);
+
 		$dayData = $wpdb->get_results($sql, ARRAY_A);
 		
-		//Last Weeks
-		$sql = '
-		SELECT concat ("KW ", weekofyear(date)) as name,
+		//Weeks
+		$sql = $wpdb->prepare('
+		SELECT concat ("KW ", weekofyear(date), ", ", year(date)) as name,
 			   round(sum(Commission),2) as commission,
 			   round(sum(Confirmed), 2) as confirmed
 		FROM '.$wpdb->prefix.'ap_transaction 
 		WHERE TransactionStatus <> "Cancelled" 
+		AND date BETWEEN %s and %s
 		GROUP BY weekofyear(date)
-		ORDER BY date DESC
-		LIMIT 12';
+		ORDER BY date DESC',
+		$date_from_db, $date_to_db);
+
 		$weekData = $wpdb->get_results($sql, ARRAY_A);
 		
 		
 		
-		//Last Months
-		$sql = '
-		SELECT concat (monthname(date), " ", year(date)) as name,
+		//Months
+		$sql = $wpdb->prepare('
+		SELECT concat (
+				elt(month(date),"Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"),
+				" ", 
+				year(date)) 
+			   as name,
 			   round(sum(Commission),2) as commission,
 			   round(sum(Confirmed), 2) as confirmed
 		FROM '.$wpdb->prefix.'ap_transaction 
 		WHERE TransactionStatus <> "Cancelled" 
+		AND date BETWEEN %s and %s
 		GROUP BY month(date), year(date)
 		ORDER BY year(date) DESC,
-				 month(date) DESC
-		LIMIT 12';
+				 month(date) DESC',
+		$date_from_db, $date_to_db);;
+
 		$monthData = $wpdb->get_results($sql, ARRAY_A);
-		*/
 		
 
 		
@@ -136,7 +146,10 @@ class Affiliate_Power_Statistics {
 			'Netzwerk' => $networkData,
 			'Einstiegsseite' => $landingData,
 			'Besucherquelle' => $refererData,
-			'Keyword' => $keywordData
+			'Keyword' => $keywordData,
+			'Tag' => $dayData,
+			'Woche' => $weekData,
+			'Monat' => $monthData
 		);
 		
 		$statisticHtml = '';
@@ -148,8 +161,46 @@ class Affiliate_Power_Statistics {
 		}
 		echo '<h2>Statistiken</h2>';
 		
+		//Check Licence
+		if (isset($options['licence-key'])) {
+			echo '<div class="error"><p><strong>Du hast einen gültigen Lizenzschlüssel eingegeben, aber die Premium-Version noch nicht heruntergeladen. Bitte begib dich zur <a href="update-core.php">Update Seite</a> und aktualisiere auf die Premium-Version. Unter Umständen  kann es bis zu 5 Minuten dauern, bis Wordpress die neue Version meldet.</strong></p></div>';
+		}
 		
-		echo '<form method="post" action=""><p>Von: <input type="date" name="date_from" class="datepicker" value="'.esc_attr($date_from).'" /> Bis:  <input type="date" name="date_to" class="datepicker" value="'.esc_attr($date_to).'" /> <input type="submit" value="OK" /></p></form>';
+		
+		//Datepicker
+		$dates_predefined = array (
+			'custom' => 'Freier Zeitaum',
+			'today' => 'Heute',
+			'yesterday' => 'Gestern',
+			'last_7_days' => 'Letzte 7 Tage',
+			'last_30_days' => 'Letzte 30 Tage',
+			'all' => 'Gesamt'
+		);
+		$dates_predefined_options = '';
+		foreach ($dates_predefined as $value => $text) {
+			$dates_predefined_options .= '<option value="'.$value.'"';
+			if (
+				!isset($_POST['datepicker_predefined']) && $value == 'last_30_days' || 
+				isset($_POST['datepicker_predefined']) && $value == $_POST['datepicker_predefined']) {
+					$dates_predefined_options .= ' selected="selected"';
+			}
+			$dates_predefined_options .= '>'.$text.'</option>';
+		}
+		$first_transaction = $wpdb->get_var('SELECT unix_timestamp(Date) FROM '.$wpdb->prefix.'ap_transaction ORDER BY Date ASC LIMIT 1');
+		
+		
+		//output
+		echo '
+			<script type="text/javascript">
+			var first_transaction_ts = "'.$first_transaction.'";
+			</script>
+			<form method="post" action="" name="formDate"><p>
+				Von: <input type="date" name="date_from" id="datepicker_from" value="'.esc_attr($date_from).'" /> Bis:  <input type="date" name="date_to" id="datepicker_to" value="'.esc_attr($date_to).'" /> <input type="submit" value="OK" /><br />
+				 Zeitraum: <select id="datepicker_predefined" name="datepicker_predefined">
+					'.$dates_predefined_options.'
+				</select>
+				
+			</p></form>';
 		echo $statisticHtml;
 	
 	}
@@ -159,7 +210,7 @@ class Affiliate_Power_Statistics {
 		$html = ' 
 			<div style="width:30%; float:left; margin-right:20px;">
 				<h3>'.$headline.'</h3>
-				<table class="widefat">
+				<table class="widefat" style="border-color:#666">
 					<thead>
 						<tr>
 							<th>'.$headline.'</th>

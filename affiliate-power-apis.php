@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) die; //no direct access
 
 class Affiliate_Power_Apis {
 
@@ -11,7 +12,12 @@ class Affiliate_Power_Apis {
 	
 	static public function downloadTransactionsQuick() {
 		check_ajax_referer( 'affiliate-power-download-transactions', 'nonce' );
-		self::downloadTransactions(3);
+		global $wpdb;
+		$transaction_count = $wpdb->get_var('SELECT count(*) FROM '.$wpdb->prefix.'ap_transaction');
+		if ($transaction_count == 0) $downloadDays = 100;
+		else $downloadDays = 3;
+	
+		self::downloadTransactions($downloadDays);
 	}
 
 
@@ -20,6 +26,13 @@ class Affiliate_Power_Apis {
 		$tillTS = time()-3600*2; //Jetzt in UTC
 		
 		$options = get_option('affiliate-power-options');
+		//adcell
+		if(is_numeric($options['adcell-username']) && isset($options['adcell-password'])) {
+			include_once('apis/adcell.php');
+			if (!isset($options['adcell-referer-filter'])) $options['adcell-referer-filter'] = 0;
+			$transactions = Affiliate_Power_Api_Adcell::downloadTransactions($options['adcell-username'], $options['adcell-password'], $options['adcell-referer-filter'], $fromTS, $tillTS);
+			foreach ($transactions as $transaction) self::handleTransaction($transaction);
+		}
 				
 
 		//affili
@@ -80,7 +93,8 @@ class Affiliate_Power_Apis {
 				$list_items = '';
 				
 				foreach ($transactions as $transaction) {
-					$list_items .= '<li>'.$transaction['shop_name'].': '.number_format($transaction['commission'], 2, ',', '.').' &euro;</li>';
+					$datetime_de = date('d.m.Y H:i:s', strtotime($transaction['datetime_db']));
+					$list_items .= '<li>'.$datetime_de.': '.$transaction['shop_name'].': '.number_format($transaction['commission'], 2, ',', '.').' &euro;</li>';
 				}
 				
 				if ($list_items != '') {
