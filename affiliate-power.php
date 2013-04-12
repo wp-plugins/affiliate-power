@@ -5,7 +5,7 @@ PLUGIN URI: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 DESCRIPTION: Affiliate Power ermöglicht es, Affiliate-Einnahmen nach Artikeln, Besucherquellen, Keywords etc. zu analyisren
 AUTHOR: Jonas Breuer
 AUTHOR URI: http://www.j-breuer.de
-VERSION: 0.7.1
+VERSION: 0.7.2
 Min WP Version: 3.1
 Max WP Version: 3.5.1
 */
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) die; //no direct access
 
 
 
-define('AFFILIATE_POWER_VERSION', '0.7.1');
+define('AFFILIATE_POWER_VERSION', '0.7.2');
 define('AFFILIATE_POWER_PREMIUM', false);
 
 include_once("affiliate-power-menu.php"); //admin menu
@@ -224,18 +224,43 @@ class Affiliate_Power {
 		);
 		$subid = $wpdb->insert_id;
 	
-		if ($network == 'adcell') $target_url = preg_replace('/bid=([0-9]+)\-([0-9]+)/', 'bid=${1}-${2}-'.$subid, $target_url);
-		if ($network == 'affili') $target_url .= '&subid='.$subid;
-		elseif ($network == 'belboon') {
-			if (strpos($target_url, "/&deeplink") !== false) $target_url = str_replace("/&deeplink", '/subid='.$subid."&deeplink", $target_url);
-			else $target_url .= '/subid='.$subid;
-		}
-		elseif ($network == 'superclix') $target_url .= '&subid='.$subid;
-		elseif ($network == 'tradedoubler') $target_url .= '&epi='.$subid;
-		elseif ($network == 'zanox') $target_url .= '&SIDE=[['.$subid.']]';
-		elseif ($network == 'CJ') {
-			if (strpos($target_url, "?") !== false) $target_url .= '&SID='.$subid;
-			else $target_url .= '?SID='.$subid; 
+		switch ($network) {
+		
+			case 'adcell':
+				$target_url = preg_replace('/bid=([0-9]+)\-([0-9]+)/', 'bid=${1}-${2}-'.$subid, $target_url);
+				break;
+				
+			case 'affili':
+				if (strpos($target_url, '&diurl=') !== false) $target_url = str_replace('&diurl=', '&subid='.$subid.'&diurl=', $target_url);
+				else $target_url .= '&subid='.$subid;
+				break;
+				
+			case 'belboon':
+				if (strpos($target_url, '/&deeplink=') !== false) $target_url = str_replace('/&deeplink=', '/subid='.$subid.'&deeplink=', $target_url);
+				else $target_url .= '/subid='.$subid;
+				break;
+				
+			case 'CJ':
+				if (strpos($target_url, 'url=') !== false) $target_url = str_replace('url=', 'sid='.$subid.'&url=', $target_url);
+				elseif (strpos($target_url, "?") !== false) $target_url .= '&sid='.$subid;
+				else $target_url .= '?sid='.$subid;
+				break;
+				
+			case 'superclix':
+				if (strpos($target_url, '&page=') !== false) $target_url = str_replace('&page=', '&subid='.$subid.'&page=', $target_url);
+				else $target_url .= '&subid='.$subid;
+				break;
+				
+			case 'tradedoubler':
+				if (strpos($target_url, '&url=') !== false) $target_url = str_replace('&url=', '&epi='.$subid.'&url=', $target_url);
+				elseif (strpos($target_url, 'p=') !== false) $target_url .= '&epi='.$subid;
+				elseif (strpos($target_url, 'url(') !== false) $target_url = str_replace('url(', 'epi('.$subid.')url(', $target_url);
+				else $target_url .= 'epi('.$subid.')';
+				break;
+				
+			case 'zanox':
+				$target_url .= '&SIDE=[['.$subid.']]';
+				break;
 		}
 		
 		return $target_url;

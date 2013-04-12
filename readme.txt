@@ -80,6 +80,10 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 
 == Changelog ==
 
+= 0.7.2 =
+* Probleme mit bestimmten Deeplinks gefixt
+* Berücksichtigung alternativer Tradedoubler Links
+
 = 0.7.1 =
 * Bugfix: Datumsauswahl unter Chrome
 * Bugfix: Adcell Import 
