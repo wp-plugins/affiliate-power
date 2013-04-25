@@ -55,12 +55,24 @@ class Affiliate_Power_Api_Zanox {
 						
 						$date = $result->leadItems->leadItem[$i]->trackingDate;
 						$number = $result->leadItems->leadItem[$i]->id;
-						$sub_id = isset($result->saleItems->saleItem[$i]->subPublisher->id) ? $result->saleItems->saleItem[$i]->subPublisher->id : 0;
+						$sub_id_old = isset($result->leadItems->leadItem[$i]->subPublisher->id) ? $result->leadItems->leadItem[$i]->subPublisher->id : 0;
+						$gpps = isset($result->leadItems->leadItem[$i]->gpps->gpp) ? $result->leadItems->leadItem[$i]->gpps->gpp : 0;
 						$shop_id = $result->leadItems->leadItem[$i]->program->id;
-						$shop_name = mysql_real_escape_string($result->leadItems->leadItem[$i]->program->_);
+						$shop_name = $result->leadItems->leadItem[$i]->program->_;
 						$commission = $result->leadItems->leadItem[$i]->commission;
 						$status = $result->leadItems->leadItem[$i]->reviewState;
 						$checkdate = $result->leadItems->leadItem[$i]->modifiedDate;
+						
+						$sub_id = 0;
+						if ($gpps) {
+							foreach ($gpps as $gpp) {
+								if ($gpp->id == 'zpar4') {
+									$sub_id = $gpp->_;
+									break;
+								}
+							}
+						}
+						if ($sub_id == 0) $sub_id = $sub_id_old;
 
 						if ($status == "confirmed") $confirmed = $commission;
 						else $confirmed = 0;
@@ -116,13 +128,25 @@ class Affiliate_Power_Api_Zanox {
 						
 						$date = $result->saleItems->saleItem[$i]->trackingDate;
 						$number = $result->saleItems->saleItem[$i]->id;
-						$sub_id = isset($result->saleItems->saleItem[$i]->subPublisher->id) ? $result->saleItems->saleItem[$i]->subPublisher->id : 0;
+						$sub_id_old = isset($result->saleItems->saleItem[$i]->subPublisher->id) ? $result->saleItems->saleItem[$i]->subPublisher->id : 0;
+						$gpps = isset($result->saleItems->saleItem[$i]->gpps->gpp) ? $result->saleItems->saleItem[$i]->gpps->gpp : 0;
 						$shop_id = $result->saleItems->saleItem[$i]->program->id;
-						$shop_name = mysql_real_escape_string($result->saleItems->saleItem[$i]->program->_);
+						$shop_name = $result->saleItems->saleItem[$i]->program->_;
 						$price = $result->saleItems->saleItem[$i]->amount;
 						$commission = $result->saleItems->saleItem[$i]->commission;
 						$status = $result->saleItems->saleItem[$i]->reviewState;
 						$checkdate = $result->saleItems->saleItem[$i]->modifiedDate;
+						
+						$sub_id = 0;
+						if ($gpps) {
+							foreach ($gpps as $gpp) {
+								if ($gpp->id == 'zpar4') {
+									$sub_id = $gpp->_;
+									break;
+								}
+							}
+						}
+						if ($sub_id == 0) $sub_id = $sub_id_old;
 
 						if ($status == "confirmed") $confirmed = $commission;
 						else $confirmed = 0;

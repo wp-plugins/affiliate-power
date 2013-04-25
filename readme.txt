@@ -80,6 +80,9 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 
 == Changelog ==
 
+= 0.7.3 =
+* Bug beim Zanox-Tracking gefixt
+
 = 0.7.2 =
 * Probleme mit bestimmten Deeplinks gefixt
 * Berücksichtigung alternativer Tradedoubler Links
