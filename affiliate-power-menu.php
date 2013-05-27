@@ -15,6 +15,7 @@ if ($options['add-sub-ids'] !== 0) {
 	add_action('manage_posts_custom_column', array('Affiliate_Power_Menu', 'addEarningsToPosts'), 10, 2);
 }
 
+add_filter('plugin_action_links_affiliate-power/affiliate-power.php', array('Affiliate_Power_Menu', 'addPluginLinks'), 10, 2);
 //todo: fix sort filter
 //add_filter('manage_edit-post_sortable_columns', array('Affiliate_Power_Menu', 'makeEarningsColumnSortable') );
 //add_filter('request', array('Affiliate_Power_Menu', 'handleSortEarningsColumn') );
@@ -25,7 +26,7 @@ class Affiliate_Power_Menu {
 	
 
 	static public function adminMenu() {
-		add_menu_page('Affiliate Power', 'Affiliate Power', 'manage_options', 'affiliate-power', array('Affiliate_Power_Menu', 'dummyFunction'));
+		add_menu_page('Affiliate Power', 'Affiliate Power', 'manage_options', 'affiliate-power', array('Affiliate_Power_Menu', 'dummyFunction'), plugins_url( 'affiliate-power/img/affiliate-power-16.png' ));
 		add_submenu_page('affiliate-power', 'Transaktionen ansehen und analysieren', 'Leads / Sales', 'manage_options', 'affiliate-power', array('Affiliate_Power_Transactions', 'transactionsPage') );
 		add_submenu_page('affiliate-power', 'Statistiken einsehen', 'Statistiken', 'manage_options', 'affiliate-power-statistics', array('Affiliate_Power_Statistics', 'statisticsPage') );
 		add_submenu_page('affiliate-power', 'Affiliate Power Einstellungen', 'Einstellungen', 'manage_options', 'affiliate-power-settings', array('Affiliate_Power_Settings', 'optionsPage') );
@@ -82,6 +83,12 @@ class Affiliate_Power_Menu {
 			//$output = $arr_earnings[0];
 			echo $output;
 		}
+	}
+	static public function addPluginLinks($links, $file) {
+	
+		$links[] = '<a href="'.admin_url('admin.php?page=affiliate-power-settings').'">Einstellungen</a>';
+		return $links;
+
 	}
 	
 	

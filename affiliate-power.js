@@ -18,7 +18,6 @@ jQuery(document).ready(function(){
 		var data = { action: 'ap_save_clickout', source_url: source_url, target_url: target_url};
 		jQuery.post(affiliatePower.ajaxurl, data, function(response) {
 			var arr_response = response.split('~');
-			affiliatePower.nonce_clickout = arr_response[0];
 			if (arr_response[1]) target_url = arr_response[1];
 			
 			if (new_window) new_window.location.href = target_url;

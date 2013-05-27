@@ -1,6 +1,7 @@
 <?php
 if (!defined('ABSPATH')) die; //no direct access
 
+
 add_action('wp_dashboard_setup', array('Affiliate_Power_Widget', 'add') );
 
 
@@ -70,12 +71,13 @@ class Affiliate_Power_Widget {
 		';
 		$sum_total = $wpdb->get_var($sql);
 		
-		$refresh_button = '<input type="button" id="button_download_transactions" value="Aktualisieren" />
+		$refresh_button = '<input type="button" style="float:left; width:100px;" id="button_download_transactions" value="Aktualisieren" /><span class="spinner" style="float:left;"></span>
 			<script type="text/javascript">
 				jQuery(document).ready(function($) {
 					var data = { action: \'ap_download_transactions\', nonce: \'' . wp_create_nonce( 'affiliate-power-download-transactions' ) . '\'};
 					$("#button_download_transactions").bind("click", function(e){
 						$(this).val(\'Bitte warten...\');
+						$(\'.spinner\').css(\'display\', \'block\');
 						$.post(ajaxurl, data, function(response) {
 							location.reload();
 						});
@@ -85,7 +87,7 @@ class Affiliate_Power_Widget {
 		
 	
 		echo $refresh_button.'<br>
-			<table>
+			<table style="clear:left;">
 				<tr><td>Heute:</td><td style="text-align:right">'.number_format($sum_today, 2, ',', '.').' €</td></tr>
 				<tr><td>Gestern:</td><td style="text-align:right">'.number_format($sum_yesterday, 2, ',', '.').' €</td></tr>
 				<tr><td>Dieser Monat:</td><td style="text-align:right">'.number_format($sum_this_month, 2, ',', '.').' €</td></tr>

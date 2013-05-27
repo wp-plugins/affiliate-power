@@ -129,16 +129,22 @@ class Affiliate_Power_Apis {
 	static public function handleTransaction($transaction) {
 		global $wpdb;
 		
-		$sql = 'SELECT ap_transactionID, 
+		$transaction['number'] = (string)$transaction['number'];
+		$transaction['price'] = (float)$transaction['price'];
+		$transaction['commission'] = (float)$transaction['commission'];
+		$transaction['confirmed'] = (float)$transaction['confirmed'];
+		
+		$sql = $wpdb->prepare('SELECT ap_transactionID, 
 			TransactionId_network, 
 			Commission, 
 			TransactionStatus 
 			FROM '.$wpdb->prefix.'ap_transaction
 			WHERE TransactionId_network = %s
 			AND network = %s
-			LIMIT 1';
+			LIMIT 1',
+			$transaction['number'], $transaction['network']);
 		
-		$existing_transaction = $wpdb->get_row( $wpdb->prepare($sql, $transaction['number'], $transaction['network']) );
+		$existing_transaction = $wpdb->get_row( $sql );
 		
 		
 		//Transaktion existiert noch nicht => INSERT
@@ -153,9 +159,9 @@ class Affiliate_Power_Apis {
 						'ProgramId' => $transaction['shop_id'],
 						'ProgramTitle' => $transaction['shop_name'],
 						'Transaction' => $transaction['transaction_type'],
-						'Price' => (float)$transaction['price'],
-						'Commission' => (float)$transaction['commission'],	
-						'Confirmed' => (float)$transaction['confirmed'],
+						'Price' => $transaction['price'],
+						'Commission' => $transaction['commission'],	
+						'Confirmed' => $transaction['confirmed'],
 						'CheckDate' => $transaction['checkdatetime_db'],
 						'TransactionStatus' => $transaction['status']
 					), 
@@ -187,8 +193,8 @@ class Affiliate_Power_Apis {
 			$wpdb->update( 
 				$wpdb->prefix.'ap_transaction', 
 				array( 
-					'Commission' => (float)$transaction['commission'],	
-					'Confirmed' => (float)$transaction['confirmed'],
+					'Commission' => $transaction['commission'],	
+					'Confirmed' => $transaction['confirmed'],
 					'TransactionStatus' => $transaction['status']
 				), 
 				array( 'ap_transactionID' => $existing_transaction->ap_transactionID ), 

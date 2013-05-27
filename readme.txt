@@ -1,6 +1,6 @@
 === Affiliate Power ===
 Contributors: JonasBreuer
-Donate link: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
+Donate link: http://www.j-breuer.de/wordpress-plugins/affiliate-power/?utm_source=wordpressorg&utm_medium=description_donate&utm_campaign=ap
 Tags: affiliate, tracking, überblick, provisionen, subid, sales, leads, affili, affili.net, zanox, tradedoubler, belboon, superclix, cj, commission junction, adcell
 Requires at least: 3.1
 Tested up to: 3.5.1
@@ -15,11 +15,11 @@ Finde automatisch heraus welche Artikel, Besucherquellen, Keywords etc. zu welch
 
 Mit Affiliate Power werden deine erzielten Affiliate-Einnahmen automatisch deinen Artikeln und Seiten zugeordnet. So kannst du herausfinden, welcher Artikel sich gelohnt hat und welcher weniger. Alle Daten werden dabei auf deinem Server ausgewertet und sind somit sicher.
 
-Bei Fragen oder Problemen hinterlasse einfach einen Kommentar auf der [Plugin Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power/). Ich helfe gerne.
+Bei Fragen oder Problemen hinterlasse einfach einen Kommentar auf der [Plugin Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power/?utm_source=wordpressorg&utm_medium=description_head&utm_campaign=ap). Ich helfe gerne.
 
 = Premium Version =
 
-Zusätzlich zur kostenlosen Basic-Version gibt es eine Premium-Version des Plugins. Da sich das Plugin in der Beta-Phase befindet ist auch die Premium-Version momentan kostenlos. Mehr Infos zur Teilnahme am Betatest gibt es auf der [Plugin Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power/#premium).
+Zusätzlich zur kostenlosen Basic-Version gibt es eine Premium-Version des Plugins. Dort können neben den Artikeln auch Besucherquellen, Keywords etc. ausgewertet werden. Mehr Infos gibt es auf der [Premium Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/?utm_source=wordpressorg&utm_medium=description_premium&utm_campaign=ap).
 
 = Features =
 
@@ -32,6 +32,7 @@ Features die nur in der Premium-Version verfügbar sind, sind *kursiv*
 * Automatische Infomail bei neuen oder geänderten Leads und Sales
 * Export aller Leads und Sales als Excel-CSV
 * Statistiken über einen frei wählbaren Zeitraum sortiert nach Artikeln, Partnern, Netzwerken, Tagen, Wochen, Monaten, *Landing-Pages, Besucherquellen, Keywords und URL-Parametern*
+* *Detail-Statistiken über einzelne Artikel, Partner etc.*
 * Deine Daten bleiben in deiner Datenbank
 
 
@@ -54,11 +55,11 @@ Ja, alle Daten bleiben auf deinem Server.
 
 = Werden noch weitere Netzwerke hinzugefügt? = 
 
-Auf jeden Fall! Hinterlasse doch einen Kommentar auf der [Plugin Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power/), welches Netzwerk dir noch fehlt.
+Auf jeden Fall! Hinterlasse doch einen Kommentar auf der [Plugin Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power/?utm_source=wordpressorg&utm_medium=faq_networks&utm_campaign=ap), welches Netzwerk dir noch fehlt.
 
 = Was ist mit dem Amazon Partnerprogramm? =
 
-Amazon bietet leider kein vernünftiges Tracking an. Daher wird das Amazon Partnerprogramm vorerst nicht in das Plugin integriert.
+Amazon bietet leider kein vernünftiges Tracking an. Daher ist eine Integration des Amazon Partnerprogramms sehr schwierig. Ich arbeite momentan an einer Lösung, kann aber noch nichts versprechen.
 
 = Funktioniert das Plugin mit einem Link-Cloaker wie Pretty Link? = 
 
@@ -77,8 +78,16 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 
 1. Berechnung der Einnahmen für jeden Artikel
 2. Übersicht über die erzielten Provisionen
+3. Statistiken (Premium-Version)
 
 == Changelog ==
+
+= 1.0.0 =
+* Unterstützung von Custom Post Types
+* Einbau eines eigenen Logos
+* *Einbau der Detail-Statistiken*
+* Verbesserte Erklärungstexte und Benutzerführung
+* Kleine Bugfixes
 
 = 0.7.3 =
 * Bug beim Zanox-Tracking gefixt

@@ -21,22 +21,23 @@ class Affiliate_Power_Transactions {
 		?>
 		<div class="wrap">
 			
-			<div id="icon-users" class="icon32"><br/></div>
-			<h2>Leads / Sales</h2>
+			<div class="icon32" style="background:url(<?php echo plugins_url('affiliate-power/img/affiliate-power-36.png'); ?>) no-repeat;"><br/></div>
+			<h2>Affiliate Power Sales</h2>
 			
 			<form id="movies-filter" method="get">
 				<input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
 				<?php $transactionList->display() ?>
 			</form>
 			
-			<input type="button" id="button_download_transactions" value="Transaktionen aktualisieren" />
-			<input type="button" id="button_export_csv" value="Excel Download" />
+			<input type="button" style="float:left; width:170px;" id="button_download_transactions" value="Transaktionen aktualisieren" /><span class="spinner" id="spinner1" style="float:left;"></span><br />
+			<input type="button" style="float:left; width:170px; clear:left;" id="button_export_csv" value="Excel Download" /><span class="spinner" id="spinner2" style="float:left;"></span>
 			
 			<script type="text/javascript">
 				jQuery(document).ready(function($) {
 				
 					$("#button_download_transactions").bind("click", function(e){
 						$(this).val('Bitte warten...');
+						$('#spinner1').css('display', 'block');
 						$.post(ajaxurl, { action: 'ap_download_transactions', nonce: '<?php echo wp_create_nonce( 'affiliate-power-download-transactions' ) ?>' }, function(response) {
 							location.reload();
 						});
@@ -44,9 +45,11 @@ class Affiliate_Power_Transactions {
 					
 					$("#button_export_csv").bind("click", function(e){
 						$(this).val('Bitte warten...');
+						$('#spinner2').css('display', 'block');
 						$.post(ajaxurl, { action: 'ap_export_csv', nonce: '<?php echo wp_create_nonce( 'affiliate-power-export-csv' ) ?>'}, function(response) {
 							$("#button_export_csv").val('Excel Download');
 							$("body").append("<iframe src='<?php echo plugins_url( "affiliate-power/csv-download.php", dirname(__FILE__ )); ?>' style='display: none;' ></iframe>")
+							$('#spinner2').css('display', 'none');
 							
 						});
 					});
@@ -200,7 +203,7 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 				break;
 			
 			case 'referer' :
-				$value = '<a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power/#premium" target="_blank">Nur in der Premium Version</a>';
+				$value = '<a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/?utm_source=basic&utm_medium=transactions_referer&utm_campaign=ap" target="_blank">Nur in der Premium Version</a>';
 				break;
 				
 				

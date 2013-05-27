@@ -110,7 +110,7 @@ class Affiliate_Power_Api_Tradedoubler {
 			$sitename = $arr_transaction[9];
 			if ($filter_sitename != '' && $filter_sitename != $sitename) continue;
 			
-			$shop_name = mysql_real_escape_string($arr_transaction[0]);
+			$shop_name = $arr_transaction[0];
 			$shop_id = $arr_transaction[1];
 			$date = $arr_transaction[2];
 			$checkdate = $arr_transaction[3];

@@ -74,10 +74,19 @@ class Affiliate_Power_Settings {
 		include_once 'options-head.php'; //we need this to show error messages
 		?>
 		<div class="wrap">
-		<h2>Affiliate Power</h2>
-		<p>Herzlich Willkommen bei der Beta-Version von Affiliate Power. Das Plugin befindet sich noch in der Entwicklung. Sollte du Probleme und Vorschläge für neue Features haben, freue ich mich über einen Kommentar auf der <a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power/" target="_blank">Plugin Seite</a>. Sollte dir das Plugin gefallen und du einen Blog haben, wo es thematisch passt, würde ich mich über eine Vorstellung des Plugins sehr freuen.</p>
-		<p>Es gibt auch eine Premium-Version des Plugins, wo neben den Artikel auch Userherkunft, Keywords, Landing-Pages und URL-Parameter wie utm_campaign getrackt werden können. Da sich das Plugin in der Beta-Phase befindet ist das Premium Plugin momentan komplett kostenlos. Auch hier gibt es mehr Infos auf der <a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power/" target="_blank">Plugin Seite</a>.</p>
-		<p>Auf dieser Seite kannst du die Einstellungen von Affiliate Power bearbeiten. Bitte habe etwas Geduld beim Speichern der Daten. Das Plugin führt einen Testlogin bei den Netzwerken durch.</p>
+		<div class="icon32" style="background:url(<?php echo plugins_url('affiliate-power/img/affiliate-power-36.png'); ?>) no-repeat;"><br/></div>
+		<h2>Affiliate Power Einstellungen</h2>
+		<?php
+		//Check Licence
+		$options = get_option('affiliate-power-options');
+		if (isset($options['licence-key'])) {
+			echo '<div class="updated"><p><strong>Du hast einen gültigen Lizenzschlüssel eingegeben, aber die Premium-Version noch nicht heruntergeladen. Bitte begib dich zur <a href="update-core.php">Update Seite</a> und aktualisiere auf die Premium-Version. Unter Umständen  kann es bis zu 5 Minuten dauern, bis Wordpress die neue Version meldet.</strong></p></div>';
+		}
+		?>
+		<p>Herzlich Willkommen bei Affiliate Power. Sollte du Probleme und Vorschläge für neue Features haben, freue ich mich über einen Kommentar auf der <a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power/?utm_source=basic&utm_medium=settings_introcomment&utm_campaign=ap" target="_blank">Plugin Seite</a>.
+		<p>Sollte dir das Plugin gefallen und du einen Blog haben, wo es thematisch passt, würde ich mich über eine Vorstellung des Plugins sehr freuen.</p>
+		<p>Dir gefällt das Plugin aber du möchtest noch mehr über deine Einnahmen wissen? Es gibt auch eine Premium-Version des Plugins, wo neben den Artikeln auch Userherkunft, Keywords, Landing-Pages und URL-Parameter wie utm_campaign getrackt werden können. Mehr Infos gibt es auf der <a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/?utm_source=basic&utm_medium=settings_intropremium&utm_campaign=ap" target="_blank">Premium Seite</a>.</p>
+		<p>Bitte habe etwas Geduld beim Speichern der Daten. Das Plugin führt einen Testlogin bei den Netzwerken durch.</p>
 		
 		<form action="options.php" method="post">
 		<?php settings_fields('affiliate-power-options'); ?>
@@ -115,14 +124,13 @@ class Affiliate_Power_Settings {
 	static public function addLicenceKeyField() {
 		$options = get_option('affiliate-power-options');
 		if (!isset($options['licence-key'])) $options['licence-key'] = '';
-		echo "<input type='text' id='affiliate-power-licence-key' name='affiliate-power-options[licence-key]' size='40' value='".$options['licence-key']."' /> ";
+		echo "<input type='password' id='affiliate-power-licence-key' name='affiliate-power-options[licence-key]' size='40' value='".$options['licence-key']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_licence_key_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_licence_key_info' style='display:none;'>Affiliate-Power gibt es auch als Premium-Version, für die ein Lizenzschlüssel benötigt wird. Momentan ist das Plugin noch in der Beta-Phase und die Premium Version ist komplett kostenlos. Wenn du am Betatest teilnehmen möchtest, <a href='http://www.j-breuer.de/kontakt/' target='_blank'>schreib mir</a>. Mehr Infos zur Premium-Version gibt es <a href='http://www.j-breuer.de/wordpress-plugins/affiliate-power/#premium' target='_blank'>auf der Plugin Seite</a>. Für die Nutzung der Basis-Version kann dieses Feld leer bleiben.</div>";
+		echo "<div id='ap_licence_key_info' style='display:none;'>Affiliate Power gibt es auch als Premium-Version, für die ein Lizenzschlüssel benötigt wird. Mehr Infos zur Premium-Version gibt es auf der <a href='http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/?utm_source=basic&utm_medium=settings_licencefield&utm_campaign=ap' target='_blank'>Premium Seite</a>. Für die Nutzung der Basis-Version kann dieses Feld leer bleiben.</div>";
 	}
 	
 	static public function addLandingParamsField() {
-		echo "<input type='text' size='80' value='Nur in der Premium-Version' readonly='readonly' style='color:#888; cursor:pointer;' onclick='window.open(\"http://www.j-breuer.de/wordpress-plugins/affiliate-power/#premium\", \"_blank\")' /> ";
-
+		echo "<input type='text' size='80' value='Nur in der Premium-Version' readonly='readonly' style='color:#888; cursor:pointer;' onclick='window.open(\"http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/?utm_source=basic&utm_medium=settings_paramfield&utm_campaign=ap\", \"_blank\")' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_landing_params_info\").style.display=\"block\"; return false;'>[?]</a></span>";
 		echo "<div id='ap_landing_params_info' style='display:none;'>Hier kannst du URL-Parameter definieren, die du tracken möchtest. Mehrere Parameter einfach durch ein Komma trennen. Wenn du das Kampagnen-Tracking von Google Analytics benutzt, eignen sich zum Beispiel folgende Werte: <em>utm_campaign,utm_source,utm_medium,utm_term,utm_content</em>.</div>";
 	}
@@ -139,7 +147,7 @@ class Affiliate_Power_Settings {
 		if (!isset($options['adcell-username'])) $options['adcell-username'] = '';
 		echo "<input type='text' id='affiliate-power-adcell-username' name='affiliate-power-options[adcell-username]' size='40' value='".$options['adcell-username']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_adcell_username_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_aadcell_username_info' style='display:none;'>Der Adcell Username ist die Nummer, mit der du dich auch auf adcell.de einloggst.</div>";
+		echo "<div id='ap_adcell_username_info' style='display:none;'>Der Adcell Username ist die Nummer, mit der du dich auch auf adcell.de einloggst.</div>";
 	}
 	
 	static public function addAdcellPasswordField() {

@@ -80,9 +80,25 @@ class Affiliate_Power_Statistics {
 		$networkData = $wpdb->get_results($sql, ARRAY_A);
 		
 		
-		$landingData = $refererData = $keywordData = array(
+		$landingData = array(
 			array(
-				'name' => '<a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power/#premium" target="_blank">Nur in der Premium Version</a>',
+				'name' => '<a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/?utm_source=basic&utm_medium=statistics_landing&utm_campaign=ap" target="_blank">Nur in der Premium Version</a>',
+				'commission' => '0',
+				'confirmed' => '0'
+			)
+		);
+		
+		$refererData = array(
+			array(
+				'name' => '<a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/?utm_source=basic&utm_medium=statistics_referer&utm_campaign=ap" target="_blank">Nur in der Premium Version</a>',
+				'commission' => '0',
+				'confirmed' => '0'
+			)
+		);
+		
+		$keywordData = array(
+			array(
+				'name' => '<a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/?utm_source=basic&utm_medium=statistics_keyword&utm_campaign=ap" target="_blank">Nur in der Premium Version</a>',
 				'commission' => '0',
 				'confirmed' => '0'
 			)
@@ -159,7 +175,9 @@ class Affiliate_Power_Statistics {
 			if ($i % 3 == 0) $statisticHtml .= '<div style="clear:both;">&nbsp;</div>';
 			$i += 1;
 		}
-		echo '<h2>Statistiken</h2>';
+		echo '<div class="wrap">';
+		echo '<div class="icon32" style="background:url('.plugins_url('affiliate-power/img/affiliate-power-36.png').') no-repeat;"><br/></div>';
+		echo '<h2>Affiliate Power Statistiken</h2>';
 		
 		//Check Licence
 		if (isset($options['licence-key'])) {
@@ -202,6 +220,7 @@ class Affiliate_Power_Statistics {
 				
 			</p></form>';
 		echo $statisticHtml;
+		echo '</div>';
 	
 	}
 	

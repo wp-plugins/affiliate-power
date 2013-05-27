@@ -5,7 +5,7 @@ PLUGIN URI: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 DESCRIPTION: Affiliate Power ermöglicht es, Affiliate-Einnahmen nach Artikeln, Besucherquellen, Keywords etc. zu analyisren
 AUTHOR: Jonas Breuer
 AUTHOR URI: http://www.j-breuer.de
-VERSION: 0.7.3
+VERSION: 1.0.0
 Min WP Version: 3.1
 Max WP Version: 3.5.1
 */
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) die; //no direct access
 
 
 
-define('AFFILIATE_POWER_VERSION', '0.7.3');
+define('AFFILIATE_POWER_VERSION', '1.0.0');
 define('AFFILIATE_POWER_PREMIUM', false);
 
 include_once("affiliate-power-menu.php"); //admin menu
@@ -46,7 +46,7 @@ if(is_plugin_active('pretty-link/pretty-link.php') && $options['add-sub-ids'] ==
 	include_once("affiliate-power-prli.php");
 }
 
-//Affiliate_Power_Apis::downloadTransactions(10);
+
 
 class Affiliate_Power {
 
@@ -55,7 +55,7 @@ class Affiliate_Power {
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 		
 		if ( !wp_next_scheduled( 'affiliate_power_daily_event' ) ) {
-			wp_schedule_event( current_time( 'timestamp' ), 'daily', 'affiliate_power_daily_event');
+			wp_schedule_event( current_time( 'timestamp' )+86400, 'daily', 'affiliate_power_daily_event');
 		}
 		
 		//standard options if this is a new installation
@@ -110,6 +110,27 @@ class Affiliate_Power {
 				)
 			);
 		}
+		
+		add_action( 'admin_notices', array('Affiliate_Power', 'activationMessage') );
+	}
+	
+	static public function activationMessage() {
+		ob_start();
+		if (AFFILIATE_POWER_PREMIUM) {
+			echo '<div id="message" class="updated">
+			<img src="'.plugins_url('img/affiliate-power-36.png', __FILE__).'" alt="Affiliate Power" style="float:left; width:36px;" />
+			<h2>Herzlich Willkommen bei Affiliate Power Premium!</h2>
+			<p>Nochmal Glückwunsch zu der Entscheidung den Blindflug im Affiliate-Marketing zu verlassen und Licht in deine Einnahmen zu bringen. Das Plugin wird von nun an automatisch die neuen Statistiken für alle neuen Sales erstellen. Wenn du das URL-Parameter Tracking verwenden möchtest, solltest du auf der <a href="'.admin_url('admin.php?page=affiliate-power-settings').'">Einstellungsseite</a> die Parameter hinterlegen, die du benutzt.</p>
+			</div>';
+		}
+		else {
+			echo '<div id="message" class="updated">
+			<img src="'.plugins_url('img/affiliate-power-36.png', __FILE__).'" alt="Affiliate Power" style="float:left; width:36px;" />
+			<h2>Herzlich Willkommen bei Affiliate Power!</h2>
+			<p>Wie geht es weiter? Zunächst solltest du auf der <a href="'.admin_url('admin.php?page=affiliate-power-settings').'">Einstellungsseite</a> die Daten der Affiliate-Netzwerke hinterlegen, die du benutzt. Dann kannst du deine bisherigen Sales herunterladen und die erste statistische Auswertung vornehmen. Die Auswertung deiner Artikel kann nur für neue Sales erstellt werden. Alle anderen Statistiken funktionieren auch für alte Sales.</p>
+			</div>';
+		}
+		echo ob_get_clean();
 	}
 	
 	static public function deactivation() {
@@ -152,7 +173,43 @@ class Affiliate_Power {
 		);
 	}
 	
+	static public function url_to_postid( $url ) {  
+	
+		$post_id = url_to_postid( $url );
+		if ($post_id == 0 && $url == home_url('/')) $post_id = -1;  //-1 = Homepage
+		if ( $post_id == 0 ) {
+		
+			// Try custom post types  
+			$cpts = get_post_types( array(  
+				'public'   => true,  
+				'_builtin' => false  
+			), 'objects', 'and' );  
+			
+			// Get path from URL  
+			$url_parts = parse_url($url);
+			$path = trim($url_parts['path'], '/'); //path has to be without slashes at start and end
+			
+			// Test against each CPT's rewrite slug  
+			foreach ( $cpts as $cpt_name => $cpt ) { 
+				$cpt_slug = $cpt->rewrite['slug'];
+				
+				if ( strlen( $path ) > strlen( $cpt_slug ) && substr( $path, 0, strlen( $cpt_slug ) ) == $cpt_slug ) { 
+					$slug = substr( $path, strlen( $cpt_slug ) ); 
 
+					$query = new WP_Query( array( 
+						'post_type'         => $cpt_name, 
+						'name'              => $slug, 
+						'posts_per_page'    => 1  
+					));  
+					if ( is_object( $query->post ) ) { 
+						$post_id = $query->post->ID; 
+						break;
+					}
+				}  
+			}  
+		}  
+		return $post_id;  
+	}  
 	
 	static public function clickoutAjax() {
 
@@ -162,7 +219,6 @@ class Affiliate_Power {
 		//sanitize
 		$target_url = esc_url_raw($_POST['target_url']);
 		$source_url = esc_url_raw($_POST['source_url']);
-		//$ap_art = (int)$_POST['ap_art'];
 		
 		//get source and target URLs
 		$arr_target_url = parse_url($target_url);
@@ -171,7 +227,7 @@ class Affiliate_Power {
 		
 		$new_target_url = self::saveClickout($source_url, $target_url);
 		
-		echo $new_nonce.'~'.$new_target_url;
+		echo '~'.$new_target_url;
 		die;
 	}
 	
@@ -207,9 +263,7 @@ class Affiliate_Power {
 		
 		//save clickout in db and use as subid
 		global $wpdb;
-		
-		$post_id = url_to_postid($source_url);
-		if ($post_id == 0 && $source_url == home_url('/')) $post_id = -1;  //-1 = Homepage
+		$post_id = self::url_to_postid($source_url);
 		
 		$wpdb->insert(
 			$wpdb->prefix.'ap_clickout',
