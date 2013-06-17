@@ -5,7 +5,7 @@ PLUGIN URI: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 DESCRIPTION: Affiliate Power ermöglicht es, Affiliate-Einnahmen nach Artikeln, Besucherquellen, Keywords etc. zu analyisren
 AUTHOR: Jonas Breuer
 AUTHOR URI: http://www.j-breuer.de
-VERSION: 1.0.0
+VERSION: 1.0.1
 Min WP Version: 3.1
 Max WP Version: 3.5.1
 */
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) die; //no direct access
 
 
 
-define('AFFILIATE_POWER_VERSION', '1.0.0');
+define('AFFILIATE_POWER_VERSION', '1.0.1');
 define('AFFILIATE_POWER_PREMIUM', false);
 
 include_once("affiliate-power-menu.php"); //admin menu
@@ -37,7 +37,7 @@ add_action('wp_ajax_ap_save_clickout', array('Affiliate_Power', 'clickoutAjax'))
 add_action('wp_ajax_nopriv_ap_save_clickout', array('Affiliate_Power', 'clickoutAjax'));
 
 add_filter('pre_set_site_transient_update_plugins', array('Affiliate_Power_Apis', 'checkVersion'));  
-add_filter('plugins_api', array('Affiliate_Power_Apis', 'getNewVersionInfo'), 10, 3);  
+//add_filter('plugins_api', array('Affiliate_Power_Apis', 'getNewVersionInfo'), 10, 3);  
 
 
 //pretty link integration
@@ -59,7 +59,8 @@ class Affiliate_Power {
 		}
 		
 		//standard options if this is a new installation
-		if (!get_option('affiliate-power-options')) {
+		$options = get_option('affiliate-power-options');
+		if (!$options) {
 			$options = array('add-sub-ids' => 1);
 			update_option('affiliate-power-options', $options);
 		}
@@ -111,21 +112,30 @@ class Affiliate_Power {
 			);
 		}
 		
-		add_action( 'admin_notices', array('Affiliate_Power', 'activationMessage') );
+		//add and activate infotext
+		$meta_options = get_option('affiliate-power-meta-options');
+		if (!$meta_options) $meta_options = array();
+		$meta_options['infotext'] = '<h3>Neu: Geld verdienen mit Affiliate Power!</h3><p>Mit dem Partnerprogramm von Affiliate Power bekommst du satte 30% Provision für jeden vermittelten Verkauf der Premium-Version.</p><h3><a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power-partnerprogramm/" target="_blank">Alle Infos zum Partnerprogramm</a></h3><a href="#" class="affiliate-power-hide-infotext">Nicht mehr anzeigen</a>';
+		$meta_options['hide-infotext'] = 0;
+		update_option('affiliate-power-meta-options', $meta_options);
+		
+		//welcome message when first install or just upgraded to premium
+		$premium = get_option('affiliate-power-premium', false);
+		if ($version == '0.0.0' || $premium == false && AFFILIATE_POWER_PREMIUM == true) add_action( 'admin_notices', array('Affiliate_Power', 'activationMessage') );
 	}
 	
 	static public function activationMessage() {
 		ob_start();
 		if (AFFILIATE_POWER_PREMIUM) {
 			echo '<div id="message" class="updated">
-			<img src="'.plugins_url('img/affiliate-power-36.png', __FILE__).'" alt="Affiliate Power" style="float:left; width:36px;" />
+			<img src="'.plugins_url('img/affiliate-power-36.png', __FILE__).'" alt="Affiliate Power" style="float:left; width:36px; margin:6px;" />
 			<h2>Herzlich Willkommen bei Affiliate Power Premium!</h2>
 			<p>Nochmal Glückwunsch zu der Entscheidung den Blindflug im Affiliate-Marketing zu verlassen und Licht in deine Einnahmen zu bringen. Das Plugin wird von nun an automatisch die neuen Statistiken für alle neuen Sales erstellen. Wenn du das URL-Parameter Tracking verwenden möchtest, solltest du auf der <a href="'.admin_url('admin.php?page=affiliate-power-settings').'">Einstellungsseite</a> die Parameter hinterlegen, die du benutzt.</p>
 			</div>';
 		}
 		else {
 			echo '<div id="message" class="updated">
-			<img src="'.plugins_url('img/affiliate-power-36.png', __FILE__).'" alt="Affiliate Power" style="float:left; width:36px;" />
+			<img src="'.plugins_url('img/affiliate-power-36.png', __FILE__).'" alt="Affiliate Power" style="float:left; width:36px; margin:6px;" />
 			<h2>Herzlich Willkommen bei Affiliate Power!</h2>
 			<p>Wie geht es weiter? Zunächst solltest du auf der <a href="'.admin_url('admin.php?page=affiliate-power-settings').'">Einstellungsseite</a> die Daten der Affiliate-Netzwerke hinterlegen, die du benutzt. Dann kannst du deine bisherigen Sales herunterladen und die erste statistische Auswertung vornehmen. Die Auswertung deiner Artikel kann nur für neue Sales erstellt werden. Alle anderen Statistiken funktionieren auch für alte Sales.</p>
 			</div>';
@@ -143,6 +153,7 @@ class Affiliate_Power {
 		$wpdb->query($sql);
 		$sql = 'DROP TABLE '.$wpdb->prefix.'ap_clickout;';
 		$wpdb->query($sql);
+		delete_option('affiliate-power-meta-options');
 		delete_option('affiliate-power-options');
 		delete_option('affiliate-power-version');
 		delete_option('affiliate-power-premium');
@@ -158,6 +169,12 @@ class Affiliate_Power {
 			self::activation();
 			update_option('affiliate-power-version', AFFILIATE_POWER_VERSION);
 			update_option('affiliate-power-premium', AFFILIATE_POWER_PREMIUM);
+		}
+		//deactivate infotext
+		if (isset($_GET['action']) && $_GET['action'] == 'affiliate-power-hide-infotext') {
+			$meta_options = get_option('affiliate-power-meta-options');
+			$meta_options['hide-infotext'] = 1;
+			update_option('affiliate-power-meta-options', $meta_options);
 		}
 		
 	}
@@ -227,7 +244,7 @@ class Affiliate_Power {
 		
 		$new_target_url = self::saveClickout($source_url, $target_url);
 		
-		echo '~'.$new_target_url;
+		echo '~'.$new_target_url; // the ~ just separates the url from any unexpected output (notices etc.)
 		die;
 	}
 	
@@ -281,7 +298,8 @@ class Affiliate_Power {
 		switch ($network) {
 		
 			case 'adcell':
-				$target_url = preg_replace('/bid=([0-9]+)\-([0-9]+)/', 'bid=${1}-${2}-'.$subid, $target_url);
+				if (strpos($target_url, 'bid=') !== false) $target_url = preg_replace('/bid=([0-9]+)\-([0-9]+)/', 'bid=${1}-${2}-'.$subid, $target_url);
+				else $target_url = preg_replace('@slotId/([0-9]+)@', 'slotId/${1}/subid/'.$subid, $target_url);
 				break;
 				
 			case 'affili':

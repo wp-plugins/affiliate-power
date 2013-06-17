@@ -82,10 +82,15 @@ class Affiliate_Power_Settings {
 		if (isset($options['licence-key'])) {
 			echo '<div class="updated"><p><strong>Du hast einen gültigen Lizenzschlüssel eingegeben, aber die Premium-Version noch nicht heruntergeladen. Bitte begib dich zur <a href="update-core.php">Update Seite</a> und aktualisiere auf die Premium-Version. Unter Umständen  kann es bis zu 5 Minuten dauern, bis Wordpress die neue Version meldet.</strong></p></div>';
 		}
+		//Infotext
+		$meta_options = get_option('affiliate-power-meta-options');
+		if (isset($meta_options['infotext']) && $meta_options['hide-infotext'] == 0) {
+			echo '<div class="updated">'.$meta_options['infotext'].'</div>';
+		}
 		?>
-		<p>Herzlich Willkommen bei Affiliate Power. Sollte du Probleme und Vorschläge für neue Features haben, freue ich mich über einen Kommentar auf der <a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power/?utm_source=basic&utm_medium=settings_introcomment&utm_campaign=ap" target="_blank">Plugin Seite</a>.
-		<p>Sollte dir das Plugin gefallen und du einen Blog haben, wo es thematisch passt, würde ich mich über eine Vorstellung des Plugins sehr freuen.</p>
-		<p>Dir gefällt das Plugin aber du möchtest noch mehr über deine Einnahmen wissen? Es gibt auch eine Premium-Version des Plugins, wo neben den Artikeln auch Userherkunft, Keywords, Landing-Pages und URL-Parameter wie utm_campaign getrackt werden können. Mehr Infos gibt es auf der <a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/?utm_source=basic&utm_medium=settings_intropremium&utm_campaign=ap" target="_blank">Premium Seite</a>.</p>
+		<p>Solltest du Probleme und Vorschläge für neue Features haben, freue ich mich über einen Kommentar auf der <a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power/" target="_blank">Plugin Seite</a>.
+		<p>Dir gefällt das Plugin aber du möchtest noch mehr über deine Einnahmen wissen? Es gibt auch eine Premium-Version des Plugins, wo neben den Artikeln auch Userherkunft, Keywords, Landing-Pages und URL-Parameter wie utm_campaign getrackt werden können. Mehr Infos gibt es auf der <a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/" target="_blank">Premium Seite</a>.</p>
+		<p><strong>Mit Affiliate Power kannst du jetzt auch direkt Geld verdienen.</strong> Du bekommst satte 30% Provision für jeden vermittelten Verkauf der Premium-Version. <a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power-partnerprogramm/" target="_blank"><strong>Alle Infos zum Partnerprogramm.</strong></a></p>
 		<p>Bitte habe etwas Geduld beim Speichern der Daten. Das Plugin führt einen Testlogin bei den Netzwerken durch.</p>
 		
 		<form action="options.php" method="post">
@@ -106,6 +111,7 @@ class Affiliate_Power_Settings {
 	
 	static public function addSubIdsField() {
 		$options = get_option('affiliate-power-options');
+		if (!isset($options['add-sub-ids'])) $options['add-sub-ids'] = 0;
 		$checked = $options['add-sub-ids'] ? ' checked' : '';
 		echo "<input type='checkbox' id='affiliate-power-add-sub-ids' name='affiliate-power-options[add-sub-ids]' value='1' ".$checked." /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_sub_id_info\").style.display=\"block\"; return false;'>[?]</a></span>";
@@ -115,6 +121,7 @@ class Affiliate_Power_Settings {
 	
 	static public function addSendMailTransactionsField() {
 		$options = get_option('affiliate-power-options');
+		if (!isset($options['send-mail-transactions'])) $options['send-mail-transactions'] = 0;
 		$checked = $options['send-mail-transactions'] ? ' checked' : '';
 		echo "<input type='checkbox' id='affiliate-power-send-mail-transactions' name='affiliate-power-options[send-mail-transactions]' value='1' ".$checked." /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_send_mail_transactions_info\").style.display=\"block\"; return false;'>[?]</a></span>";
@@ -126,11 +133,12 @@ class Affiliate_Power_Settings {
 		if (!isset($options['licence-key'])) $options['licence-key'] = '';
 		echo "<input type='password' id='affiliate-power-licence-key' name='affiliate-power-options[licence-key]' size='40' value='".$options['licence-key']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_licence_key_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_licence_key_info' style='display:none;'>Affiliate Power gibt es auch als Premium-Version, für die ein Lizenzschlüssel benötigt wird. Mehr Infos zur Premium-Version gibt es auf der <a href='http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/?utm_source=basic&utm_medium=settings_licencefield&utm_campaign=ap' target='_blank'>Premium Seite</a>. Für die Nutzung der Basis-Version kann dieses Feld leer bleiben.</div>";
+		echo "<div id='ap_licence_key_info' style='display:none;'>Affiliate Power gibt es auch als Premium-Version, für die ein Lizenzschlüssel benötigt wird. Mehr Infos zur Premium-Version gibt es auf der <a href='http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/' target='_blank'>Premium Seite</a>. Für die Nutzung der Basis-Version kann dieses Feld leer bleiben.</div>";
 	}
 	
 	static public function addLandingParamsField() {
-		echo "<input type='text' size='80' value='Nur in der Premium-Version' readonly='readonly' style='color:#888; cursor:pointer;' onclick='window.open(\"http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/?utm_source=basic&utm_medium=settings_paramfield&utm_campaign=ap\", \"_blank\")' /> ";
+		
+		echo "<input type='text' size='80' value='Nur in der Premium-Version' readonly='readonly' style='color:#888; cursor:pointer;' onclick='window.open(\"http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/\", \"_blank\")' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_landing_params_info\").style.display=\"block\"; return false;'>[?]</a></span>";
 		echo "<div id='ap_landing_params_info' style='display:none;'>Hier kannst du URL-Parameter definieren, die du tracken möchtest. Mehrere Parameter einfach durch ein Komma trennen. Wenn du das Kampagnen-Tracking von Google Analytics benutzt, eignen sich zum Beispiel folgende Werte: <em>utm_campaign,utm_source,utm_medium,utm_term,utm_content</em>.</div>";
 	}

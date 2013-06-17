@@ -14,7 +14,7 @@ class Affiliate_Power_Apis {
 		check_ajax_referer( 'affiliate-power-download-transactions', 'nonce' );
 		global $wpdb;
 		$transaction_count = $wpdb->get_var('SELECT count(*) FROM '.$wpdb->prefix.'ap_transaction');
-		if ($transaction_count == 0) $downloadDays = 100;
+		if ($transaction_count == 0) $downloadDays = 99;
 		else $downloadDays = 3;
 	
 		self::downloadTransactions($downloadDays);
@@ -82,8 +82,8 @@ class Affiliate_Power_Apis {
 		
 		
 		
-		//Send mail to admin
-		if ($options['send-mail-transactions'] == 1) {
+		//Send mail to admin (only when activated and only on daily update($days==100)
+		if ($options['send-mail-transactions'] == 1 && $days == 100) {
 		
 			$list_transactions = '';
 			$type_mapper = array('new' => 'Neue', 'confirmed' => 'Bestätigte', 'cancelled' => 'Stornierte');
@@ -233,21 +233,20 @@ class Affiliate_Power_Apis {
 		}
 		
 		$options = get_option('affiliate-power-options');
+		$premium_valid = false;
 		if (isset($options['licence-key']) && !empty($options['licence-key'])) {
 			$licence_status = self::checkLicenceKey($options['licence-key']);
-			if ($licence_status == 'ok') $premium = true;
-			else return $transient;  
+			if ($licence_status == 'ok') $premium_valid = true;
 		}
-		else return $transient;
 		
-		if (!AFFILIATE_POWER_PREMIUM) $updating_to_premium = true;
+		if (!AFFILIATE_POWER_PREMIUM && $premium_valid) $updating_to_premium = true;
 		else $updating_to_premium = false;
 	
 		$http_answer = wp_remote_post('http://www.j-breuer.de/ap-api/api.php', array('body' => array('action' => 'version')));
-		if (is_wp_error($http_answer) || $http_answer['response']['code'] != 200) return $transient;
-		$new_version = $http_answer['body'];
+		if (is_wp_error($http_answer) || $http_answer['response']['code'] != 200) $new_version = AFFILIATE_POWER_VERSION;
+		else $new_version = $http_answer['body'];
 		
-	    if (version_compare(AFFILIATE_POWER_VERSION, $new_version, '<') || $updating_to_premium) {  
+	    if ( (version_compare(AFFILIATE_POWER_VERSION, $new_version, '<') && AFFILIATE_POWER_PREMIUM) || $updating_to_premium ) {   
             $obj = new stdClass();  
             $obj->slug = 'affiliate-power';
             $obj->new_version = $new_version;  

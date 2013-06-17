@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) die; //no direct access
 
 
 //add SubIds on redirect
-add_filter('prli_target_url', array('Affiliate_Power_Prli', 'saveClickout'));
+add_filter('prli_target_url', array('Affiliate_Power_Prli', 'saveClickout'), 110); //priority has to be >99 to work with the feature "Target URL Rotation" of Prli Pro
 
 	
 

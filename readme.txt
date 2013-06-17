@@ -82,6 +82,11 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 
 == Changelog ==
 
+= 1.0.1 =
+* Einnahmen werden auch in der Seitenübersicht angezeigt
+* Pretty Link Pro URL Rotation gefixt
+* Mail nur bei Tagesabruf
+
 = 1.0.0 =
 * Unterstützung von Custom Post Types
 * Einbau eines eigenen Logos

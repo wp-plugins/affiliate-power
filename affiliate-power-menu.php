@@ -11,7 +11,9 @@ add_action( 'admin_enqueue_scripts', array('Affiliate_Power_Menu', 'addJs') );
 
 $options = get_option('affiliate-power-options');
 if ($options['add-sub-ids'] !== 0) {
+	add_filter('manage_pages_columns', array('Affiliate_Power_Menu', 'addEarningsColummnToPosts'));
 	add_filter('manage_posts_columns', array('Affiliate_Power_Menu', 'addEarningsColummnToPosts'));
+	add_action('manage_pages_custom_column', array('Affiliate_Power_Menu', 'addEarningsToPosts'), 10, 2);
 	add_action('manage_posts_custom_column', array('Affiliate_Power_Menu', 'addEarningsToPosts'), 10, 2);
 }
 
@@ -43,7 +45,7 @@ class Affiliate_Power_Menu {
 			'affiliate-power-menu',
 			plugins_url('affiliate-power-menu.js', __FILE__),
 			array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'),
-			time(),
+			AFFILIATE_POWER_VERSION,
 			true
 		);	
 

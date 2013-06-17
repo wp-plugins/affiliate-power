@@ -1,5 +1,10 @@
 jQuery(document).ready(function(){
 
+	jQuery('.affiliate-power-hide-infotext').bind('click', function(e) {
+		e.preventDefault();
+		window.location.href = window.location.href + "&action=affiliate-power-hide-infotext";
+	});
+
 	jQuery('#datepicker_from').datepicker({
 		dateFormat : 'dd.mm.yy',
 		monthNames: [ "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" ],

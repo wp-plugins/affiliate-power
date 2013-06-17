@@ -80,29 +80,13 @@ class Affiliate_Power_Statistics {
 		$networkData = $wpdb->get_results($sql, ARRAY_A);
 		
 		
-		$landingData = array(
+		$landingData = $refererData = $keywordData = array(
 			array(
-				'name' => '<a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/?utm_source=basic&utm_medium=statistics_landing&utm_campaign=ap" target="_blank">Nur in der Premium Version</a>',
+				'name' => '<a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/" target="_blank">Nur in der Premium Version</a>',
 				'commission' => '0',
 				'confirmed' => '0'
 			)
-		);
-		
-		$refererData = array(
-			array(
-				'name' => '<a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/?utm_source=basic&utm_medium=statistics_referer&utm_campaign=ap" target="_blank">Nur in der Premium Version</a>',
-				'commission' => '0',
-				'confirmed' => '0'
-			)
-		);
-		
-		$keywordData = array(
-			array(
-				'name' => '<a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/?utm_source=basic&utm_medium=statistics_keyword&utm_campaign=ap" target="_blank">Nur in der Premium Version</a>',
-				'commission' => '0',
-				'confirmed' => '0'
-			)
-		);
+		);	
 
 		//Days
 		$sql = $wpdb->prepare('
@@ -182,6 +166,12 @@ class Affiliate_Power_Statistics {
 		//Check Licence
 		if (isset($options['licence-key'])) {
 			echo '<div class="error"><p><strong>Du hast einen gültigen Lizenzschlüssel eingegeben, aber die Premium-Version noch nicht heruntergeladen. Bitte begib dich zur <a href="update-core.php">Update Seite</a> und aktualisiere auf die Premium-Version. Unter Umständen  kann es bis zu 5 Minuten dauern, bis Wordpress die neue Version meldet.</strong></p></div>';
+		}
+		
+		//Infotext
+		$meta_options = get_option('affiliate-power-meta-options');
+		if (isset($meta_options['infotext']) && $meta_options['hide-infotext'] == 0) {
+			echo '<div class="updated">'.$meta_options['infotext'].'</div>';
 		}
 		
 		
