@@ -1,6 +1,6 @@
 === Affiliate Power ===
 Contributors: JonasBreuer
-Donate link: http://www.j-breuer.de/wordpress-plugins/affiliate-power/?utm_source=wordpressorg&utm_medium=description_donate&utm_campaign=ap
+Donate link: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 Tags: affiliate, tracking, überblick, provisionen, subid, sales, leads, affili, affili.net, zanox, tradedoubler, belboon, superclix, cj, commission junction, adcell
 Requires at least: 3.1
 Tested up to: 3.5.1
@@ -15,11 +15,11 @@ Finde automatisch heraus welche Artikel, Besucherquellen, Keywords etc. zu welch
 
 Mit Affiliate Power werden deine erzielten Affiliate-Einnahmen automatisch deinen Artikeln und Seiten zugeordnet. So kannst du herausfinden, welcher Artikel sich gelohnt hat und welcher weniger. Alle Daten werden dabei auf deinem Server ausgewertet und sind somit sicher.
 
-Bei Fragen oder Problemen hinterlasse einfach einen Kommentar auf der [Plugin Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power/?utm_source=wordpressorg&utm_medium=description_head&utm_campaign=ap). Ich helfe gerne.
+Bei Fragen oder Problemen hinterlasse einfach einen Kommentar auf der [Plugin Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power/). Ich helfe gerne.
 
 = Premium Version =
 
-Zusätzlich zur kostenlosen Basic-Version gibt es eine Premium-Version des Plugins. Dort können neben den Artikeln auch Besucherquellen, Keywords etc. ausgewertet werden. Mehr Infos gibt es auf der [Premium Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/?utm_source=wordpressorg&utm_medium=description_premium&utm_campaign=ap).
+Zusätzlich zur kostenlosen Basic-Version gibt es eine Premium-Version des Plugins. Dort können neben den Artikeln auch Besucherquellen, Keywords etc. ausgewertet werden. Mehr Infos gibt es auf der [Premium Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/).
 
 = Features =
 
@@ -55,7 +55,7 @@ Ja, alle Daten bleiben auf deinem Server.
 
 = Werden noch weitere Netzwerke hinzugefügt? = 
 
-Auf jeden Fall! Hinterlasse doch einen Kommentar auf der [Plugin Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power/?utm_source=wordpressorg&utm_medium=faq_networks&utm_campaign=ap), welches Netzwerk dir noch fehlt.
+Auf jeden Fall! Hinterlasse doch einen Kommentar auf der [Plugin Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power/), welches Netzwerk dir noch fehlt.
 
 = Was ist mit dem Amazon Partnerprogramm? =
 
