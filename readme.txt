@@ -84,6 +84,7 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 
 = 1.0.1 =
 * Einnahmen werden auch in der Seitenübersicht angezeigt
+* Untersützung für neues Adcell Linkformat
 * Pretty Link Pro URL Rotation gefixt
 * Mail nur bei Tagesabruf
 
