@@ -82,6 +82,9 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 
 == Changelog ==
 
+= 1.0.2 =
+* Unterstützung für verschlüsselte Adcell Links nach dem neuen Linkformat
+
 = 1.0.1 =
 * Einnahmen werden auch in der Seitenübersicht angezeigt
 * Untersützung für neues Adcell Linkformat
