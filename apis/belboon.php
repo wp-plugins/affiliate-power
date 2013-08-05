@@ -29,6 +29,8 @@ class Affiliate_Power_Api_Belboon {
 		
 		define('WSDL_SERVER', 'http://api.belboon.com/?wsdl');
 		
+		$arr_filter_platform = explode(',', $filter_platform);
+		$arr_filter_platform = array_map('trim', $arr_filter_platform);
 		$StartDate = date('Y-m-d', $fromTS);
 		$EndDate = date('Y-m-d', $tillTS);
 		$config = array(
@@ -67,7 +69,7 @@ class Affiliate_Power_Api_Belboon {
 			//print_r($transaction);
 			
 			$platform = $arr_transaction['platformname'];
-			if ($filter_platform != '' && $filter_platform != $platform) continue;
+			if ( $filter_platform != '' && !in_array($platform, $arr_filter_platform) ) continue;
 						
 			$number = $arr_transaction['eventid'];
 			$datetime_db = $arr_transaction['eventdate'];

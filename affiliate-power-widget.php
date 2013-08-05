@@ -9,7 +9,7 @@ class Affiliate_Power_Widget {
 
 	static public function add() {
 		if ( current_user_can('manage_options') ) {
-			wp_add_dashboard_widget('affiliate-power', 'Affiliate Einnahmen', array('Affiliate_Power_Widget', 'getContent'));	
+			wp_add_dashboard_widget('affiliate-power', __('Affiliate Income', 'affiliate-power'), array('Affiliate_Power_Widget', 'getContent'));	
 		}
 	}
 	
@@ -71,12 +71,12 @@ class Affiliate_Power_Widget {
 		';
 		$sum_total = $wpdb->get_var($sql);
 		
-		$refresh_button = '<input type="button" style="float:left; width:100px;" id="button_download_transactions" value="Aktualisieren" /><span class="spinner" style="float:left;"></span>
+		$refresh_button = '<input type="button" style="float:left; width:100px;" id="button_download_transactions" value="'.__('Refresh', 'affiliate-power').'" /><span class="spinner" style="float:left;"></span>
 			<script type="text/javascript">
 				jQuery(document).ready(function($) {
 					var data = { action: \'ap_download_transactions\', nonce: \'' . wp_create_nonce( 'affiliate-power-download-transactions' ) . '\'};
 					$("#button_download_transactions").bind("click", function(e){
-						$(this).val(\'Bitte warten...\');
+						$(this).val(\''.__('Please wait', 'affiliate-power').'...\');
 						$(\'.spinner\').css(\'display\', \'block\');
 						$.post(ajaxurl, data, function(response) {
 							location.reload();
@@ -88,13 +88,13 @@ class Affiliate_Power_Widget {
 	
 		echo $refresh_button.'<br>
 			<table style="clear:left;">
-				<tr><td>Heute:</td><td style="text-align:right">'.number_format($sum_today, 2, ',', '.').' €</td></tr>
-				<tr><td>Gestern:</td><td style="text-align:right">'.number_format($sum_yesterday, 2, ',', '.').' €</td></tr>
-				<tr><td>Dieser Monat:</td><td style="text-align:right">'.number_format($sum_this_month, 2, ',', '.').' €</td></tr>
-				<tr><td>Letzter Monat:</td><td style="text-align:right">'.number_format($sum_last_month, 2, ',', '.').' €</td></tr>
-				<tr><td>Gesamt:</td><td style="text-align:right">'.number_format($sum_total, 2, ',', '.').' €</td></tr>
+				<tr><td>'.__('Today', 'affiliate-power').':</td><td style="text-align:right">'.number_format($sum_today, 2, ',', '.').' €</td></tr>
+				<tr><td>'.__('Yesterday', 'affiliate-power').':</td><td style="text-align:right">'.number_format($sum_yesterday, 2, ',', '.').' €</td></tr>
+				<tr><td>'.__('This month', 'affiliate-power').':</td><td style="text-align:right">'.number_format($sum_this_month, 2, ',', '.').' €</td></tr>
+				<tr><td>'.__('Last month', 'affiliate-power').':</td><td style="text-align:right">'.number_format($sum_last_month, 2, ',', '.').' €</td></tr>
+				<tr><td>'.__('Total', 'affiliate-power').':</td><td style="text-align:right">'.number_format($sum_total, 2, ',', '.').' €</td></tr>
 			</table>
-			<a href="admin.php?page=affiliate-power">Detailansicht</a>';
+			<a href="admin.php?page=affiliate-power">'.__('Details', 'affiliate-power').'</a>';
 		
 	}
 	

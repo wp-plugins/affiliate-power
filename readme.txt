@@ -1,27 +1,55 @@
 === Affiliate Power ===
 Contributors: JonasBreuer
 Donate link: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
-Tags: affiliate, tracking, überblick, provisionen, subid, sales, leads, affili, affili.net, zanox, tradedoubler, belboon, superclix, cj, commission junction, adcell
+Tags: affiliate, tracking, subid, sales, leads, affili, affili.net, zanox, tradedoubler, belboon, superclix, cj, commission junction, adcell
 Requires at least: 3.1
-Tested up to: 3.5.1
+Tested up to: 3.6
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 
-Finde automatisch heraus welche Artikel, Besucherquellen, Keywords etc. zu welchen Affiliate-Einnahmen geführt haben.
+With Affiliate Power you can analyze your Affiliate income per Post, Referer, Keyword etc.
+
+
 
 == Description ==
+
+= EN: =
+
+Affiliate Power tracks your affiliate income per post, so you can focus on things that pay! All data is saved on your server only.
+
+If you have questions, just leave a comment on the [Plugin Page](http://www.affiliatepowerplugin.com/). I'm glad to help
+
+**Premium Version**
+
+In addition to the free basic version, there is a premium version of the plugin, where you can also analyze your income per Referer, Keyword, Campaign etc. Find out more on the [Premium Page](http://www.affiliatepowerplugin.com/premium/).
+
+**Features**
+
+Features, which only exist in the premium version are *emphasized*.
+
+* Supported Networks: adcell, affili.net, commission junction, belboon, superclix, tradedoubler, zanox
+* Track income per Posts, Pages, *Referer, Keywords and URL-Parameters like utm_campaign*
+* Filter your import per website
+* Overview over all Leads and Sales
+* Automatic daily infomail on new or changes Sales
+* Export all Sales as Excel-CSV
+* Statistics over any period with income per Posts, Partner, Networks, Days, Weeks, Months, *Landing Pages, Referer, Keywords and URL-Parameters*
+* *Detail Statistics over single posts, partners, etc*
+* Sync your income with the [Webworker Dashboard](https://www.webworker-dashboard.de).
+
+= DE: =
 
 Mit Affiliate Power werden deine erzielten Affiliate-Einnahmen automatisch deinen Artikeln und Seiten zugeordnet. So kannst du herausfinden, welcher Artikel sich gelohnt hat und welcher weniger. Alle Daten werden dabei auf deinem Server ausgewertet und sind somit sicher.
 
 Bei Fragen oder Problemen hinterlasse einfach einen Kommentar auf der [Plugin Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power/). Ich helfe gerne.
 
-= Premium Version =
+**Premium Version**
 
 Zusätzlich zur kostenlosen Basic-Version gibt es eine Premium-Version des Plugins. Dort können neben den Artikeln auch Besucherquellen, Keywords etc. ausgewertet werden. Mehr Infos gibt es auf der [Premium Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/).
 
-= Features =
+**Features**
 
 Features die nur in der Premium-Version verfügbar sind, sind *kursiv*
 
@@ -29,14 +57,27 @@ Features die nur in der Premium-Version verfügbar sind, sind *kursiv*
 * Automatische Zuweisung von Einnahmen zu Artikeln, Seiten, *Landing-Pages, Besucherquellen, Keywords und URL-Parametern wie utm_campaign*
 * Filterung des Imports nach Webseiten
 * Übersicht über alle Leads und Sales (ausführlich und als Dashboard-Widget)
-* Automatische Infomail bei neuen oder geänderten Leads und Sales
+* Automatische tägliche Infomail bei neuen oder geänderten Leads und Sales
 * Export aller Leads und Sales als Excel-CSV
 * Statistiken über einen frei wählbaren Zeitraum sortiert nach Artikeln, Partnern, Netzwerken, Tagen, Wochen, Monaten, *Landing-Pages, Besucherquellen, Keywords und URL-Parametern*
 * *Detail-Statistiken über einzelne Artikel, Partner etc.*
-* Deine Daten bleiben in deiner Datenbank
+* Import der Affiliate-Einnahmen ins [Webworker Dashboard](https://www.webworker-dashboard.de).
 
 
 == Installation ==
+
+= EN: =
+
+As usual.
+
+1. Upload the directory `affiliate-power` in `/wp-content/plugins/` (or install the plugin over the plugin manager of WordPress)
+2. Activate the plugin over the plugin manager of WordPress
+3. The plugin creats it's own submenu `Affiliate Power`. In the menu item `Settings` you can enter your affiliate network data
+4. After you have entered your affilaite netowrk data,  you can download your old transactions on the page `Leads/Sales` by clicking on the `Refresh transactions` button.
+5. The plugin will download your sales autoamtically once a day.
+
+
+= DE: =
 
 Wie immer.
 
@@ -47,40 +88,78 @@ Wie immer.
 5. Das Plugin aktualisiert künftig einmal täglich automatisch deine Transaktionen.
 
 
+
 == Frequently Asked Questions ==
 
-= Sind meine Daten sicher? =
+= EN: =
+
+**Is my Data safe?**
+
+Yes, your income data is stored only in your WordPress database. 
+
+**Are additional networks planned?**
+
+Definitely! Just leave a comment on the [Plugin Page](http://www.affiliatepowerplugin.com/) or write to me saying which network you think is missing. 
+
+**Whats ybout the Amazon Partnernet?**
+
+Unfortunately, Amazon offers no real API for downloading sales, so an intergration is very difficult. I'm working on a solution, but I can't make any promise yet.
+
+**Does the plug in work with Pretty Link?**
+
+Yes, with Pretty Link all tracking is automatically integrated. With other link cloakers only the transactions download works in the admin area but not article allocation etc. 
+
+**Can I use the plugin with its own SubId tracking?**
+
+Yes, you can use the plugin, but you must then disable the tracking option as it also makes use of SubIds. In this case, only the sales are downloaded and there is no article assignment, visitor sources, etc. Maybe it is better to remove your own SubIds? 
+
+**Is the sales data on the plugin up to date?**
+
+The plugin automatically downloads the sales once a day. You can, however, manually download the latest sales figures at any time.
+
+
+= DE: =
+
+**Sind meine Daten sicher?**
 
 Ja, alle Daten bleiben auf deinem Server.
 
-= Werden noch weitere Netzwerke hinzugefügt? = 
+**Werden noch weitere Netzwerke hinzugefügt?**
 
 Auf jeden Fall! Hinterlasse doch einen Kommentar auf der [Plugin Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power/), welches Netzwerk dir noch fehlt.
 
-= Was ist mit dem Amazon Partnerprogramm? =
+**Was ist mit dem Amazon Partnerprogramm?**
 
 Amazon bietet leider kein vernünftiges Tracking an. Daher ist eine Integration des Amazon Partnerprogramms sehr schwierig. Ich arbeite momentan an einer Lösung, kann aber noch nichts versprechen.
 
-= Funktioniert das Plugin mit einem Link-Cloaker wie Pretty Link? = 
+**Funktioniert das Plugin mit einem Link-Cloaker wie Pretty Link?**
 
 Ja, bei Pretty Links wird das Artikel-Tracking automatisch integriert. Bei anderen Link-Cloakern funktioniert leider nur der Download der Transaktionen in den Adminbereich.
 
-= Kann ich das Plugin zusammen mit einem eigenen SubId Tracking benutzen =
+**Kann ich das Plugin zusammen mit einem eigenen SubId Tracking benutzen**
 
 Ja, du kannst das Plugin benutzen, solltest allerdings das Artikel Tracking nicht aktivieren, da dieses ebenfalls Gebrauch von den SubIds macht.
 
-= Wie oft werden die Leads / Sales aktualisiert? =
+**Wie oft werden die Leads / Sales aktualisiert?**
 
 Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Backend zusätzlich jederzeit eine manuelle Aktualisierung auslösen.
 
 
 == Screenshots ==
 
-1. Berechnung der Einnahmen für jeden Artikel
-2. Übersicht über die erzielten Provisionen
-3. Statistiken (Premium-Version)
+1. Income per Post
+2. Overview over your Sales
+3. Statistics (Premium-Version)
 
 == Changelog ==
+
+= 1.1.0 =
+* English version
+* Integration with Webworker Dashboard
+* Daily download is now always at 3am
+* Daily mail include all sales of the day
+* Multiple ad platforms are now allowed for Belboon, Tradedoubler and Zanox
+* Little Bug Fixes and better explanations of some fields
 
 = 1.0.2 =
 * Unterstützung für verschlüsselte Adcell Links nach dem neuen Linkformat

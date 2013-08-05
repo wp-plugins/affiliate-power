@@ -9,6 +9,8 @@ class Affiliate_Power_Apis {
 			'cancelled' => array()
 	);
 	
+	static protected $new_transactions_total_commission = 0;
+	static protected $cancelled_transactions_total_commission = 0;
 	
 	static public function downloadTransactionsQuick() {
 		check_ajax_referer( 'affiliate-power-download-transactions', 'nonce' );
@@ -22,8 +24,11 @@ class Affiliate_Power_Apis {
 
 
 	static public function downloadTransactions($days = 100) {
-		$fromTS = time()-3600*2-3600*24*$days; //$days Tage in die Verg.
-		$tillTS = time()-3600*2; //Jetzt in UTC
+	
+		global $wpdb;
+		
+		$fromTS = time()-3600*2-3600*24*$days; //$days in the past
+		$tillTS = time()-3600*2; //now in UTC
 		
 		$options = get_option('affiliate-power-options');
 		//adcell
@@ -82,24 +87,32 @@ class Affiliate_Power_Apis {
 		
 		
 		
-		//Send mail to admin (only when activated and only on daily update($days==100)
+		//Send mail to admin (only when activated and only on daily update($days==100))
 		if ($options['send-mail-transactions'] == 1 && $days == 100) {
 		
 			$list_transactions = '';
-			$type_mapper = array('new' => 'Neue', 'confirmed' => 'Bestätigte', 'cancelled' => 'Stornierte');
+			$type_mapper = array(
+				'new' => __('New', 'affiliate-power'),
+				'confirmed' => __('Confirmed', 'affiliate-power'),
+				'cancelled' => __('Cancelled', 'affiliate-power')
+			);
+			//1.1.0: sales for mail are all sales from the last day now
+			self::$transaction_changes['new'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(Date) = date(now() - INTERVAL 1 DAY) AND TransactionStatus <> "Cancelled"', ARRAY_A);
+			self::$transaction_changes['confirmed'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Confirmed"', ARRAY_A);
+			self::$transaction_changes['cancelled'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Cancelled"', ARRAY_A);
 		
 			foreach (self::$transaction_changes as $type => $transactions) {
 			
 				$list_items = '';
 				
 				foreach ($transactions as $transaction) {
-					$datetime_de = date('d.m.Y H:i:s', strtotime($transaction['datetime_db']));
-					$list_items .= '<li>'.$datetime_de.': '.$transaction['shop_name'].': '.number_format($transaction['commission'], 2, ',', '.').' &euro;</li>';
+					$datetime_de = date('d.m.Y H:i:s', strtotime($transaction['Date']));
+					$list_items .= '<li>'.$datetime_de.': '.$transaction['ProgramTitle'].': '.number_format($transaction['Commission'], 2, ',', '.').' &euro;</li>';
 				}
 				
 				if ($list_items != '') {
 					$list_transactions .= '
-					<p><strong>'.$type_mapper[$type].' Transaktionen:</strong></p>
+					<p><strong>'.$type_mapper[$type].' '.__('Transactions', 'affiliate-power').'</strong></p>
 					<ul>'.$list_items.'</ul>';
 				}
 			}
@@ -110,14 +123,28 @@ class Affiliate_Power_Apis {
 				$admin_email = get_option('admin_email');
 				$blogname = get_option('blogname');
 				
-				$mailtext = 
-					'<p>Hallo Admin,</p>
-					<p>dies ist dein täglicher Einnahmen-Report von Affiliate Power für deine Seite <strong>'.$blogname.'</strong>. Du kannst diesen Report jederzeit in den Einstellungen von Affiliate Power deaktivieren, wenn er dich nervt.</p>'.
-					$list_transactions;
-					
-				mail($admin_email, 'Affiliate-Power Report für '.$blogname, $mailtext, 'content-type: text/html; charset=UTF-8');
+				$mailtext = sprintf (__('<p>Hello Admin,</p><p>This is your daily income report from Affiliate Power for your page <strong>%s</strong>. You can always deactivate this report in the Affiliate Power settings, if you are annoyed about it.</p>', 'affiliate-power'), $blogname);
+				$mailtext .= $list_transactions;
+				
+				mail($admin_email, sprintf(__('Affiliate-Power Report for %s', 'affiliate-power'), $blogname), $mailtext, 'content-type: text/html; charset=UTF-8');
 			}
+		}
 		
+		//Send new transactions to webworker dashboard(only when activated and only on daily update($days==100))
+		if (isset($options['webworker-dashboard-username']) && isset($options['webworker-dashboard-apikey']) && $days == 100) {
+		
+			//1.1.0: sales for dashoard are all sales from the last day now
+			self::$new_transactions_total_commission = $wpdb->get_var('SELECT sum(Commission) FROM '.$wpdb->prefix.'ap_transaction WHERE date(Date) = date(now() - INTERVAL 1 DAY) AND TransactionStatus <> "Cancelled"');
+			self::$cancelled_transactions_total_commission = $wpdb->get_var('SELECT sum(Commission)*(-1) FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Cancelled"');
+			
+			include_once('apis/webworker-dashboard.php');
+			if (self::$new_transactions_total_commission > 0) {
+				Affiliate_Power_Api_Webworker_Dashboard::sendEarnings($options['webworker-dashboard-username'], $options['webworker-dashboard-apikey'], time()-3600*12, self::$new_transactions_total_commission);
+			}
+			if (self::$cancelled_transactions_total_commission < 0) {
+				Affiliate_Power_Api_Webworker_Dashboard::sendEarnings($options['webworker-dashboard-username'], $options['webworker-dashboard-apikey'], time()-3600*12, self::$cancelled_transactions_total_commission);
+			}
+			
 		}	
 
 		
@@ -207,7 +234,10 @@ class Affiliate_Power_Apis {
 			);
 			
 			if ($transaction['status'] == 'Confirmed') self::$transaction_changes['confirmed'][] = $transaction;
-			elseif($transaction['status'] == 'Cancelled') self::$transaction_changes['cancelled'][] = $transaction;
+			elseif($transaction['status'] == 'Cancelled') {
+				self::$transaction_changes['cancelled'][] = $transaction;
+				self::$cancelled_transactions_total_commission -= $transaction['commission'];
+			}
 		}
 	
 	}
@@ -246,7 +276,7 @@ class Affiliate_Power_Apis {
 		if (is_wp_error($http_answer) || $http_answer['response']['code'] != 200) $new_version = AFFILIATE_POWER_VERSION;
 		else $new_version = $http_answer['body'];
 		
-	    if ( (version_compare(AFFILIATE_POWER_VERSION, $new_version, '<') && AFFILIATE_POWER_PREMIUM) || $updating_to_premium ) {   
+	    if ( (version_compare(AFFILIATE_POWER_VERSION, $new_version, '<') && AFFILIATE_POWER_PREMIUM) || $updating_to_premium ) {
             $obj = new stdClass();  
             $obj->slug = 'affiliate-power';
             $obj->new_version = $new_version;  

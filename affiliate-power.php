@@ -2,19 +2,19 @@
 /*
 PLUGIN NAME: Affiliate Power
 PLUGIN URI: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
-DESCRIPTION: Affiliate Power ermöglicht es, Affiliate-Einnahmen nach Artikeln, Besucherquellen, Keywords etc. zu analyisren
+DESCRIPTION: With Affiliate Power you can analyze your Affiliate income per Article, Referer, Keyword etc.
 AUTHOR: Jonas Breuer
 AUTHOR URI: http://www.j-breuer.de
-VERSION: 1.0.2
+VERSION: 1.1.0
 Min WP Version: 3.1
-Max WP Version: 3.5.1
+Max WP Version: 3.6
 */
 if (!defined('ABSPATH')) die; //no direct access
 
 
 
 
-define('AFFILIATE_POWER_VERSION', '1.0.2');
+define('AFFILIATE_POWER_VERSION', '1.1.0');
 define('AFFILIATE_POWER_PREMIUM', false);
 
 include_once("affiliate-power-menu.php"); //admin menu
@@ -54,9 +54,9 @@ class Affiliate_Power {
 		global $wpdb;
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 		
-		if ( !wp_next_scheduled( 'affiliate_power_daily_event' ) ) {
-			wp_schedule_event( current_time( 'timestamp' )+86400, 'daily', 'affiliate_power_daily_event');
-		}
+		//since 1.1.0, daily import is at 3:00
+		if ( wp_next_scheduled( 'affiliate_power_daily_event' ) ) wp_clear_scheduled_hook('affiliate_power_daily_event');
+		wp_schedule_event( strtotime('tomorrow')+3600*3, 'daily', 'affiliate_power_daily_event');
 		
 		//standard options if this is a new installation
 		$options = get_option('affiliate-power-options');
@@ -115,7 +115,7 @@ class Affiliate_Power {
 		//add and activate infotext
 		$meta_options = get_option('affiliate-power-meta-options');
 		if (!$meta_options) $meta_options = array();
-		$meta_options['infotext'] = '<h3>Neu: Geld verdienen mit Affiliate Power!</h3><p>Mit dem Partnerprogramm von Affiliate Power bekommst du satte 30% Provision für jeden vermittelten Verkauf der Premium-Version.</p><h3><a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power-partnerprogramm/" target="_blank">Alle Infos zum Partnerprogramm</a></h3><a href="#" class="affiliate-power-hide-infotext">Nicht mehr anzeigen</a>';
+		$meta_options['infotext'] = __('<h3>New: Earn money with Affiliate Power!</h3><p>With the Affiliate Program you earn awesome 30% for each sale of the Premium version.</p><h3><a href="http://www.affiliatepowerplugin.com/affiliate-program/" target="_blank">All Information about the Affiliate program</a></h3><a href="#" class="affiliate-power-hide-infotext">Hide this message</a>', 'affiliate-power');
 		$meta_options['hide-infotext'] = 0;
 		update_option('affiliate-power-meta-options', $meta_options);
 		
@@ -127,18 +127,10 @@ class Affiliate_Power {
 	static public function activationMessage() {
 		ob_start();
 		if (AFFILIATE_POWER_PREMIUM) {
-			echo '<div id="message" class="updated">
-			<img src="'.plugins_url('img/affiliate-power-36.png', __FILE__).'" alt="Affiliate Power" style="float:left; width:36px; margin:6px;" />
-			<h2>Herzlich Willkommen bei Affiliate Power Premium!</h2>
-			<p>Nochmal Glückwunsch zu der Entscheidung den Blindflug im Affiliate-Marketing zu verlassen und Licht in deine Einnahmen zu bringen. Das Plugin wird von nun an automatisch die neuen Statistiken für alle neuen Sales erstellen. Wenn du das URL-Parameter Tracking verwenden möchtest, solltest du auf der <a href="'.admin_url('admin.php?page=affiliate-power-settings').'">Einstellungsseite</a> die Parameter hinterlegen, die du benutzt.</p>
-			</div>';
+			printf(__('<div id="message" class="updated"><img src="%s" alt="Affiliate Power" style="float:left; width:36px; margin:6px;" /><h2>Welcome to Affiliate Power Premium!</h2><p>Congratulations again to your decision to shed light on your affiliate income. The plugin will now automatically create the new statistics for all your new sales. IF you want to use the URL-Parameter Tracking, you should enter your parameters on the <a href="%s">Settings Page</a>.</p></div>', 'affiliate-power'), plugins_url('img/affiliate-power-36.png', __FILE__), admin_url('admin.php?page=affiliate-power-settings'));
 		}
 		else {
-			echo '<div id="message" class="updated">
-			<img src="'.plugins_url('img/affiliate-power-36.png', __FILE__).'" alt="Affiliate Power" style="float:left; width:36px; margin:6px;" />
-			<h2>Herzlich Willkommen bei Affiliate Power!</h2>
-			<p>Wie geht es weiter? Zunächst solltest du auf der <a href="'.admin_url('admin.php?page=affiliate-power-settings').'">Einstellungsseite</a> die Daten der Affiliate-Netzwerke hinterlegen, die du benutzt. Dann kannst du deine bisherigen Sales herunterladen und die erste statistische Auswertung vornehmen. Die Auswertung deiner Artikel kann nur für neue Sales erstellt werden. Alle anderen Statistiken funktionieren auch für alte Sales.</p>
-			</div>';
+			printf(__('<div id="message" class="updated"><img src="%s" alt="Affiliate Power" style="float:left; width:36px; margin:6px;" /><h2>Welcome to Affiliate Power Premium!</h2><p>Whats next? First, you should enter your Affiliate network data on the <a href="%s">Settings Page</a>. Then, you can download your old sales and the plugin will create the first statistics. The article statistic can only be created for new sales. All other statistics also work for old sales.</p></div>', 'affiliate-power'), plugins_url('img/affiliate-power-36.png', __FILE__), admin_url('admin.php?page=affiliate-power-settings'));
 		}
 		echo ob_get_clean();
 	}
@@ -161,6 +153,9 @@ class Affiliate_Power {
 	
 	
 	static public function init() {
+		//load language file
+		$plugin_dir = basename(dirname(__FILE__));
+		load_plugin_textdomain( 'affiliate-power', '', $plugin_dir . '/languages/' );
 		
 		//create tables etc. if user updated the plugin
 		$version = get_option('affiliate-power-version', '0.0.0');

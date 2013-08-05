@@ -16,7 +16,7 @@ class Affiliate_Power_Transactions {
 		
 		//Check Licence
 		if (isset($options['licence-key'])) {
-			echo '<div class="error"><p><strong>Du hast einen gültigen Lizenzschlüssel eingegeben, aber die Premium-Version noch nicht heruntergeladen. Bitte begib dich zur <a href="update-core.php">Update Seite</a> und aktualisiere auf die Premium-Version. Unter Umständen  kann es bis zu 5 Minuten dauern, bis Wordpress die neue Version meldet.</strong></p></div>';
+			echo '<div class="error"><p><strong>'.__('You entered a valid licence key but you did not download the premium version yet. Please go to the a href="update-core.php">Update Page</a> and update to the premium version. It can take up to 5 minutes until WordPress notifies you about the new version.', 'affiliate-power').'</strong></p></div>';
 		}
 		
 		//Infotext
@@ -29,21 +29,21 @@ class Affiliate_Power_Transactions {
 		<div class="wrap">
 			
 			<div class="icon32" style="background:url(<?php echo plugins_url('affiliate-power/img/affiliate-power-36.png'); ?>) no-repeat;"><br/></div>
-			<h2>Affiliate Power Sales</h2>
+			<?php _e ('<h2>Affiliate Power Sales</h2>', 'affiliate-power'); ?>
 			
 			<form id="movies-filter" method="get">
 				<input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
 				<?php $transactionList->display() ?>
 			</form>
 			
-			<input type="button" style="float:left; width:170px;" id="button_download_transactions" value="Transaktionen aktualisieren" /><span class="spinner" id="spinner1" style="float:left;"></span><br />
-			<input type="button" style="float:left; width:170px; clear:left;" id="button_export_csv" value="Excel Download" /><span class="spinner" id="spinner2" style="float:left;"></span>
+			<input type="button" style="float:left; width:170px;" id="button_download_transactions" value="<?php _e('Update Sales', 'affiliate-power'); ?>" /><span class="spinner" id="spinner1" style="float:left;"></span><br />
+			<input type="button" style="float:left; width:170px; clear:left;" id="button_export_csv" value="<?php _e('CSV/Excel Download', 'affiliate-power'); ?>" /><span class="spinner" id="spinner2" style="float:left;"></span>
 			
 			<script type="text/javascript">
 				jQuery(document).ready(function($) {
 				
 					$("#button_download_transactions").bind("click", function(e){
-						$(this).val('Bitte warten...');
+						$(this).val('<?php _e('Please wait', 'affiliate-power'); ?>...');
 						$('#spinner1').css('display', 'block');
 						$.post(ajaxurl, { action: 'ap_download_transactions', nonce: '<?php echo wp_create_nonce( 'affiliate-power-download-transactions' ) ?>' }, function(response) {
 							location.reload();
@@ -51,10 +51,10 @@ class Affiliate_Power_Transactions {
 					});
 					
 					$("#button_export_csv").bind("click", function(e){
-						$(this).val('Bitte warten...');
+						$(this).val('<?php _e('Please wait', 'affiliate-power'); ?>...');
 						$('#spinner2').css('display', 'block');
 						$.post(ajaxurl, { action: 'ap_export_csv', nonce: '<?php echo wp_create_nonce( 'affiliate-power-export-csv' ) ?>'}, function(response) {
-							$("#button_export_csv").val('Excel Download');
+							$("#button_export_csv").val('<?php _e('CSV/Excel Download', 'affiliate-power'); ?>');
 							$("body").append("<iframe src='<?php echo plugins_url( "affiliate-power/csv-download.php", dirname(__FILE__ )); ?>' style='display: none;' ></iframe>")
 							$('#spinner2').css('display', 'none');
 							
@@ -74,7 +74,7 @@ class Affiliate_Power_Transactions {
 		check_ajax_referer( 'affiliate-power-export-csv', 'nonce' );
 		
 		global $wpdb;
-		$csv_content = 'Id;Datum;Netzwerk;Merchant;Typ;Einkaufspreis;Provision;Status;ArtikelId;ArtikelName' . "\r\n";
+		$csv_content = __('Id;Date;Network;Merchant;Type;Price;Commission;Status;PostId;PostName', 'affiliate-power') . "\r\n";
 		
 		$sql = $wpdb->prepare('
 			SELECT 
@@ -147,8 +147,8 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
                 
         //Set parent defaults
         parent::__construct( array(
-            'singular'  => 'Transaktion',     //singular name of the listed records
-            'plural'    => 'Transaktionen',    //plural name of the listed records
+            'singular'  => __('Sale', 'affiliate-power'),     //singular name of the listed records
+            'plural'    => __('Sales', 'affiliate-power'),    //plural name of the listed records
             'ajax'      => false        //does this table support ajax?
         ) ); 
     }
@@ -180,9 +180,9 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 				break;
 				
 			case 'TransactionStatus' :
-				if ($item['TransactionStatus'] == 'Cancelled') $value = 'Abgelehnt';
-				elseif ($item['TransactionStatus'] == 'Confirmed') $value = 'Bestätigt';
-				else $value = 'Vorgemerkt';
+				if ($item['TransactionStatus'] == 'Cancelled') $value = __('Cancelled', 'affiliate-power');
+				elseif ($item['TransactionStatus'] == 'Confirmed') $value = __('Confirmed', 'affiliate-power');
+				else $value = __('Open', 'affiliate-power');
 				break;
 				
 			case 'post_title' :
@@ -192,15 +192,15 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 				}
 				else {
 					if ($item['post_title'] == '') {
-						$value = '- unbekannt -';
+						$value = __('- unknown -', 'affiliate-power');
 						break;
 					} 
 					
 					$permalink = get_permalink($item['postID']);
 					
 					$actions = array(
-						'view'    => sprintf('<a href="%s" target="_blank">Ansehen</a>',$permalink),
-						'edit'    => sprintf('<a href="post.php?post=%d&action=%s">Edit</a>',$item['postID'],'edit')
+						'view'    => sprintf('<a href="%s" target="_blank">'.__('View', 'affiliate-power').'</a>',$permalink),
+						'edit'    => sprintf('<a href="post.php?post=%d&action=%s">'.__('Edit', 'affiliate-power').'</a>',$item['postID'],'edit')
 					);
 					$value = sprintf('%1$s %2$s',
 						/*$1%s*/ $item['post_title'],
@@ -210,7 +210,7 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 				break;
 			
 			case 'referer' :
-				$value = '<a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/" target="_blank">Nur in der Premium Version</a>';
+				$value = __('<a href="http://www.affiliatepowerplugin.com/premium/" target="_blank">Only in the premium version</a>', 'affiliate-power');
 				break;
 				
 				
@@ -236,15 +236,16 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 		else $post_title_text = 'SubId';
 
         $columns = array(
-            'germanDate'     => 'Datum',
-            'network'    => 'Netzwerk',
-            'ProgramTitle'  => 'Merchant',
-			'Transaction' => 'Typ',
-			'Price' => 'Einkaufswert',
-			'Commission'  => 'Provision',
-			'TransactionStatus' => 'Status',
+            'germanDate'     => __('Date', 'affiliate-power'),
+            'network'    => __('Network', 'affiliate-power'),
+            'ProgramTitle'  => __('Merchant', 'affiliate-power'),
+			'Transaction' => __('Type', 'affiliate-power'),
+			'Price' => __('Price', 'affiliate-power'),
+			'Commission'  => __('Commission', 'affiliate-power'),
+			'TransactionStatus' => __('Status', 'affiliate-power'),
 			'post_title' => $post_title_text,
-			'referer' => 'Besucherquelle',
+			'referer' => __('Referer', 'affiliate-power'),
+			'landing_page' => __('Landing Page', 'affiliate-power'),
         );
         return $columns;
     }
@@ -314,7 +315,7 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 			   '.$wpdb->prefix.'ap_transaction.Commission,
 			   '.$wpdb->prefix.'ap_transaction.Confirmed,
 			   '.$wpdb->prefix.'ap_transaction.TransactionStatus,
-			   "- unbekannt -" as referer,
+			   "- unknown -" as referer,
 			   '.$wpdb->prefix.'posts.ID AS postID,
 			   '.$wpdb->posts.'.post_title
 		FROM '.$wpdb->prefix.'ap_transaction
@@ -335,7 +336,7 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 			   '.$wpdb->prefix.'ap_transaction.Commission,
 			   '.$wpdb->prefix.'ap_transaction.Confirmed,
 			   '.$wpdb->prefix.'ap_transaction.TransactionStatus,
-			   "- unbekannt -" as referer,
+			   "- unknown -" as referer,
 			   '.$wpdb->prefix.'posts.ID AS postID,
 			   '.$wpdb->posts.'.post_title
 		FROM '.$wpdb->prefix.'ap_transaction

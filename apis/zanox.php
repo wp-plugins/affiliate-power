@@ -30,6 +30,9 @@ class Affiliate_Power_Api_Zanox {
 		$zx->setSecretKey($secret_key);
 		$zx->setPublicKey($public_key);
 		
+		$arr_filter_adspace = explode(',', $filter_adspace);
+		$arr_filter_adspace = array_map('trim', $arr_filter_adspace);
+		
 		$filter_date_stamp = $tillTS;
 		$filter_date = date("Y-m-d", $filter_date_stamp);
 		
@@ -51,7 +54,7 @@ class Affiliate_Power_Api_Zanox {
 					for ($i=0;$i<count($result->leadItems->leadItem);$i++)
 					{
 						$adspace = $result->leadItems->leadItem[$i]->adspace->_;
-						if ($filter_adspace != '' && $filter_adspace != $adspace) continue;
+						if ( $filter_adspace != '' && !in_array($adspace, $arr_filter_adspace) ) continue;
 						
 						$date = $result->leadItems->leadItem[$i]->trackingDate;
 						$number = $result->leadItems->leadItem[$i]->id;
@@ -124,7 +127,7 @@ class Affiliate_Power_Api_Zanox {
 					for ($i=0;$i<count($result->saleItems->saleItem);$i++)
 					{
 						$adspace = $result->saleItems->saleItem[$i]->adspace->_;
-						if ($filter_adspace != '' && $filter_adspace != $adspace) continue;
+						if ( $filter_adspace != '' && !in_array($adspace, $arr_filter_adspace) ) continue;
 						
 						$date = $result->saleItems->saleItem[$i]->trackingDate;
 						$number = $result->saleItems->saleItem[$i]->id;

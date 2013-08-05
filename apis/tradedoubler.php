@@ -35,7 +35,9 @@ class Affiliate_Power_Api_Tradedoubler {
 	static public function downloadTransactions($report_key, $filter_sitename, $fromTS, $tillTS) {
 	
 		$output_transactions = array();
-			
+		
+		$arr_filter_sitename = explode(',', $filter_sitename);
+		$arr_filter_sitename = array_map('trim', $arr_filter_sitename);
 		$StartDate = date('d.m.y', $fromTS);
 		$EndDate = date('d.m.y', $tillTS);
 
@@ -108,7 +110,7 @@ class Affiliate_Power_Api_Tradedoubler {
 			$arr_transaction = explode(';', $transaction);
 			
 			$sitename = $arr_transaction[9];
-			if ($filter_sitename != '' && $filter_sitename != $sitename) continue;
+			if ( $filter_sitename != '' && !in_array($sitename, $arr_filter_sitename) ) continue;
 			
 			$shop_name = $arr_transaction[0];
 			$shop_id = $arr_transaction[1];

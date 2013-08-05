@@ -23,7 +23,7 @@ class Affiliate_Power_Statistics {
 			round(sum('.$wpdb->prefix.'ap_transaction.Commission),2) as commission,
 			round(sum('.$wpdb->prefix.'ap_transaction.Confirmed), 2) as confirmed,
 			'.$wpdb->posts.'.ID AS postID,
-			if (postID = -1, "- Startseite -", ifnull('.$wpdb->posts.'.post_title, "- unbekannt -")) as name
+			if (postID = -1, "- - Homepage - -", ifnull('.$wpdb->posts.'.post_title, "- unknown -")) as name
 		FROM '.$wpdb->prefix.'ap_transaction 
 		LEFT JOIN '.$wpdb->prefix.'ap_clickout
 		ON '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'ap_clickout.ap_clickoutID
@@ -38,7 +38,7 @@ class Affiliate_Power_Statistics {
 			round(sum('.$wpdb->prefix.'ap_transaction.Commission),2) as commission,
 			round(sum('.$wpdb->prefix.'ap_transaction.Confirmed), 2) as confirmed,
 			'.$wpdb->posts.'.ID AS postID,
-			ifnull('.$wpdb->posts.'.post_title, "- unbekannt -") as name
+			ifnull('.$wpdb->posts.'.post_title, "- unknown -") as name
 		FROM '.$wpdb->prefix.'ap_transaction 
 		LEFT JOIN '.$wpdb->posts.'
 		ON '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'posts.ID
@@ -82,7 +82,7 @@ class Affiliate_Power_Statistics {
 		
 		$landingData = $refererData = $keywordData = array(
 			array(
-				'name' => '<a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/" target="_blank">Nur in der Premium Version</a>',
+				'name' => __('<a href="http://www.affiliatepowerplugin.com/premium/" target="_blank">Only in the premium version</a>', 'affiliate-power'),
 				'commission' => '0',
 				'confirmed' => '0'
 			)
@@ -121,7 +121,7 @@ class Affiliate_Power_Statistics {
 		//Months
 		$sql = $wpdb->prepare('
 		SELECT concat (
-				elt(month(date),"Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"),
+				date_format(date, "%%M"),
 				" ", 
 				year(date)) 
 			   as name,
@@ -161,11 +161,11 @@ class Affiliate_Power_Statistics {
 		}
 		echo '<div class="wrap">';
 		echo '<div class="icon32" style="background:url('.plugins_url('affiliate-power/img/affiliate-power-36.png').') no-repeat;"><br/></div>';
-		echo '<h2>Affiliate Power Statistiken</h2>';
+		_e ('<h2>Affiliate Power Statistics</h2>', 'affiliate-power');
 		
 		//Check Licence
 		if (isset($options['licence-key'])) {
-			echo '<div class="error"><p><strong>Du hast einen gültigen Lizenzschlüssel eingegeben, aber die Premium-Version noch nicht heruntergeladen. Bitte begib dich zur <a href="update-core.php">Update Seite</a> und aktualisiere auf die Premium-Version. Unter Umständen  kann es bis zu 5 Minuten dauern, bis Wordpress die neue Version meldet.</strong></p></div>';
+			echo '<div class="error"><p><strong>'.__('You entered a valid licence key but you did not download the premium version yet. Please go to the a href="update-core.php">Update Page</a> and update to the premium version. It can take up to 5 minutes until WordPress notifies you about the new version.', 'affiliate-power').'</strong></p></div>';
 		}
 		
 		//Infotext
@@ -177,12 +177,12 @@ class Affiliate_Power_Statistics {
 		
 		//Datepicker
 		$dates_predefined = array (
-			'custom' => 'Freier Zeitaum',
-			'today' => 'Heute',
-			'yesterday' => 'Gestern',
-			'last_7_days' => 'Letzte 7 Tage',
-			'last_30_days' => 'Letzte 30 Tage',
-			'all' => 'Gesamt'
+			'custom' => __('Custom', 'affiliate-power'),
+			'today' => __('Today', 'affiliate-power'),
+			'yesterday' => __('Yesterday', 'affiliate-power'),
+			'last_7_days' => __('Last 7 days', 'affiliate-power'),
+			'last_30_days' => __('Last 30 days', 'affiliate-power'),
+			'all' => __('All', 'affiliate-power')
 		);
 		$dates_predefined_options = '';
 		foreach ($dates_predefined as $value => $text) {
@@ -203,8 +203,8 @@ class Affiliate_Power_Statistics {
 			var first_transaction_ts = "'.$first_transaction.'";
 			</script>
 			<form method="post" action="" name="formDate"><p>
-				Von: <input type="text" name="date_from" id="datepicker_from" value="'.esc_attr($date_from).'" /> Bis:  <input type="text" name="date_to" id="datepicker_to" value="'.esc_attr($date_to).'" /> <input type="submit" value="OK" /><br />
-				 Zeitraum: <select id="datepicker_predefined" name="datepicker_predefined">
+				'.__('From', 'affiliate-power').': <input type="text" name="date_from" id="datepicker_from" value="'.esc_attr($date_from).'" /> '.__('Till', 'affiliate-power').':  <input type="text" name="date_to" id="datepicker_to" value="'.esc_attr($date_to).'" /> <input type="submit" value="OK" /><br />
+				'.__('Period', 'affiliate-power').': <select id="datepicker_predefined" name="datepicker_predefined">
 					'.$dates_predefined_options.'
 				</select>
 				
@@ -223,13 +223,13 @@ class Affiliate_Power_Statistics {
 					<thead>
 						<tr>
 							<th>'.$headline.'</th>
-							<th>Einnahmen</th>      
+							<th>'.__('Income', 'affiliate-power').'</th> 
 						</tr>
 					</thead>
 					<tfoot>
 						<tr>
 							<th>'.$headline.'</th>
-							<th>Einnahmen</th>
+							<th>'.__('Income', 'affiliate-power').'</th>
 						</tr>
 					</tfoot>
 					<tbody>';

@@ -8,57 +8,64 @@ add_action('admin_init', array('Affiliate_Power_Settings', 'addSettings'));
 class Affiliate_Power_Settings {
 
 
-	static public function addSettings() {
+		static public function addSettings() {
 		register_setting( 'affiliate-power-options', 'affiliate-power-options', array('Affiliate_Power_Settings', 'optionsValidate') );
 		
-		add_settings_section('affiliate-power-main', 'Grundeinstellungen', array('Affiliate_Power_Settings', 'optionsMainText'), 'affiliate-power-options');
-		add_settings_field('affiliate-power-add-sub-ids', 'Tracking aktiv', array('Affiliate_Power_Settings', 'addSubIdsField'), 'affiliate-power-options', 'affiliate-power-main');
+		add_settings_section('affiliate-power-main', __('Basic settings', 'affiliate-power'), array('Affiliate_Power_Settings', 'optionsMainText'), 'affiliate-power-options');
+		add_settings_field('affiliate-power-add-sub-ids', __('Activate tracking', 'affiliate-power'), array('Affiliate_Power_Settings', 'addSubIdsField'), 'affiliate-power-options', 'affiliate-power-main');
 		//add_settings_field('affiliate-power-prli-homepage', 'Startseiten Integration', array('Affiliate_Power_Settings', 'addHomepageField'), 'affiliate-power-options', 'affiliate-power-main');
-		add_settings_field('affiliate-power-send-mail-transactions', 'Täglicher E-Mail Report', array('Affiliate_Power_Settings', 'addSendMailTransactionsField'), 'affiliate-power-options', 'affiliate-power-main');
-		add_settings_field('affiliate-power-licence-key', 'Lizenzschlüssel', array('Affiliate_Power_Settings', 'addLicenceKeyField'), 'affiliate-power-options', 'affiliate-power-main');
-		add_settings_field('affiliate-power-landing-params', 'URL-Parameter', array('Affiliate_Power_Settings', 'addLandingParamsField'), 'affiliate-power-options', 'affiliate-power-main');
+		add_settings_field('affiliate-power-send-mail-transactions', __('Daily email report', 'affiliate-power'), array('Affiliate_Power_Settings', 'addSendMailTransactionsField'), 'affiliate-power-options', 'affiliate-power-main');
+		add_settings_field('affiliate-power-licence-key', __('Licence key', 'affiliate-power'), array('Affiliate_Power_Settings', 'addLicenceKeyField'), 'affiliate-power-options', 'affiliate-power-main');
+		add_settings_field('affiliate-power-landing-params', __('URL-Parameter', 'affiliate-power'), array('Affiliate_Power_Settings', 'addLandingParamsField'), 'affiliate-power-options', 'affiliate-power-main');
 		
 		//add_settings_field('affiliate-power-download-method', 'Methode Sale/Lead Download', array('Affiliate_Power_Settings', 'downloadMethod'), 'affiliate-power-options', 'affiliate-power-main');
 		
-		add_settings_section('affiliate-power-networks', 'Affiliate-Netzwerke', array('Affiliate_Power_Settings', 'optionsNetworksText'), 'affiliate-power-options');
+		//Webworker Dashboard
+		add_settings_section('affiliate-power-webworker-dashboard', __('Webworker Dashboard', 'affiliate-power'), array('Affiliate_Power_Settings', 'optionsWebworkerDashboardText'), 'affiliate-power-options');
+		add_settings_field('affiliate-power-webworker-dashboard-username', __('Webworker Dashboard Email address', 'affiliate-power'), array('Affiliate_Power_Settings', 'addWebworkerDashboardUsernameField'), 'affiliate-power-options', 'affiliate-power-webworker-dashboard');
+		add_settings_field('affiliate-power-webworker-dashboard-apikey', __('Webworker Dashboard API Key', 'affiliate-power'), array('Affiliate_Power_Settings', 'addWebworkerDashboardApiKeyField'), 'affiliate-power-options', 'affiliate-power-webworker-dashboard');
+		
+		
+		add_settings_section('affiliate-power-networks', __('Affiliate-Networks', 'affiliate-power'), array('Affiliate_Power_Settings', 'optionsNetworksText'), 'affiliate-power-options');
 		
 		//Adcell
-		add_settings_section('affiliate-power-networks-adcell', 'Adcell', array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
-		add_settings_field('affiliate-power-adcell-username', 'Adcell Benutzername', array('Affiliate_Power_Settings', 'addAdcellUsernameField'), 'affiliate-power-options', 'affiliate-power-networks-adcell');
-		add_settings_field('affiliate-power-adcell-password', 'Adcell Schnittstellen Passwort', array('Affiliate_Power_Settings', 'addAdcellPasswordField'), 'affiliate-power-options', 'affiliate-power-networks-adcell');
-		add_settings_field('affiliate-power-adcell-referer-filter', 'Adcell Webseiten Filter', array('Affiliate_Power_Settings', 'addAdcellRefererFilterField'), 'affiliate-power-options', 'affiliate-power-networks-adcell');
+		add_settings_section('affiliate-power-networks-adcell', __('Adcell', 'affiliate-power'), array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
+		add_settings_field('affiliate-power-adcell-username', __('Adcell Username', 'affiliate-power'), array('Affiliate_Power_Settings', 'addAdcellUsernameField'), 'affiliate-power-options', 'affiliate-power-networks-adcell');
+		add_settings_field('affiliate-power-adcell-password', __('Adcell API Password', 'affiliate-power'), array('Affiliate_Power_Settings', 'addAdcellPasswordField'), 'affiliate-power-options', 'affiliate-power-networks-adcell');
+		add_settings_field('affiliate-power-adcell-referer-filter', __('Adcell Website Filter', 'affiliate-power'), array('Affiliate_Power_Settings', 'addAdcellRefererFilterField'), 'affiliate-power-options', 'affiliate-power-networks-adcell');
+
 		//affili.net
-		add_settings_section('affiliate-power-networks-affili', 'Affili.net', array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
-		add_settings_field('affiliate-power-affili-id', 'Affili.net UserId', array('Affiliate_Power_Settings', 'addAffiliIdField'), 'affiliate-power-options', 'affiliate-power-networks-affili');
-		add_settings_field('affiliate-power-affili-password', 'Affili.net PublisherWebservice Passwort', array('Affiliate_Power_Settings', 'addAffiliPasswordField'), 'affiliate-power-options', 'affiliate-power-networks-affili');
+		add_settings_section('affiliate-power-networks-affili', __('Affili.net', 'affiliate-power'), array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
+		add_settings_field('affiliate-power-affili-id', __('Affili.net UserId', 'affiliate-power'), array('Affiliate_Power_Settings', 'addAffiliIdField'), 'affiliate-power-options', 'affiliate-power-networks-affili');
+		add_settings_field('affiliate-power-affili-password', __('Affili.net PublisherWebservice Password', 'affiliate-power'), array('Affiliate_Power_Settings', 'addAffiliPasswordField'), 'affiliate-power-options', 'affiliate-power-networks-affili');
 		
 		//belboon
-		add_settings_section('affiliate-power-networks-belboon', 'Belboon', array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
-		add_settings_field('affiliate-power-belboon-username', 'Belboon Benutzername', array('Affiliate_Power_Settings', 'addBelboonUsernameField'), 'affiliate-power-options', 'affiliate-power-networks-belboon');
-		add_settings_field('affiliate-power-belboon-passwords', 'Belboon WebService Passwort', array('Affiliate_Power_Settings', 'addBelboonPasswordField'), 'affiliate-power-options', 'affiliate-power-networks-belboon');
-		add_settings_field('affiliate-power-belboon-platform', 'Belboon Werbeplattform', array('Affiliate_Power_Settings', 'addBelboonPlatformField'), 'affiliate-power-options', 'affiliate-power-networks-belboon');
+		add_settings_section('affiliate-power-networks-belboon', __('Belboon', 'affiliate_power'), array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
+		add_settings_field('affiliate-power-belboon-username', __('Belboon Username', 'affiliate-power'), array('Affiliate_Power_Settings', 'addBelboonUsernameField'), 'affiliate-power-options', 'affiliate-power-networks-belboon');
+		add_settings_field('affiliate-power-belboon-passwords', __('Belboon WebService Password', 'affiliate-power'), array('Affiliate_Power_Settings', 'addBelboonPasswordField'), 'affiliate-power-options', 'affiliate-power-networks-belboon');
+		add_settings_field('affiliate-power-belboon-platform', __('Belboon Ad Platform Name', 'affiliate-power'), array('Affiliate_Power_Settings', 'addBelboonPlatformField'), 'affiliate-power-options', 'affiliate-power-networks-belboon');
 		
 		//Commission Junction
-		add_settings_section('affiliate-power-networks-cj', 'Commission Junction', array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
-		add_settings_field('affiliate-power-cj-id', 'Commission Junction PID', array('Affiliate_Power_Settings', 'addCjIdField'), 'affiliate-power-options', 'affiliate-power-networks-cj');
-		add_settings_field('affiliate-power-cj-key', 'Commission Junction Developer Key', array('Affiliate_Power_Settings', 'addCjKeyField'), 'affiliate-power-options', 'affiliate-power-networks-cj');
+		add_settings_section('affiliate-power-networks-cj', __('Commission Junction', 'affiliate-power'), array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
+		add_settings_field('affiliate-power-cj-id', __('Commission Junction PID', 'affiliate-power'), array('Affiliate_Power_Settings', 'addCjIdField'), 'affiliate-power-options', 'affiliate-power-networks-cj');
+		add_settings_field('affiliate-power-cj-key', __('Commission Junction Developer Key', 'affiliate-power'), array('Affiliate_Power_Settings', 'addCjKeyField'), 'affiliate-power-options', 'affiliate-power-networks-cj');
 		
 		//superclix
-		add_settings_section('affiliate-power-networks-superclix', 'Superclix', array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
-		add_settings_field('affiliate-power-superclix-usename', 'Superclix Username', array('Affiliate_Power_Settings', 'addSuperclixUSernameField'), 'affiliate-power-options', 'affiliate-power-networks-superclix');
-		add_settings_field('affiliate-power-superclix-password', 'Superclix Export Passwort', array('Affiliate_Power_Settings', 'addSuperclixPasswordField'), 'affiliate-power-options', 'affiliate-power-networks-superclix');
+		add_settings_section('affiliate-power-networks-superclix', __('Superclix', 'affiliate-power'), array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
+		add_settings_field('affiliate-power-superclix-usename', __('Superclix Username', 'affiliate-power'), array('Affiliate_Power_Settings', 'addSuperclixUSernameField'), 'affiliate-power-options', 'affiliate-power-networks-superclix');
+		add_settings_field('affiliate-power-superclix-password', __('Superclix Export Password', 'affiliate-power'), array('Affiliate_Power_Settings', 'addSuperclixPasswordField'), 'affiliate-power-options', 'affiliate-power-networks-superclix');
 		
 		//tradedoubler
-		add_settings_section('affiliate-power-networks-tradedoubler', 'Tradedoubler', array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
-		add_settings_field('affiliate-power-tradedoubler-key', 'Tradedoubler Report Key', array('Affiliate_Power_Settings', 'addTradedoublerKeyField'), 'affiliate-power-options', 'affiliate-power-networks-tradedoubler');
-		add_settings_field('affiliate-power-tradedoubler-sitename', 'Tradedoubler Seitenname', array('Affiliate_Power_Settings', 'addTradedoublerSitenameField'), 'affiliate-power-options', 'affiliate-power-networks-tradedoubler');
+		add_settings_section('affiliate-power-networks-tradedoubler', __('Tradedoubler', 'affiliate-power'), array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
+		add_settings_field('affiliate-power-tradedoubler-key', __('Tradedoubler Report Key', 'affiliate-power'), array('Affiliate_Power_Settings', 'addTradedoublerKeyField'), 'affiliate-power-options', 'affiliate-power-networks-tradedoubler');
+		add_settings_field('affiliate-power-tradedoubler-sitename', __('Tradedoubler Site name', 'affiliate-power'), array('Affiliate_Power_Settings', 'addTradedoublerSitenameField'), 'affiliate-power-options', 'affiliate-power-networks-tradedoubler');
 		
 		//zanox
-		add_settings_section('affiliate-power-networks-zanox', 'Zanox', array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
-		add_settings_field('affiliate-power-zanox-connect-id', 'Zanox ConnectId', array('Affiliate_Power_Settings', 'addZanoxConnectIdField'), 'affiliate-power-options', 'affiliate-power-networks-zanox');
-		add_settings_field('affiliate-power-zanox-public-key', 'Zanox Public Key', array('Affiliate_Power_Settings', 'addZanoxPublicKeyField'), 'affiliate-power-options', 'affiliate-power-networks-zanox');
-		add_settings_field('affiliate-power-zanox-secret-key', 'Zanox Secret Key', array('Affiliate_Power_Settings', 'addZanoxSecretKeyField'), 'affiliate-power-options', 'affiliate-power-networks-zanox');
-		add_settings_field('affiliate-power-zanox-adspace', 'Zanox Werbefläche', array('Affiliate_Power_Settings', 'addZanoxAdspaceField'), 'affiliate-power-options', 'affiliate-power-networks-zanox');
+		add_settings_section('affiliate-power-networks-zanox', __('Zanox', 'affiliate-power'), array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
+		add_settings_field('affiliate-power-zanox-connect-id', __('Zanox ConnectId', 'affiliate-power'), array('Affiliate_Power_Settings', 'addZanoxConnectIdField'), 'affiliate-power-options', 'affiliate-power-networks-zanox');
+		add_settings_field('affiliate-power-zanox-public-key', __('Zanox Public Key', 'affiliate-power'), array('Affiliate_Power_Settings', 'addZanoxPublicKeyField'), 'affiliate-power-options', 'affiliate-power-networks-zanox');
+		add_settings_field('affiliate-power-zanox-secret-key', __('Zanox Secret Key', 'affiliate-power'), array('Affiliate_Power_Settings', 'addZanoxSecretKeyField'), 'affiliate-power-options', 'affiliate-power-networks-zanox');
+		add_settings_field('affiliate-power-zanox-adspace', __('Zanox Ad space name', 'affiliate-power'), array('Affiliate_Power_Settings', 'addZanoxAdspaceField'), 'affiliate-power-options', 'affiliate-power-networks-zanox');
 		
 		
 		
@@ -75,24 +82,27 @@ class Affiliate_Power_Settings {
 		?>
 		<div class="wrap">
 		<div class="icon32" style="background:url(<?php echo plugins_url('affiliate-power/img/affiliate-power-36.png'); ?>) no-repeat;"><br/></div>
-		<h2>Affiliate Power Einstellungen</h2>
+		<h2><?php _e('Affiliate Power Settings', 'affiliate-power'); ?></h2>
 		<?php
+		$meta_options = get_option('affiliate-power-meta-options');
 		//Check Licence
 		$options = get_option('affiliate-power-options');
 		if (isset($options['licence-key'])) {
-			echo '<div class="updated"><p><strong>Du hast einen gültigen Lizenzschlüssel eingegeben, aber die Premium-Version noch nicht heruntergeladen. Bitte begib dich zur <a href="update-core.php">Update Seite</a> und aktualisiere auf die Premium-Version. Unter Umständen  kann es bis zu 5 Minuten dauern, bis Wordpress die neue Version meldet.</strong></p></div>';
+			echo '<div class="updated"><p><strong>'.__('You entered a valid licence key but you did not download the premium version yet. Please go to the a href="update-core.php">Update Page</a> and update to the premium version. It can take up to 5 minutes until WordPress notifies you about the new version.', 'affiliate-power').'</strong></p></div>';
 		}
 		//Infotext
-		$meta_options = get_option('affiliate-power-meta-options');
 		if (isset($meta_options['infotext']) && $meta_options['hide-infotext'] == 0) {
 			echo '<div class="updated">'.$meta_options['infotext'].'</div>';
 		}
-		?>
-		<p>Solltest du Probleme und Vorschläge für neue Features haben, freue ich mich über einen Kommentar auf der <a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power/" target="_blank">Plugin Seite</a>.
-		<p>Dir gefällt das Plugin aber du möchtest noch mehr über deine Einnahmen wissen? Es gibt auch eine Premium-Version des Plugins, wo neben den Artikeln auch Userherkunft, Keywords, Landing-Pages und URL-Parameter wie utm_campaign getrackt werden können. Mehr Infos gibt es auf der <a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/" target="_blank">Premium Seite</a>.</p>
-		<p><strong>Mit Affiliate Power kannst du jetzt auch direkt Geld verdienen.</strong> Du bekommst satte 30% Provision für jeden vermittelten Verkauf der Premium-Version. <a href="http://www.j-breuer.de/wordpress-plugins/affiliate-power-partnerprogramm/" target="_blank"><strong>Alle Infos zum Partnerprogramm.</strong></a></p>
-		<p>Bitte habe etwas Geduld beim Speichern der Daten. Das Plugin führt einen Testlogin bei den Netzwerken durch.</p>
 		
+		_e('<p>If you have problems or ideas for new features I always appreciate a comment on the <a href="http://www.affiliatepowerplugin.com" target="_blank">Plugin Page</a> or a <a href="http://www.affiliatepowerplugin.com/contact/" target="_blank">Message</a>.</p>', 'affiliate-power');
+		
+		_e('<p>You like the plugin but you want to know more about your income? There is also a premium version of Affiliate Power where you can track the User Source, Keyword, Landing Page and URL-Parameters like utm_campaign. Find more information on the <a href="http://www.affiliatepowerplugin.com/premium/" target="_blank">Premium Page</a>.<p>', 'affiliate-power');
+		
+		_e('<p><strong>Now you can earn directly money with Affiliate Power.</strong> You get 30% Commission for each sale of the Premium-Version. <a href="http://www.affiliatepowerplugin.com/affiliate-program/" target="_blank"><strong>All Information about the Affiliate program.</strong></a></p>', 'affiliate-power');
+		
+		_e('<p>Please be patient when saving the settings. The plugin performs a test login at the networks while saving.</p>', 'affiliate-power');
+		?>
 		<form action="options.php" method="post">
 		<?php settings_fields('affiliate-power-options'); ?>
 		<?php do_settings_sections('affiliate-power-options'); ?>
@@ -102,6 +112,7 @@ class Affiliate_Power_Settings {
 		</div>
 		<?php
 	}
+	
 	
 	
 	static public function optionsMainText() {
@@ -115,7 +126,7 @@ class Affiliate_Power_Settings {
 		$checked = $options['add-sub-ids'] ? ' checked' : '';
 		echo "<input type='checkbox' id='affiliate-power-add-sub-ids' name='affiliate-power-options[add-sub-ids]' value='1' ".$checked." /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_sub_id_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_sub_id_info' style='display:none;'>Mit dem Tracking kannst du herausfinden, welche Artikel/Referer/Keywords etc. zu welchen Einnahmen geführt haben. Einnahmen, die du vor der Installation des Plugins erzielt hast, können nicht zugeordnet werden. Diese Option macht für fast alle Benutzer des Plugins Sinn.</div>";
+		_e("<div id='ap_sub_id_info' style='display:none;'>With the activated tracking, you can find out which articles/referer/keywords etc. led to which income. Sales, which occurred before the plugin installation can not be analyzed. This option makes sense for almost all plugin users.</div>", "affiliate-power");
 	}
 	
 	
@@ -125,7 +136,7 @@ class Affiliate_Power_Settings {
 		$checked = $options['send-mail-transactions'] ? ' checked' : '';
 		echo "<input type='checkbox' id='affiliate-power-send-mail-transactions' name='affiliate-power-options[send-mail-transactions]' value='1' ".$checked." /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_send_mail_transactions_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_send_mail_transactions_info' style='display:none;'>Du bekommst täglich eine E-Mail mit den am letzten Tag neuen oder geänderten Transaktionen. Wenn es keine neuen oder geänderten Transaktionen gibt, wird auch keine E-Mail verschickt.</div>";
+		_e("<div id='ap_send_mail_transactions_info' style='display:none;'>Receive a daily email with all new or changed sales. If there aren't any sales, no email will be send.</div>", "affiliate-power");
 	}
 	
 	static public function addLicenceKeyField() {
@@ -133,19 +144,42 @@ class Affiliate_Power_Settings {
 		if (!isset($options['licence-key'])) $options['licence-key'] = '';
 		echo "<input type='password' id='affiliate-power-licence-key' name='affiliate-power-options[licence-key]' size='40' value='".$options['licence-key']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_licence_key_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_licence_key_info' style='display:none;'>Affiliate Power gibt es auch als Premium-Version, für die ein Lizenzschlüssel benötigt wird. Mehr Infos zur Premium-Version gibt es auf der <a href='http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/' target='_blank'>Premium Seite</a>. Für die Nutzung der Basis-Version kann dieses Feld leer bleiben.</div>";
+		_e("<div id='ap_licence_key_info' style='display:none;'>There is also a premium version of Affiliate Power which requires a licence key. Find more information about the premium version on the <a href='http://www.affiliatepowerplugin.com/premium/' target='_blank'>Premium Page</a>. For using the basic version, leave this field empty.</div>", "affiliate-power");
 	}
 	
 	static public function addLandingParamsField() {
 		
-		echo "<input type='text' size='80' value='Nur in der Premium-Version' readonly='readonly' style='color:#888; cursor:pointer;' onclick='window.open(\"http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/\", \"_blank\")' /> ";
+		echo "<input type='text' size='80' value='".__('Only in the premium version', 'affiliate-power')."' readonly='readonly' style='color:#888; cursor:pointer;' onclick='window.open(\"".__('http://www.affiliatepowerplugin.com/premium/', 'affiliate-power')."\", \"_blank\")' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_landing_params_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_landing_params_info' style='display:none;'>Hier kannst du URL-Parameter definieren, die du tracken möchtest. Mehrere Parameter einfach durch ein Komma trennen. Wenn du das Kampagnen-Tracking von Google Analytics benutzt, eignen sich zum Beispiel folgende Werte: <em>utm_campaign,utm_source,utm_medium,utm_term,utm_content</em>.</div>";
+		_e("<div id='ap_landing_params_info' style='display:none;'>Here you can define URL-Parameters you want to track. You can separate several parameters with comma. If you are using Google Analytics campaign tracking, this values may be a good start: <em>utm_campaign,utm_source,utm_medium,utm_term,utm_content</em>.</div>", "affiliate-power");
 	}
+	
+	
+	//Webworker Dashboard
+	static public function optionsWebworkerDashboardText() {
+		_e('With the <a href="https://www.webworker-dashboard.de" target="_blank">Webworker Dashboard</a> you can keep track of all your projects. If you have an account there, you can import your affiliate earnings automatically by entering your account details here. This is completely optional. If you do not enter your account details, no data will be send.', 'affiliate-power');
+	}
+	
+	static public function addWebworkerDashboardUsernameField() {
+		$options = get_option('affiliate-power-options');
+		if (!isset($options['webworker-dashboard-username'])) $options['webworker-dashboard-username'] = '';
+		echo "<input type='text' id='affiliate-power-webworker-dashboard-username' name='affiliate-power-options[webworker-dashboard-username]' size='40' value='".$options['webworker-dashboard-username']."' /> ";
+		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_webworker_dashboard_username_info\").style.display=\"block\"; return false;'>[?]</a></span>";
+		_e("<div id='ap_webworker_dashboard_username_info' style='display:none;'>This is the normal Email address you use to login at the Webworker Dashboard.</div>", "affiliate-power");
+	}
+	
+	static public function addWebworkerDashboardApiKeyField() {
+		$options = get_option('affiliate-power-options');
+		if (!isset($options['webworker-dashboard-apikey'])) $options['webworker-dashboard-apikey'] = '';
+		echo "<input type='text' id='affiliate-power-webworker-dashboard-apikey' name='affiliate-power-options[webworker-dashboard-apikey]' size='40' value='".$options['webworker-dashboard-apikey']."' /> ";
+		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_webworker_dashboard_apikey_info\").style.display=\"block\"; return false;'>[?]</a></span>";
+		_e("<div id='ap_webworker_dashboard_apikey_info' style='display:none;'>The API password is a special access to the Webworker Dashboard API. Please do <strong>not</strong> enter your normal Webworker Dashboard password here. The API Key can be created in the login area, menu item Settings -> APIs. Select \"Webworker Dashboard\" in the select box and click \"Add API\".</div>", "affiliate-power");
+	}
+	
 	
 	//Network Settings
 	static public function optionsNetworksText() {
-		echo '<p>Damit das Tracking funktioniert, musst du hier deine Daten bei den Affiliate-Netzwerken hinterlegen, die du benutzt. <a href=" http://www.j-breuer.de/wordpress-plugins/affiliate-power/#daten-sicherheit" target="_blank">Sind meine Daten sicher?</a></p>';
+		_e('<p>In order to download your sales, you have to enter your data of the affiliate networks you are using. <a href=" http://www.affiliatepowerplugin.com/#data-security" target="_blank">Whats about data security?</a></p>', 'affiliate-power');
 	}
 	
 	
@@ -155,7 +189,7 @@ class Affiliate_Power_Settings {
 		if (!isset($options['adcell-username'])) $options['adcell-username'] = '';
 		echo "<input type='text' id='affiliate-power-adcell-username' name='affiliate-power-options[adcell-username]' size='40' value='".$options['adcell-username']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_adcell_username_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_adcell_username_info' style='display:none;'>Der Adcell Username ist die Nummer, mit der du dich auch auf adcell.de einloggst.</div>";
+		_e("<div id='ap_adcell_username_info' style='display:none;'>The Adcell Username is the number, you are using to login on the adcell page.</div>", "affiliate-power");
 	}
 	
 	static public function addAdcellPasswordField() {
@@ -163,7 +197,7 @@ class Affiliate_Power_Settings {
 		if (!isset($options['adcell-password'])) $options['adcell-password'] = '';
 		echo "<input type='text' id='affiliate-power-adcell-password' name='affiliate-power-options[adcell-password]' size='40' value='".$options['adcell-password']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_adcell_password_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_adcell_password_info' style='display:none;'>Das Adcell Schnittstellen Passwort ist ein spezieller Zugang zur API von Adcell. Bitte gib hier <strong>nicht</strong> das normale Adcell Passwort an. Du musst das Schnittstellen Passwort im Login-Bereich von Adcell unter \"Meine Daten\" festlegen und hier eintragen.</div>";
+		_e("<div id='ap_adcell_password_info' style='display:none;'>The Adcell API password is a special access to the Adcell API. Please do <strong>not</strong> enter your normal Adcell password here. The API password can be defined in the publisher area, menu item \"My Data\".</div>", "affiliate-power");
 	}
 	
 	static public function addAdcellRefererFilterField() {
@@ -172,15 +206,17 @@ class Affiliate_Power_Settings {
 		$checked = $options['adcell-referer-filter'] ? ' checked' : '';
 		echo "<input type='checkbox' id='affiliate-power-adcell-referer-filter' name='affiliate-power-options[adcell-referer-filter]' value='1' ".$checked." /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_adcell_referer_filter_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_adcell_referer_filter_info' style='display:none;'>Nur Transaktionen berücksichtigen, die von dieser Domain kommen. Diese Option macht nur Sinn, wenn du deinen Adcell Account für mehrere Seiten benutzt.</div>";
+		_e("<div id='ap_adcell_referer_filter_info' style='display:none;'>Only save sales, which came from this domain. This option makes only sense if you are using your Adcell account for several pages", "affiliate-power");
 	}
+
+	
 	//Affili.net
 	static public function addAffiliIdField() {
 		$options = get_option('affiliate-power-options');
 		if (!isset($options['affili-id'])) $options['affili-id'] = '';
 		echo "<input type='text' id='affiliate-power-affili-id' name='affiliate-power-options[affili-id]' size='40' value='".$options['affili-id']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_affili_id_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_affili_id_info' style='display:none;'>Die Affili.net UserId ist die 6-stellige Nummer, mit der du dich auch auf affili.net einloggst.</div>";
+		_e("<div id='ap_affili_id_info' style='display:none;'>The Affili.net UserId is the 6-digit number, you are using to login on affili.net.</div>", "affiliate-power");
 	}
 	
 	static public function addAffiliPasswordField() {
@@ -188,7 +224,7 @@ class Affiliate_Power_Settings {
 		if (!isset($options['affili-password'])) $options['affili-password'] = '';
 		echo "<input type='text' id='affiliate-power-affili-password' name='affiliate-power-options[affili-password]' size='40' value='".$options['affili-password']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_affili_password_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_affili_password_info' style='display:none;'>Das Affili.net PublisherWebservice Passwort ist ein spezieller Zugang zur API von Affili.net. Bitte gib hier <strong>nicht</strong> das normale affili.net Passwort an. Du findest das PublisherWebservice Passwort im Login-Bereich von affili.net unter Konto -> Technische Einstellungen -> Webservices. Eventuell musst du das Passwort erst noch anfordern.</div>";
+		_e("<div id='ap_affili_password_info' style='display:none;'>The affili.net PublisherWebservice Password is a special access the the affili.net API. Please do <strong>not</strong> enter your normal affili.net password here. You can find the PublisherWebservice Password in the publisher area of affili.net, menu item Account -> Technical settings -> Webservices. It may be necessary to request the password via the request button first.</div>", "affiliate-power");
 	}
 	
 	
@@ -199,7 +235,7 @@ class Affiliate_Power_Settings {
 		if (!isset($options['belboon-username'])) $options['belboon-username'] = '';
 		echo "<input type='text' id='affiliate-power-belboon-username' name='affiliate-power-options[belboon-username]' size='40' value='".$options['belboon-username']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_belboon_username_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_belboon_username_info' style='display:none;'>Der Belboon Benutzername ist der Name, den du auch beim normalen Login eingibst. Bitte achte hier unbedingt auf Groß- und Kleinschreibung.</div>";
+		_e("<div id='ap_belboon_username_info' style='display:none;'>The Belboon username is the name you use to login on the Belboon page. This name is case-sensitive.</div>", "affiliate-power");
 	}
 	
 	static public function addBelboonPasswordField() {
@@ -207,7 +243,7 @@ class Affiliate_Power_Settings {
 		if (!isset($options['belboon-password'])) $options['belboon-password'] = '';
 		echo "<input type='text' id='affiliate-power-belboon-password' name='affiliate-power-options[belboon-password]' size='40' value='".$options['belboon-password']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_belboon_password_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_belboon_password_info' style='display:none;'>Das Belboon WebService Passwort ist ein spezieller Zugang zur API von Belboon. Bitte gib hier <strong>nicht</strong> das normale Belboon Passwort an. Du findest das WebService Passwort im Login-Bereich auf der linken Seite unter Tools & Services -> Webservices. Eventuell musst du das Passwort erst noch anfordern.</div>";
+		_e("<div id='ap_belboon_password_info' style='display:none;'>The belboon WebService Password is a special access the the belboon API. Please do <strong>not</strong> enter your normal belboon password here. You can find the WebService Password in the publisher area, left-hand side, menu item Tools & Services -> Webservices. It may be necessary to request the password first.</div>", "affiliate-power");
 	}
 	
 	static public function addBelboonPlatformField() {
@@ -215,7 +251,7 @@ class Affiliate_Power_Settings {
 		if (!isset($options['belboon-platform'])) $options['belboon-platform'] = '';
 		echo "<input type='text' id='affiliate-power-belboon-platform' name='affiliate-power-options[belboon-platform]' size='40' value='".$options['belboon-platform']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_belboon_platform_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_belboon_platform_info' style='display:none;'>Wenn du deinen Belboon Account für mehrere Seiten benutzt, kannst du hier die bei Belboon eingetragene Werbeplattform für diese Seite eintragen. Das Plugin wird dann nur die Sales importieren, die zu dieser Werbeplattform gehören. Wenn du den Account sowieso nur für diese Seite nutzt, kannst du das Feld einfach leer lassen. In diesem Fall importiert das Plugin alle Sales.</div>";
+		_e("<div id='ap_belboon_platform_info' style='display:none;'>If you are using your belboon account for several pages, you can enter the ad platform name for this page here. The plugin will only import sales from this ad platform. Please do <strong>not</strong> enter the ad platform id but the name. You can find the ad platform name in the publisher area, left-hand side, menu item Overview ad platforms. If you are using several ad platforms for this page you can separate the ad platform names with comma. If you are using your belboon account only for this page anyway, just leave the field empty. In this case, the plugin will download all sales.</div>", "affiliate-power");
 	}
 	
 	
@@ -225,7 +261,7 @@ class Affiliate_Power_Settings {
 		if (!isset($options['cj-id'])) $options['cj-id'] = '';
 		echo "<input type='text' id='affiliate-power-cj-id' name='affiliate-power-options[cj-id]' size='40' value='".$options['cj-id']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_cj_id_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_cj_id_info' style='display:none;'>Die PID identifiziert deine Webseite bei Commission Junction. Du findest sie im Login-Bereich von Commission Junction im Reiter Account -> Website Einstellungen.</div>";
+		_e("<div id='ap_cj_id_info' style='display:none;'>The PID identifies your website at Commission Junction. You can find it in the publisher area of Commission Junction at the menu item Account -> Website Settings.</div>", "affiliate-power");
 	}
 	
 	static public function addCjKeyField() {
@@ -233,7 +269,7 @@ class Affiliate_Power_Settings {
 		if (!isset($options['cj-key'])) $options['cj-key'] = '';
 		echo "<input type='text' id='affiliate-power-cj-key' name='affiliate-power-options[cj-key]' size='40' value='".$options['cj-key']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_cj_key_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_cj_key_info' style='display:none;'>Der Commission Junction Developer Key ist ein spezieller Zugang zur API von Commission Junction.  Bitte gib hier <strong>nicht</strong> das normale Passwort an. Um den Key zu bekommen musst du auf der <a href='http://www.cj.com/webservices' target='_blank'>Webservice-Seite von Commission Junction</a> auf \"Register for a Key\" klicken und dich mit deinen Account-Daten anmelden.</div>";
+		_e("<div id='ap_cj_key_info' style='display:none;'>The Commission Junction Developer Key is a special access to the Commission Junction API. Please do <strong>not</strong> enter your normal password here. In order to get the key, you have to go to the <a href='http://www.cj.com/webservices' target='_blank'>Webservice-Site of Commission Junction</a>, click on \"Register for a Key\" and login with your normal account data.</div>", "affiliate-power");
 	}
 	
 	
@@ -244,7 +280,7 @@ class Affiliate_Power_Settings {
 		if (!isset($options['superclix-username'])) $options['superclix-username'] = '';
 		echo "<input type='text' id='affiliate-power-superclix-username' name='affiliate-power-options[superclix-username]' size='40' value='".$options['superclix-username']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_superclix_username_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_superclix_username_info' style='display:none;'>Der Superclix Username ist der Name, den du auch beim normalen Login eingibst. Bitte achte hier unbedingt auf Groß- und Kleinschreibung.</div>";
+		_e("<div id='ap_superclix_username_info' style='display:none;'>The Superclix username is the name you use to login on the Superclix page. This name is case-sensitive.</div>", "affiliate-power");
 	}
 	
 	static public function addSuperclixPasswordField() {
@@ -252,7 +288,7 @@ class Affiliate_Power_Settings {
 		if (!isset($options['superclix-password'])) $options['superclix-password'] = '';
 		echo "<input type='text' id='affiliate-power-superclix-password' name='affiliate-power-options[superclix-password]' size='40' value='".$options['superclix-password']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_superclix_password_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_superclix_password_info' style='display:none;'>Das Superclix Export Passwort ist ein spezieller Zugang zur API von Superclix. Bitte gib hier <strong>nicht</strong> das normale Superclix Passwort an. Du musst das Export Passwort im Login-Bereich von Superclix unter \"Konto -> Passwort ändern \" festlegen und hier eintragen.</div>";
+		_e("<div id='ap_superclix_password_info' style='display:none;'>The Superclix export password is a special access to the Superclix API. Please do <strong>not</strong> enter your normal password here. The export password can be defined in the publisher area, menu item \"Account -> Change password \".</div>", "affiliate-power");
 	}
 	
 	
@@ -262,7 +298,7 @@ class Affiliate_Power_Settings {
 		if (!isset($options['tradedoubler-key'])) $options['tradedoubler-key'] = '';
 		echo "<input type='text' id='affiliate-power-tradedoubler-key' name='affiliate-power-options[tradedoubler-key]' size='40' value='".$options['tradedoubler-key']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_tradedoubler_key_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_tradedoubler_key_info' style='display:none;'>Der Tradedoubler Report Key ist ein spezieller Zugang zur API von Tradedoubler. Bitte gib hier <strong>nicht</strong> das normale Tradedoubler Passwort an. Um den Tradedoubler Key zu bekommen, musst du eine E-Mail mit deinem Tradedoubler Benutzernamen an <a href='mailto:support.de@tradedoubler.com'>support.de@tradedoubler.com</a> schicken mit der Bitte für die Report API freigeschaltet zu werden. Du bekommst dann eine E-Mail mit dem Key.</div>";
+		_e("<div id='ap_tradedoubler_key_info' style='display:none;'>The Tradedoubler Report Key is a special access to the Tradedoubler API. Please do <strong>not</strong> enter your normal Tradedoubler password here. In order to get the Tradedoubler Report Key, you have to wirte an email with your username to <a href='mailto:support.uk@tradedoubler.com'>support.uk@tradedoubler.com</a> (you can also change the country code if you are not in the UK) and ask for a Report Key. You will get an email with the key.</div>", "affiliate-power");
 	}
 	
 	static public function addTradedoublerSitenameField() {
@@ -270,7 +306,7 @@ class Affiliate_Power_Settings {
 		if (!isset($options['tradedoubler-sitename'])) $options['tradedoubler-sitename'] = '';
 		echo "<input type='text' id='affiliate-power-tradedoubler-sitename' name='affiliate-power-options[tradedoubler-sitename]' size='40' value='".$options['tradedoubler-sitename']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_tradedoubler_sitename_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_tradedoubler_sitename_info' style='display:none;'>Wenn du deinen Tradedoubler Account für mehrere Seiten benutzt, kannst du hier den bei Tradedoubler eingetragenen Seitennamen für diese Seite eintragen. Das Plugin wird dann nur die Sales importieren, die zu diesem Seitennamen gehören. Wenn du den Account sowieso nur für diese Seite nutzt, kannst du das Feld einfach leer lassen. In diesem Fall importiert das Plugin alle Sales.</div>";
+		_e("<div id='ap_tradedoubler_sitename_info' style='display:none;'>If you are using your Tradedoubler account for several pages, enter the site name you defined in the Tradedoubler login area for this page. The plugin will only import sales from this site name. Please do <strong>not</strong> enter the site id but the name. You can find the site name in the publisher area, menu item Sites -> Sites. If you are using several sites for this page you can separate the site names with comma. If you are using your account only for this page anyway, just leave the field empty. In this case, the plugin will download all sales.</div>", "affiliate-power");
 	}
 	
 	
@@ -281,13 +317,7 @@ class Affiliate_Power_Settings {
 		if (!isset($options['zanox-connect-id'])) $options['zanox-connect-id'] = '';
 		echo "<input type='text' id='affiliate-power-zanox-connect-id' name='affiliate-power-options[zanox-connect-id]' size='40' value='".$options['zanox-connect-id']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_zanox_connect_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_zanox_connect_info' style='display:none;'>Die Zanox ConnectId wird für den Zugriff auf die Zanox Transaktionen benötigt. Die Schritte, um diese zu bekommen sind bei Zanox etwas umständlich aber gemeinsam bekommen wir das schon hin:
-		<ol>
-		<li>Auf <a href='http://apps.zanox.com'>http://apps.zanox.com</a> oben rechts auf \"Connect with Zanox\" klicken und dich mit deinen normalen Zanox-Daten einloggen</li>
-		<li>Im Tab \"Developers\" unter \"My own Applications\" den Bedingungen zustimmen und auf \"Become a developer\" klicken</li>
-		<li>Auf den neu erschienen Button \"New application\" und dann auf \"zanox keys\" klicken</li>
-		</ol>
-		</div>";
+		_e("<div id='ap_zanox_connect_info' style='display:none;'>The Zanox ConnectId is required to import sales from zanox. It's not that simple to get it, but together we will work it out:<ol><li>Go to <a href='http://apps.zanox.com' target='_blank'>http://apps.zanox.com</a>, click on \"Connect with Zanox\" in the top-right corner and login with your normal Zanox account data</li><li>Go to the tab \"Developers\" -> \"My own Applications\", accept the terms and click on \"Become a developer\"</li><li>Click on the new button \"New application\" and then \"zanox keys\"</li></ol></div>", "affiliate-power");
 	}
 	
 	static public function addZanoxPublicKeyField() {
@@ -295,13 +325,7 @@ class Affiliate_Power_Settings {
 		if (!isset($options['zanox-public-key'])) $options['zanox-public-key'] = '';
 		echo "<input type='text' id='affiliate-power-zanox-public-key' name='affiliate-power-options[zanox-public-key]' size='40' value='".$options['zanox-public-key']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_zanox_public_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_zanox_public_info' style='display:none;'>Der Zanox PublicKey wird für den Zugriff auf die Zanox Transaktionen benötigt. Die Schritte, um diesen zu bekommen sind bei Zanox etwas umständlich aber gemeinsam bekommen wir das schon hin:
-		<ol>
-		<li>Auf <a href='http://apps.zanox.com'>http://apps.zanox.com</a> oben rechts auf \"Connect with Zanox\" klicken und dich mit deinen normalen Zanox-Daten einloggen</li>
-		<li>Im Tab \"Developers\" unter \"My own Applications\" den Bedingungen zustimmen und auf \"Become a developer\" klicken</li>
-		<li>Auf den neu erschienen Button \"New application\" und dann auf \"zanox keys\" klicken</li>
-		</ol>
-		</div>";
+		_e("<div id='ap_zanox_public_info' style='display:none;'>The Zanox PublicKey is required to import sales from zanox. It's not that simple to get it, but together we will work it out:<ol><li>Go to <a href='http://apps.zanox.com' target='_blank'>http://apps.zanox.com</a>, click on \"Connect with Zanox\" in the top-right corner and login with your normal Zanox account data</li><li>Go to the tab \"Developers\" -> \"My own Applications\", accept the terms and click on \"Become a developer\"</li><li>Click on the new button \"New application\" and then \"zanox keys\"</li></ol></div>", "affiliate-power");
 	}
 	
 	static public function addZanoxSecretKeyField() {
@@ -309,13 +333,7 @@ class Affiliate_Power_Settings {
 		if (!isset($options['zanox-secret-key'])) $options['zanox-secret-key'] = '';
 		echo "<input type='text' id='affiliate-power-zanox-secret-key' name='affiliate-power-options[zanox-secret-key]' size='40' value='".$options['zanox-secret-key']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_zanox_secret_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_zanox_secret_info' style='display:none;'>Der Zanox SecretKey wird für den Zugriff auf die Zanox Transaktionen benötigt. Die Schritte, um diesen zu bekommen sind bei Zanox etwas umständlich aber gemeinsam bekommen wir das schon hin:
-		<ol>
-		<li>Auf <a href='http://apps.zanox.com'>http://apps.zanox.com</a> oben rechts auf \"Connect with Zanox\" klicken und dich mit deinen normalen Zanox-Daten einloggen</li>
-		<li>Im Tab \"Developers\" unter \"My own Applications\" den Bedingungen zustimmen und auf \"Become a developer\" klicken</li>
-		<li>Auf den neu erschienen Button \"New application\" und dann auf \"zanox keys\" klicken</li>
-		</ol>
-		</div>";
+		_e("<div id='ap_zanox_secret_info' style='display:none;'>The Zanox SecretKey is required to import sales from zanox. It's not that simple to get it, but together we will work it out:<ol><li>Go to <a href='http://apps.zanox.com' target='_blank'>http://apps.zanox.com</a>, click on \"Connect with Zanox\" in the top-right corner and login with your normal Zanox account data</li><li>Go to the tab \"Developers\" -> \"My own Applications\", accept the terms and click on \"Become a developer\"</li><li>Click on the new button \"New application\" and then \"zanox keys\"</li></ol></div>", "affiliate-power");
 	}
 	
 	static public function addZanoxAdspaceField() {
@@ -323,7 +341,7 @@ class Affiliate_Power_Settings {
 		if (!isset($options['zanox-adspace'])) $options['zanox-adspace'] = '';
 		echo "<input type='text' id='affiliate-power-zanox-adspace' name='affiliate-power-options[zanox-adspace]' size='40' value='".$options['zanox-adspace']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_zanox_adspace_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		echo "<div id='ap_zanox_adspace_info' style='display:none;'>Wenn du deinen Zanox Account für mehrere Seiten benutzt, kannst du hier die bei Zanox eingetragene Werbefläche für diese Seite eintragen. Das Plugin wird dann nur die Sales importieren, die zu dieser Werbefläche gehören. Wenn du den Account sowieso nur für diese Seite nutzt, kannst du das Feld einfach leer lassen. In diesem Fall importiert das Plugin alle Sales.</div>";
+		_e("<div id='ap_zanox_adspace_info' style='display:none;'>If you are using your Zanox account for several pages, enter the ad space name you defined in the  login area for this page. The plugin will only import sales from this ad space name. Please do <strong>not</strong> enter the ad space id but the name. You can find the ad space name in the publisher area, menu item Profile -> My Ad Spaces. If you are using several ad spaces for this page you can separate the ad space names with comma. If you are using your account only for this page anyway, just leave the field empty. In this case, the plugin will download all sales.</div>", "affiliate-power");
 	}
 	
 	
@@ -343,18 +361,34 @@ class Affiliate_Power_Settings {
 
 		if (isset($input['licence-key']) && ctype_alnum($input['licence-key'])) {
 			$check_result = Affiliate_Power_Apis::checkLicenceKey($input['licence-key']);
-			if ($check_result == false || $check_result == 'database_error' || $check_result == 'database_charset_error') add_settings_error('affiliate-power-options', 'affiliate-power-error-licence-key', 'Der Lizenzschlüssel konnte nicht überprüft werden. Bitte versuche es später nochmal und <a href="http://www.j-breuer.de/kontakt/" target="_blank">sag mir Bescheid</a> falls es noch immer nicht geht.');
-			elseif ($check_result == 'outdated_key') add_settings_error('affiliate-power-options', 'affiliate-power-error-licence-key', 'Der Lizenzschlüssel ist abgelaufen. Bitte erneuere den Lizenzschlüssel.');
-			elseif ($check_result == 'invalid_key_format' || $check_result == 'invalid_key') add_settings_error('affiliate-power-options', 'affiliate-power-error-licence-key', 'Der Lizenzschlüssel ist ungültig. Bitte überprüfe deine Eingabe. Falls du sicher bist, dass du den Schlüssel richtig eingegeben hast, <a href="http://www.j-breuer.de/kontakt/" target="_blank">sag mir Bescheid</a>, dann überprüfe ich das.');
+			if ($check_result == false || $check_result == 'database_error' || $check_result == 'database_charset_error') add_settings_error('affiliate-power-options', 'affiliate-power-error-licence-key', __('The licence key could not be checked. Please try again later and <a href="http://www.affiliatepowerplugin.com/contact/" target="_blank">let me know</a> if it is still not working.', 'affiliate-power') );
+			elseif ($check_result == 'outdated_key') add_settings_error('affiliate-power-options', 'affiliate-power-error-licence-key', __('The licence key is outdated. Please renew your licence key.', 'affiliate-power') );
+			elseif ($check_result == 'invalid_key_format' || $check_result == 'invalid_key') add_settings_error('affiliate-power-options', 'affiliate-power-error-licence-key', __('The licence key is invalid. Please check again. If you are sure you entered the right key, <a href="http://www.affiliatepowerplugin.com/contact/" target="_blank">let me know</a>, and I will check it out.', 'affiliate-power') );
 			elseif ($check_result == 'ok') $whitelist['licence-key'] = $input['licence-key'];
 		}
-		elseif (!empty($input['licence-key'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-licence-key', 'Ungültiger Lizenzschlüssel. Der Schlüssel sollte nur aus Zahlen und Buchstaben bestehen.');
+		elseif (!empty($input['licence-key'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-licence-key', __('Invalid licence key. The key should only contain numbers and letters.', 'affiliate-power'));
 		
 		//if (is_numeric($input['download-method'])) $whitelist['download-method'] = (int)$input['download-method'];
 		
+		
+		//Webworker Dashboard
+		if (is_email($input['webworker-dashboard-username'])) $whitelist['webworker-dashboard-username'] = $input['webworker-dashboard-username'];
+		elseif (!empty($input['webworker-dashboard-username'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-webworker-dashboard-username', __('Invalid Webworker Dashboard email address. This is not a valid email address.', 'affiliate-power'), 'error');
+		
+		if (ctype_alnum($input['webworker-dashboard-apikey']) && strlen($input['webworker-dashboard-apikey']) == 32) $whitelist['webworker-dashboard-apikey'] = $input['webworker-dashboard-apikey'];
+		elseif (!empty($input['webworker-dashboard-apikey'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-webworker-dashboard-apikey', __('Invalid Webworker Dashboard Apikey. The Apikey should be 32 characters long and only contain numbers and letters. Please do not enter your normal Webworker Dashboard password, but yourApikey', 'affiliate-power'), 'error');
+		
+		if (isset($whitelist['webworker-dashboard-username']) && isset($whitelist['webworker-dashboard-apikey'])) {
+			include_once('apis/webworker-dashboard.php');
+			if (!Affiliate_Power_Api_Webworker_Dashboard::checkLogin($whitelist['webworker-dashboard-username'], $whitelist['webworker-dashboard-apikey'])){
+				add_settings_error('affiliate-power-options', 'affiliate-power-error-webworker-dashboard-login', __('Webworker Dashboard test login failed. Please check your data.', 'affiliate-power'), 'error');
+			}
+		}
+		
+		
 		//Adcell
 		if (is_numeric($input['adcell-username'])) $whitelist['adcell-username'] = $input['adcell-username'];
-		elseif (!empty($input['adcell-username'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-adcell-username', 'Ungültiger Adcell Username. Der Username darf ausschließlich aus Zahlen bestehen', 'error');
+		elseif (!empty($input['adcell-username'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-adcell-username', __('Invalid Adcell username. The username should only contain numbers and letters.', 'affiliate-power'), 'error');
 		
 		if (!empty($input['adcell-password'])) $whitelist['adcell-password'] = esc_html($input['adcell-password']);
 		
@@ -364,25 +398,26 @@ class Affiliate_Power_Settings {
 		if (isset($whitelist['adcell-username']) && isset($whitelist['adcell-password'])) {
 			include_once('apis/adcell.php');
 			if (!Affiliate_Power_Api_Adcell::checkLogin($whitelist['adcell-username'], $whitelist['adcell-password'])){
-				add_settings_error('affiliate-power-options', 'affiliate-power-error-adcell-login', 'Testlogin bei Adcell fehlgeschlagen. Bitte überprüfe Deine Daten.', 'error');
+				add_settings_error('affiliate-power-options', 'affiliate-power-error-adcell-login', __('Adcell test login failed. Please check your data.', 'affiliate-power'), 'error');
 			}
 		}
 		
 		
+		
 		//Affili.net
 		if (is_numeric($input['affili-id'])) $whitelist['affili-id'] = $input['affili-id'];
-		elseif (!empty($input['affili-id'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-affili-id', 'Ungültige Affili.net Id. Die Id darf ausschließlich aus Zahlen bestehen', 'error');
+		elseif (!empty($input['affili-id'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-affili-id', __('Invalid Affili.net Id. The Id should only contain numbers.', 'affiliate-power'), 'error');
 		
 		if (ctype_alnum($input['affili-password']) && strlen($input['affili-password']) == 20) $whitelist['affili-password'] = $input['affili-password'];
-		elseif (!empty($input['affili-password'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-affili-password', 'Ungültiges Affili.net PublisherWebservice Passwort. Das Passwort muss 20 Zeichen lang sein und nur Zahlen und Buchstaben enthalten. Bitte gib nicht dein normales Affili.net Passwort an, sondern dein PublisherWebservice Passwort.', 'error');
+		elseif (!empty($input['affili-password'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-affili-password', __('Invalid Affili.net PublisherWebservice password. The password should be 20 characters long and only contain numbers and letters. Please do not enter your normal Affili.net password, but your PublisherWebservice password', 'affiliate-power'), 'error');
 		
 		if (isset($whitelist['affili-id']) && isset($whitelist['affili-password'])) {
 			include_once('apis/affili.php');	
 			if (!extension_loaded('soap')) {
-				add_settings_error('affiliate-power-options', 'affiliate-power-error-soap', 'Für den Download der Affili.net Transaktionen wird das PHP-Modul SOAP benötigt. Dieses ist bei dir nicht aktiviert. Bitte aktiviere das Modul.', 'error');
+				add_settings_error('affiliate-power-options', 'affiliate-power-error-soap', __('In order to download the Affili.net sales the PHP-module SOAP is required. This seems to be not activated on your server. Please activate the module. If you don\'t know how to do this, your webhoster can assist you.', 'affiliate-power'), 'error');
 			}
 			elseif (!Affiliate_Power_Api_Affili::checkLogin($whitelist['affili-id'], $whitelist['affili-password'])){
-				add_settings_error('affiliate-power-options', 'affiliate-power-error-affili-login', 'Testlogin bei Affili.net fehlgeschlagen. Bitte überprüfe Deine Daten.', 'error');
+				add_settings_error('affiliate-power-options', 'affiliate-power-error-affili-login', __('Affili.net test login failed. Please check your data.', 'affiliate-power'), 'error');
 			}
 		}
 		
@@ -392,15 +427,15 @@ class Affiliate_Power_Settings {
 		if (!empty($input['belboon-username'])) $whitelist['belboon-username'] = esc_html($input['belboon-username']);
 		
 		if (ctype_alnum($input['belboon-password']) && strlen($input['belboon-password']) == 20) $whitelist['belboon-password'] = $input['belboon-password'];
-		elseif (!empty($input['belboon-password'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-belboon-password', 'Ungültiges Belboon  WebService Passwort. Das Passwort muss 20 Zeichen lang sein und nur Zahlen und Buchstaben enthalten. Bitte gib nicht dein normales Belboon Passwort an, sondern dein WebService Passwort.', 'error');
+		elseif (!empty($input['belboon-password'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-belboon-password', __('Invalid Belboon WebService password. The password should be 20 characters long and only contain numbers and letters. Please do not enter your normal Belboon password, but your WebService password.', 'affiliate-power'), 'error');
 		
 		if (isset($whitelist['belboon-username']) && isset($whitelist['belboon-password'])) {
 			include_once('apis/belboon.php');
 			if (!extension_loaded('soap')) {
-				add_settings_error('affiliate-power-options', 'affiliate-power-error-soap', 'Für den Download der Belboon Transaktionen wird das PHP-Modul SOAP benötigt. Dieses ist bei dir nicht aktiviert. Bitte aktiviere das Modul.', 'error');
+				add_settings_error('affiliate-power-options', 'affiliate-power-error-soap', __('In order to download the Belboon sales the PHP-module SOAP is required. This seems to be not activated on your server. Please activate the module. If you don\'t know how to do this, your webhoster can assist you.', 'affiliate-power'), 'error');
 			}
 			elseif (!Affiliate_Power_Api_Belboon::checkLogin($whitelist['belboon-username'], $whitelist['belboon-password'])){
-				add_settings_error('affiliate-power-options', 'affiliate-power-error-belboon-login', 'Testlogin bei Belboon fehlgeschlagen. Bitte überprüfe Deine Daten.', 'error');
+				add_settings_error('affiliate-power-options', 'affiliate-power-error-belboon-login', __('Belboon test login failed. Please check your data.', 'affiliate-power'), 'error');
 			}
 		}
 		
@@ -409,18 +444,18 @@ class Affiliate_Power_Settings {
 		
 		//Commission Junction
 		if (is_numeric($input['cj-id'])) $whitelist['cj-id'] = $input['cj-id'];
-		elseif (!empty($input['cj-id'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-cj-id', 'Ungültige Commission Junction PID. Die PID darf ausschließlich aus Zahlen bestehen', 'error');
+		elseif (!empty($input['cj-id'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-cj-id', __('Invalid Commission Junction PID. The  PID should only contain numbers.', 'affiliate-power'), 'error');
 		
 		if (strlen($input['cj-key']) > 20) $whitelist['cj-key'] = esc_html($input['cj-key']);
-		elseif (!empty($input['cj-key'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-cj-key', 'Ungültiger Commission Junction Developer Key. Der Key muss über 20 Zeichen lang sein. Bitte gib nicht dein normales Passwort an, sondern deinen Developer Key.', 'error');
+		elseif (!empty($input['cj-key'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-cj-key',  __('Invalid cj developer key. The key should be longer than 20 characters Please do not enter your normal cj password, but your developer key.', 'affiliate-power'), 'error');
 		
 		if (isset($whitelist['cj-id']) && isset($whitelist['cj-key'])) {
 			include_once('apis/cj.php');	
 			if (!class_exists('DOMDocument')) {
-				add_settings_error('affiliate-power-options', 'affiliate-power-error-dom', 'Für den Download der Commission Junction Transaktionen wird die PHP-Klasse DomDocument benötigt. Diese ist bei dir offenbar nicht vorhanden. Bitte binde die Klasse ein.', 'error');
+				add_settings_error('affiliate-power-options', 'affiliate-power-error-dom', __('In order to download the Commission Junction Sales, the PHP-Class DomDocument is required. This class semms to be not included on your server. Please include the class. If you don\'t know how to do this, your webhoster can assist you.', 'affiliate-power'), 'error');
 			}
 			elseif (!Affiliate_Power_Api_Cj::checkLogin($whitelist['cj-id'], $whitelist['cj-key'])){
-				add_settings_error('affiliate-power-options', 'affiliate-power-error-cj-login', 'Testlogin bei Commission Junction fehlgeschlagen. Bitte überprüfe Deine Daten.', 'error');
+				add_settings_error('affiliate-power-options', 'affiliate-power-error-cj-login', __('Commission Junction test login failed. Please check your data.', 'affiliate-power'), 'error');
 			}
 		}
 		
@@ -434,19 +469,19 @@ class Affiliate_Power_Settings {
 		if (isset($whitelist['superclix-username']) && isset($whitelist['superclix-password'])) {
 			include_once('apis/superclix.php');
 			if (!Affiliate_Power_Api_Superclix::checkLogin($whitelist['superclix-username'], $whitelist['superclix-password'])){
-				add_settings_error('affiliate-power-options', 'affiliate-power-error-superclix-login', 'Testlogin bei Superclix fehlgeschlagen. Bitte überprüfe Deine Daten. Denk daran, dass spezielle Export Passwort anzugeben und nicht das normale Passwort', 'error');
+				add_settings_error('affiliate-power-options', 'affiliate-power-error-superclix-login', __('Superclix test login failed. Please check your data. Don\'t forget to specify your export password, not your normal password.', 'affiliate-power'), 'error');
 			}
 		}
 		
 		
 		//Tradedoubler
 		if (ctype_alnum($input['tradedoubler-key']) && strlen($input['tradedoubler-key']) >= 32) $whitelist['tradedoubler-key'] = $input['tradedoubler-key'];
-		elseif (!empty($input['tradedoubler-key'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-tradedoubler-key', 'Ungültiger Tradedoubler Report Key. Der Key muss mindestens 32 Zeichen lang sein. Bitte gib nicht dein normales Tadedoubler Passwort an, sondern den Report Key.', 'error');
+		elseif (!empty($input['tradedoubler-key'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-tradedoubler-key', __('Invalid tradedoubler report key. The key should be at least 32 characters long. Please do not enter your normal password, but your report key.', 'affiliate-power'), 'error');
 		
 		if (isset($whitelist['tradedoubler-key'])) {
 			include_once('apis/tradedoubler.php');
 			if (!Affiliate_Power_Api_Tradedoubler::checkLogin($whitelist['tradedoubler-key'])){
-				add_settings_error('affiliate-power-options', 'affiliate-power-error-tradedoubler-login', 'Testlogin bei Tradedoubler fehlgeschlagen. Bitte überprüfe Deine Daten.', 'error');
+				add_settings_error('affiliate-power-options', 'affiliate-power-error-tradedoubler-login', __('Tradedoubler test login failed. Please check your data.', 'affiliate-power'), 'error');
 			}
 		}
 		
@@ -456,21 +491,21 @@ class Affiliate_Power_Settings {
 		
 		//Zanox
 		if (ctype_alnum($input['zanox-connect-id']) && strlen($input['zanox-connect-id']) == 20) $whitelist['zanox-connect-id'] = $input['zanox-connect-id'];
-		elseif (!empty($input['zanox-connect-id'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-zanox-connect-id', 'Ungültige Zanox Connect Id. Die Id muss 20 Zeichen lang sein und nur Zahlen und Buchstaben enthalten. Bitte gib nicht deinen normalen Zanox Account an, sondern die Conenct Id.', 'error');
+		elseif (!empty($input['zanox-connect-id'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-zanox-connect-id', __('Invalid Zanox Connect Id. The Id should contain 20 characters of numbers and letters only. Please do not specify your normal Zanox account, but your Connect Id.', 'affiliate-power'), 'error');
 		
 		if (ctype_alnum($input['zanox-public-key']) && strlen($input['zanox-public-key']) == 20) $whitelist['zanox-public-key'] = $input['zanox-public-key'];
-		elseif (!empty($input['zanox-public-key'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-zanox-public-key', 'Ungültiger Zanox Public Key. Der Key muss 20 Zeichen lang sein und nur Zahlen und Buchstaben enthalten. Bitte gib nicht deinen normalen Zanox Account an, sondern den Public Key.', 'error');
+		elseif (!empty($input['zanox-public-key'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-zanox-public-key', __('Invalid Zanox Public Key. The key should contain 20 characters of numbers and letters only. Please do not specify your normal Zanox account or password, but your Public Key.', 'affiliate-power'), 'error');
 		
 		if (strlen($input['zanox-secret-key']) >= 20) $whitelist['zanox-secret-key'] = $input['zanox-secret-key'];
-		elseif (!empty($input['zanox-secret-key'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-zanox-secret-key', 'Ungültiger Zanox Secret Key. Der Key muss mindestens 20 Zeichen lang sein. Bitte gib nicht dein normales Zanox Passwort an, sondern den Secret Key.', 'error');
+		elseif (!empty($input['zanox-secret-key'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-zanox-secret-key',  __('Invalid Zanox Secret Key. The key should contain at least 20 characters of numbers and letters only. Please do not specify your normal Zanox password, but your Secret Key.', 'affiliate-power'), 'error');
 		
 		if (isset($whitelist['zanox-connect-id']) && isset($whitelist['zanox-public-key']) && isset($whitelist['zanox-secret-key'])) {
 			include_once('apis/zanox.php');
 			if (!extension_loaded('soap')) {
-				add_settings_error('affiliate-power-options', 'affiliate-power-error-soap', 'Für den Download der Zanox Transaktionen wird das PHP-Modul SOAP benötigt. Dieses ist bei dir nicht aktiviert. Bitte aktiviere das Modul.', 'error');
+				add_settings_error('affiliate-power-options', 'affiliate-power-error-soap', __('In order to download the Zanox sales the PHP-module SOAP is required. This seems to be not activated on your server. Please activate the module. If you don\'t know how to do this, your webhoster can assist you.', 'affiliate-power'), 'error');
 			}
 			elseif (!Affiliate_Power_Api_Zanox::checkLogin($whitelist['zanox-connect-id'], $whitelist['zanox-public-key'], $whitelist['zanox-secret-key'])){
-				add_settings_error('affiliate-power-options', 'affiliate-power-error-zanox-login', 'Testlogin bei Zanox fehlgeschlagen. Bitte überprüfe Deine Daten.', 'error');
+				add_settings_error('affiliate-power-options', 'affiliate-power-error-zanox-login', __('Zanox test login failed. Please check your data.', 'affiliate-power'), 'error');
 			}
 		}
 		

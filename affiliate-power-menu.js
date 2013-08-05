@@ -7,8 +7,8 @@ jQuery(document).ready(function(){
 
 	jQuery('#datepicker_from').datepicker({
 		dateFormat : 'dd.mm.yy',
-		monthNames: [ "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" ],
-		dayNamesMin: [ "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa" ], 
+		monthNames: [ objL10n.month1, objL10n.month2, objL10n.month3, objL10n.month4, objL10n.month5, objL10n.month6, objL10n.month7, objL10n.month8, objL10n.month9, objL10n.month10, objL10n.month11, objL10n.month12 ],
+		dayNamesMin: [ objL10n.day1, objL10n.day2, objL10n.day3, objL10n.day4, objL10n.day5, objL10n.day6, objL10n.day7 ], 
 		numberOfMonths: 3,
 		onClose: function( selectedDate ) {
 			jQuery( "#datepicker_to" ).datepicker( "option", "minDate", selectedDate );
@@ -18,8 +18,8 @@ jQuery(document).ready(function(){
 	
 	jQuery('#datepicker_to').datepicker({
 		dateFormat : 'dd.mm.yy',
-		monthNames: [ "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" ],
-		dayNamesMin: [ "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa" ],
+		monthNames: [ objL10n.month1, objL10n.month2, objL10n.month3, objL10n.month4, objL10n.month5, objL10n.month6, objL10n.month7, objL10n.month8, objL10n.month9, objL10n.month10, objL10n.month11, objL10n.month12 ],
+		dayNamesMin: [ objL10n.day1, objL10n.day2, objL10n.day3, objL10n.day4, objL10n.day5, objL10n.day6, objL10n.day7 ], 
 		numberOfMonths: 3,
 		onClose: function( selectedDate ) {
 			jQuery( "#datepicker_from" ).datepicker( "option", "maxDate", selectedDate );
