@@ -73,7 +73,7 @@ As usual.
 1. Upload the directory `affiliate-power` in `/wp-content/plugins/` (or install the plugin over the plugin manager of WordPress)
 2. Activate the plugin over the plugin manager of WordPress
 3. The plugin creats it's own submenu `Affiliate Power`. In the menu item `Settings` you can enter your affiliate network data
-4. After you have entered your affilaite netowrk data,  you can download your old transactions on the page `Leads/Sales` by clicking on the `Refresh transactions` button.
+4. After you have entered your affiliate network data, you can download your old sales on the page `Leads/Sales` by clicking on the `Refresh transactions` button.
 5. The plugin will download your sales autoamtically once a day.
 
 
