@@ -8,7 +8,7 @@ add_action('admin_init', array('Affiliate_Power_Settings', 'addSettings'));
 class Affiliate_Power_Settings {
 
 
-		static public function addSettings() {
+	static public function addSettings() {
 		register_setting( 'affiliate-power-options', 'affiliate-power-options', array('Affiliate_Power_Settings', 'optionsValidate') );
 		
 		add_settings_section('affiliate-power-main', __('Basic settings', 'affiliate-power'), array('Affiliate_Power_Settings', 'optionsMainText'), 'affiliate-power-options');
@@ -54,6 +54,7 @@ class Affiliate_Power_Settings {
 		add_settings_section('affiliate-power-networks-superclix', __('Superclix', 'affiliate-power'), array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
 		add_settings_field('affiliate-power-superclix-usename', __('Superclix Username', 'affiliate-power'), array('Affiliate_Power_Settings', 'addSuperclixUSernameField'), 'affiliate-power-options', 'affiliate-power-networks-superclix');
 		add_settings_field('affiliate-power-superclix-password', __('Superclix Export Password', 'affiliate-power'), array('Affiliate_Power_Settings', 'addSuperclixPasswordField'), 'affiliate-power-options', 'affiliate-power-networks-superclix');
+		add_settings_field('affiliate-power-superclix-referer-filter', __('Superclix Website Filter', 'affiliate-power'), array('Affiliate_Power_Settings', 'addSuperclixRefererFilterField'), 'affiliate-power-options', 'affiliate-power-networks-superclix');
 		
 		//tradedoubler
 		add_settings_section('affiliate-power-networks-tradedoubler', __('Tradedoubler', 'affiliate-power'), array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
@@ -102,6 +103,10 @@ class Affiliate_Power_Settings {
 		_e('<p><strong>Now you can earn directly money with Affiliate Power.</strong> You get 30% Commission for each sale of the Premium-Version. <a href="http://www.affiliatepowerplugin.com/affiliate-program/" target="_blank"><strong>All Information about the Affiliate program.</strong></a></p>', 'affiliate-power');
 		
 		_e('<p>Please be patient when saving the settings. The plugin performs a test login at the networks while saving.</p>', 'affiliate-power');
+		
+		$user = wp_get_current_user();
+		$first_name = ($user->user_firstname != '') ? $user->user_firstname : $user->user_login;
+		printf( __('<h3>Newsletter</h3><p>As a subscriber to the Affiliate Power Newsletter you get tips and news about Affiliate Marketing once a month. Just check your data and click Subscribe.</p><form method="post" target="_blank" action="http://47353.seu1.cleverreach.com/f/47353-107394/wcs/"><input type="text" name="1050108" size="30" value="%s" placeholder="First Name"> <input type="text" name="email" size="30" value="%s" placeholder="Email"> <input type="submit" value="Subscribe"></form>You can always unsubscribe from the Newsletter and I will not give your Email to anyone else.', 'affiliate-power'), $first_name, $user->user_email );
 		?>
 		<form action="options.php" method="post">
 		<?php settings_fields('affiliate-power-options'); ?>
@@ -175,6 +180,7 @@ class Affiliate_Power_Settings {
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_webworker_dashboard_apikey_info\").style.display=\"block\"; return false;'>[?]</a></span>";
 		_e("<div id='ap_webworker_dashboard_apikey_info' style='display:none;'>The API password is a special access to the Webworker Dashboard API. Please do <strong>not</strong> enter your normal Webworker Dashboard password here. The API Key can be created in the login area, menu item Settings -> APIs. Select \"Webworker Dashboard\" in the select box and click \"Add API\".</div>", "affiliate-power");
 	}
+	
 	
 	
 	//Network Settings
@@ -291,6 +297,15 @@ class Affiliate_Power_Settings {
 		_e("<div id='ap_superclix_password_info' style='display:none;'>The Superclix export password is a special access to the Superclix API. Please do <strong>not</strong> enter your normal password here. The export password can be defined in the publisher area, menu item \"Account -> Change password \".</div>", "affiliate-power");
 	}
 	
+	static public function addSuperclixRefererFilterField() {
+		$options = get_option('affiliate-power-options');
+		if (!isset($options['superclix-referer-filter'])) $options['superclix-referer-filter'] = 0;
+		$checked = $options['superclix-referer-filter'] ? ' checked' : '';
+		echo "<input type='checkbox' id='affiliate-power-superclix-referer-filter' name='affiliate-power-options[superclix-referer-filter]' value='1' ".$checked." /> ";
+		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_superclix_referer_filter_info\").style.display=\"block\"; return false;'>[?]</a></span>";
+		_e("<div id='ap_superclix_referer_filter_info' style='display:none;'>Only save sales, which came from this domain. This option makes only sense if you are using your Superclix account for several pages", "affiliate-power");
+	}
+	
 	
 	//Tradedoubler
 	static public function addTradedoublerKeyField() {
@@ -386,14 +401,15 @@ class Affiliate_Power_Settings {
 		}
 		
 		
+		
 		//Adcell
 		if (is_numeric($input['adcell-username'])) $whitelist['adcell-username'] = $input['adcell-username'];
 		elseif (!empty($input['adcell-username'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-adcell-username', __('Invalid Adcell username. The username should only contain numbers and letters.', 'affiliate-power'), 'error');
 		
 		if (!empty($input['adcell-password'])) $whitelist['adcell-password'] = esc_html($input['adcell-password']);
 		
+		if ($input['adcell-referer-filter'] != 1) $input['adcell-referer-filter'] = 0;
 		$whitelist['adcell-referer-filter'] = $input['adcell-referer-filter'];
-		if ($whitelist['adcell-referer-filter'] != 1) $whitelist['adcell-referer-filter'] = 0;
 		
 		if (isset($whitelist['adcell-username']) && isset($whitelist['adcell-password'])) {
 			include_once('apis/adcell.php');
@@ -465,6 +481,9 @@ class Affiliate_Power_Settings {
 		if (!empty($input['superclix-username'])) $whitelist['superclix-username'] = esc_html($input['superclix-username']);
 		
 		if (!empty($input['superclix-password'])) $whitelist['superclix-password'] = esc_html($input['superclix-password']);
+		
+		if ($input['superclix-referer-filter'] != 1) $input['superclix-referer-filter'] = 0;
+		$whitelist['superclix-referer-filter'] = $input['superclix-referer-filter'];
 		
 		if (isset($whitelist['superclix-username']) && isset($whitelist['superclix-password'])) {
 			include_once('apis/superclix.php');

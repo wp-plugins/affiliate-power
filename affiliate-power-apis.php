@@ -67,7 +67,8 @@ class Affiliate_Power_Apis {
 		//superclix
 		if (isset($options['superclix-username']) && isset($options['superclix-password'])) {
 			include_once('apis/superclix.php');
-			$transactions = Affiliate_Power_Api_Superclix::downloadTransactions($options['superclix-username'], $options['superclix-password'], $fromTS, $tillTS);
+			if (!isset($options['superclix-referer-filter'])) $options['superclix-referer-filter'] = 0;
+			$transactions = Affiliate_Power_Api_Superclix::downloadTransactions($options['superclix-username'], $options['superclix-password'], $options['superclix-referer-filter'], $fromTS, $tillTS);
 			foreach ($transactions as $transaction) self::handleTransaction($transaction);
 		}	
 		
@@ -87,65 +88,91 @@ class Affiliate_Power_Apis {
 		
 		
 		
-		//Send mail to admin (only when activated and only on daily update($days==100))
-		if ($options['send-mail-transactions'] == 1 && $days == 100) {
+		//some stuff only on daily update($days==100))
+		if ($days == 100) {
 		
-			$list_transactions = '';
-			$type_mapper = array(
-				'new' => __('New', 'affiliate-power'),
-				'confirmed' => __('Confirmed', 'affiliate-power'),
-				'cancelled' => __('Cancelled', 'affiliate-power')
-			);
 			//1.1.0: sales for mail are all sales from the last day now
-			self::$transaction_changes['new'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(Date) = date(now() - INTERVAL 1 DAY) AND TransactionStatus <> "Cancelled"', ARRAY_A);
-			self::$transaction_changes['confirmed'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Confirmed"', ARRAY_A);
-			self::$transaction_changes['cancelled'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Cancelled"', ARRAY_A);
-		
-			foreach (self::$transaction_changes as $type => $transactions) {
+			$transaction_changes['new'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(Date) = date(now() - INTERVAL 1 DAY) AND TransactionStatus <> "Cancelled"', ARRAY_A);
+			$transaction_changes['confirmed'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Confirmed"', ARRAY_A);
+			$transaction_changes['cancelled'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Cancelled"', ARRAY_A);
 			
-				$list_items = '';
+			$new_transactions_total = $wpdb->get_row('SELECT sum(Commission) as commission, count(*) as cnt FROM '.$wpdb->prefix.'ap_transaction WHERE date(Date) = date(now() - INTERVAL 1 DAY) AND TransactionStatus <> "Cancelled"', ARRAY_A);
+			$confirmed_transactions_total = $wpdb->get_row('SELECT sum(Commission) as commission, count(*) as cnt FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Confirmed"', ARRAY_A);
+			$cancelled_transactions_total = $wpdb->get_var('SELECT sum(Commission), count(*) as cnt FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Cancelled"', ARRAY_A);
+			
+			
+			//Send mail to admin (only when activated )
+			if ($options['send-mail-transactions'] == 1) {
+			
+				$list_transactions = '';
+				$type_mapper = array(
+				'new' => _x('New', 'multiple', 'affiliate-power'),
+				'confirmed' => _x('Confirmed', 'multiple', 'affiliate-power'),
+				'cancelled' => _x('Cancelled', 'multiple', 'affiliate-power')
+			);
+			
+				foreach ($transaction_changes as $type => $transactions) {
 				
-				foreach ($transactions as $transaction) {
-					$datetime_de = date('d.m.Y H:i:s', strtotime($transaction['Date']));
-					$list_items .= '<li>'.$datetime_de.': '.$transaction['ProgramTitle'].': '.number_format($transaction['Commission'], 2, ',', '.').' &euro;</li>';
+					$list_items = '';
+					
+					foreach ($transactions as $transaction) {
+						$datetime_de = date('d.m.Y H:i:s', strtotime($transaction['Date']));
+						$list_items .= '<li>'.$datetime_de.': '.$transaction['ProgramTitle'].': '.number_format($transaction['Commission'], 2, ',', '.').' &euro;</li>';
+					}
+					
+					if ($list_items != '') {
+						if ($type == 'new') $total = $new_transactions_total;
+						elseif ($type == 'confirmed') $total = $confirmed_transactions_total;
+						else $total = $cancelled_transactions_total;
+						$list_transactions .= '
+						<p><strong>'.$type_mapper[$type].' '.__('Transactions', 'affiliate-power').'</strong></p>
+						<ul>'.$list_items.'</ul>'
+						.sprintf( __('Total: %d Transactions, %s', 'affiliate-power'), $total['cnt'], number_format($total['commission'], 2, ',', '.').' &euro;' );
+					}
 				}
 				
-				if ($list_items != '') {
-					$list_transactions .= '
-					<p><strong>'.$type_mapper[$type].' '.__('Transactions', 'affiliate-power').'</strong></p>
-					<ul>'.$list_items.'</ul>';
+				//only send if there is any transaction
+				if ($list_transactions != '') {
+				
+					$admin_email = get_option('admin_email');
+					$blogname = get_option('blogname');
+					
+					$mailtext = sprintf (__('<p>Hello Admin,</p><p>This is your daily income report from Affiliate Power for your page <strong>%s</strong>. You can always deactivate this report in the Affiliate Power settings, if you are annoyed about it.</p>', 'affiliate-power'), $blogname);
+						
+					$mailtext .= $list_transactions;
+						
+					mail($admin_email, sprintf(__('Affiliate-Power Report for %s', 'affiliate-power'), $blogname), $mailtext, 'content-type: text/html; charset=UTF-8');
 				}
+			
 			}
 			
-			//only send if there is any transaction
-			if ($list_transactions != '') {
 			
-				$admin_email = get_option('admin_email');
-				$blogname = get_option('blogname');
+			//Send new transactions to webworker dashboard(only when activated)
+			if (isset($options['webworker-dashboard-username']) && isset($options['webworker-dashboard-apikey']) ) {
 				
-				$mailtext = sprintf (__('<p>Hello Admin,</p><p>This is your daily income report from Affiliate Power for your page <strong>%s</strong>. You can always deactivate this report in the Affiliate Power settings, if you are annoyed about it.</p>', 'affiliate-power'), $blogname);
-				$mailtext .= $list_transactions;
 				
-				mail($admin_email, sprintf(__('Affiliate-Power Report for %s', 'affiliate-power'), $blogname), $mailtext, 'content-type: text/html; charset=UTF-8');
+				include_once('apis/webworker-dashboard.php');
+				if ($new_transactions_total['commission'] > 0) {
+					Affiliate_Power_Api_Webworker_Dashboard::sendEarnings($options['webworker-dashboard-username'], $options['webworker-dashboard-apikey'], time()-3600*12, $new_transactions_total['commission']);
+				}
+				if ($cancelled_transactions_total['commission'] > 0) {
+					Affiliate_Power_Api_Webworker_Dashboard::sendEarnings($options['webworker-dashboard-username'], $options['webworker-dashboard-apikey'], time()-3600*12, $cancelled_transactions_total['commission']*(-1));
+				}
+				
 			}
-		}
+					
+					
+			//Is it time to activate a new infotext?
+			$meta_options = get_option('affiliate-power-meta-options');
+			$days_since_install = round( (date('U') - $meta_options['installstamp']) / 86400 );
+			if (isset($meta_options['infotext'.$days_since_install])) {
+				$meta_options['infotext'] = $meta_options['infotext'.$days_since_install];
+				$meta_options['hide-infotext'] = 0;
+				update_option('affiliate-power-meta-options', $meta_options);
+			}
 		
-		//Send new transactions to webworker dashboard(only when activated and only on daily update($days==100))
-		if (isset($options['webworker-dashboard-username']) && isset($options['webworker-dashboard-apikey']) && $days == 100) {
 		
-			//1.1.0: sales for dashoard are all sales from the last day now
-			self::$new_transactions_total_commission = $wpdb->get_var('SELECT sum(Commission) FROM '.$wpdb->prefix.'ap_transaction WHERE date(Date) = date(now() - INTERVAL 1 DAY) AND TransactionStatus <> "Cancelled"');
-			self::$cancelled_transactions_total_commission = $wpdb->get_var('SELECT sum(Commission)*(-1) FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Cancelled"');
-			
-			include_once('apis/webworker-dashboard.php');
-			if (self::$new_transactions_total_commission > 0) {
-				Affiliate_Power_Api_Webworker_Dashboard::sendEarnings($options['webworker-dashboard-username'], $options['webworker-dashboard-apikey'], time()-3600*12, self::$new_transactions_total_commission);
-			}
-			if (self::$cancelled_transactions_total_commission < 0) {
-				Affiliate_Power_Api_Webworker_Dashboard::sendEarnings($options['webworker-dashboard-username'], $options['webworker-dashboard-apikey'], time()-3600*12, self::$cancelled_transactions_total_commission);
-			}
-			
-		}	
+		} //if ($days == 100)
 
 		
 		die(); //for proper AJAX request
@@ -207,8 +234,6 @@ class Affiliate_Power_Apis {
 						'%s' //status
 					) 
 				);
-				
-				self::$transaction_changes['new'][] = $transaction;
 		
 		}
 						
@@ -220,12 +245,14 @@ class Affiliate_Power_Apis {
 			$wpdb->update( 
 				$wpdb->prefix.'ap_transaction', 
 				array( 
+					'CheckDate'  => $transaction['checkdatetime_db'],
 					'Commission' => $transaction['commission'],	
 					'Confirmed' => $transaction['confirmed'],
 					'TransactionStatus' => $transaction['status']
 				), 
 				array( 'ap_transactionID' => $existing_transaction->ap_transactionID ), 
 				array( 
+					'%s',   //checkdatetime_db
 					'%f',	// Commission
 					'%f',	// Confirmed
 					'%s',	// Status
@@ -233,11 +260,6 @@ class Affiliate_Power_Apis {
 				array( '%d' ) //ap_transactionID
 			);
 			
-			if ($transaction['status'] == 'Confirmed') self::$transaction_changes['confirmed'][] = $transaction;
-			elseif($transaction['status'] == 'Cancelled') {
-				self::$transaction_changes['cancelled'][] = $transaction;
-				self::$cancelled_transactions_total_commission -= $transaction['commission'];
-			}
 		}
 	
 	}

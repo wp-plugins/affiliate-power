@@ -153,6 +153,15 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 
 == Changelog ==
 
+= 1.2.0 =
+* Added Website filter for Superclix
+* Added totals in daily EMail
+* Fixed Confirmed Sales in daily Email
+* Fixed Spaces in Google Keywords
+* Added Newsletter Optin
+* Added some infotexts after x days of using the plugin
+* Fixed some minor translation issues
+
 = 1.1.0 =
 * English version
 * Integration with Webworker Dashboard

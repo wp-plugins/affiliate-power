@@ -26,7 +26,7 @@ class Affiliate_Power_Api_Superclix {
 	}
 	
 	
-	static public function downloadTransactions($username, $password, $fromTS, $tillTS) {
+	static public function downloadTransactions($username, $password, $referer_filter, $fromTS, $tillTS) {
 	
 		$StartDate = date('Y-m-d', $fromTS);
 		$EndDate = date('Y-m-d', $tillTS);
@@ -64,6 +64,13 @@ class Affiliate_Power_Api_Superclix {
 		{
 			$transaction = str_replace('"', '', $transaction);
 			$arr_transaction = explode(';', $transaction);
+			
+			if ($referer_filter) {
+				$arr_referer = parse_url($arr_transaction[10]);
+				$arr_page = parse_url(home_url('/'));
+				if ($arr_referer['host'] != $arr_page['host']) continue;
+			}
+			
 			$arr_shop_type = explode('=', $arr_transaction[3]);
 			
 			$shop_name = $arr_shop_type[1];

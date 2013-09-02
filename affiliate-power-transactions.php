@@ -57,7 +57,7 @@ class Affiliate_Power_Transactions {
 							$("#button_export_csv").val('<?php _e('CSV/Excel Download', 'affiliate-power'); ?>');
 							$("body").append("<iframe src='<?php echo plugins_url( "affiliate-power/csv-download.php", dirname(__FILE__ )); ?>' style='display: none;' ></iframe>")
 							$('#spinner2').css('display', 'none');
-							
+
 						});
 					});
 					
@@ -180,9 +180,9 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 				break;
 				
 			case 'TransactionStatus' :
-				if ($item['TransactionStatus'] == 'Cancelled') $value = __('Cancelled', 'affiliate-power');
-				elseif ($item['TransactionStatus'] == 'Confirmed') $value = __('Confirmed', 'affiliate-power');
-				else $value = __('Open', 'affiliate-power');
+				if ($item['TransactionStatus'] == 'Cancelled') $value = _x('Cancelled', 'single', 'affiliate-power');
+				elseif ($item['TransactionStatus'] == 'Confirmed') $value = _x('Confirmed', 'single', 'affiliate-power');
+				else $value = _x('Open', 'single', 'affiliate-power');
 				break;
 				
 			case 'post_title' :
@@ -232,8 +232,8 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 	
 	function get_columns(){
 		$options = get_option('affiliate-power-options');
-		if ($options['add-sub-ids'] !== 0) $post_title_text = 'Artikel';
-		else $post_title_text = 'SubId';
+		if ($options['add-sub-ids'] !== 0) $post_title_text = __('Post', 'affiliate-power');
+		else $post_title_text = __('SubId', 'affiliate-power');
 
         $columns = array(
             'germanDate'     => __('Date', 'affiliate-power'),
