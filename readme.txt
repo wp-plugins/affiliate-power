@@ -3,7 +3,7 @@ Contributors: JonasBreuer
 Donate link: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 Tags: affiliate, tracking, subid, sales, leads, affili, affili.net, zanox, tradedoubler, belboon, superclix, cj, commission junction, adcell
 Requires at least: 3.1
-Tested up to: 3.6
+Tested up to: 3.6.1
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -152,6 +152,13 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 3. Statistics (Premium-Version)
 
 == Changelog ==
+
+= 1.2.1 =
+* Fixed a bug where image affiliate links were not opened into a new window
+* Better support for WP multisite
+* Fixed cancelled sales in infomail
+* Delete old data from database
+* A few minor JS bugfixes
 
 = 1.2.0 =
 * Added Website filter for Superclix

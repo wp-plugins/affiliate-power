@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Affiliate Power\n"
-"POT-Creation-Date: 2013-08-29 09:55+0100\n"
-"PO-Revision-Date: 2013-08-29 10:07+0100\n"
+"POT-Creation-Date: 2013-09-23 12:51+0100\n"
+"PO-Revision-Date: 2013-09-23 12:51+0100\n"
 "Last-Translator: \n"
 "Language-Team: Jonas Breuer <affiliate-power@j-breuer.de>\n"
 "Language: de_DE\n"
@@ -17,31 +17,31 @@ msgstr ""
 "X-Poedit-SearchPath-0: C:\\develop\\j-breuer\\affiliate-power\\affiliate-"
 "power-basic\n"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:109
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:103
 msgctxt "multiple"
 msgid "New"
 msgstr "Neue"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:110
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:104
 msgctxt "multiple"
 msgid "Confirmed"
 msgstr "Bestätigte"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:111
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:105
 msgctxt "multiple"
 msgid "Cancelled"
 msgstr "Stornierte"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:128
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:122
 msgid "Transactions"
 msgstr "Transaktionen"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:130
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:124
 #, php-format
 msgid "Total: %d Transactions, %s"
 msgstr "Gesamt: %d Transaktionen, %s"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:140
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:134
 #, php-format
 msgid ""
 "<p>Hello Admin,</p><p>This is your daily income report from Affiliate Power "
@@ -53,7 +53,7 @@ msgstr ""
 "in den Einstellungen von Affiliate Power deaktivieren, wenn er dich nervt.</"
 "p>"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:144
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:138
 #, php-format
 msgid "Affiliate-Power Report for %s"
 msgstr "Affiliate-Power Report für %s"
@@ -1196,28 +1196,22 @@ msgstr "Details"
 #: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:123
 #, php-format
 msgid ""
-"<h3>New: Affiliate Power Newsletter</h3><p>As a subscriber to the Affiliate "
-"Power Newsletter you get tips and news about Affiliate Marketing once a "
-"month.</p><p>Just check your data and click Subscribe.</p><form method=\"post"
-"\" target=\"_blank\" action=\"http://47353.seu1.cleverreach.com/"
-"f/47353-107394/wcs/\"><input type=\"text\" name=\"1050108\" size=\"30\" "
-"value=\"%s\" placeholder=\"First Name\"> <input type=\"text\" name=\"email\" "
-"size=\"30\" value=\"%s\" placeholder=\"Email\"> <input type=\"submit\" value="
-"\"Subscribe\" /></form>You can always unsubscribe from the Newsletter and I "
-"will not give your Email to anyone else.<br /><br /><p><a href=\"#\" class="
-"\"affiliate-power-hide-infotext\">Hide this message</a></p>"
+"<h3>Premium Test Weeks</h3><p>Hey %s, have you always wanted to test the "
+"premium version of Affiliate Power but weren't sure if it's worth the price?"
+"</p><p>Now you can test Affiliate Power Premium for 30 days for just 1€.</"
+"p><h3><a href=\"http://www.affiliatepowerplugin.com/premium/\" target="
+"\"_blank\">Yes, I want to test Affiliate Power Premium for just 1€</a></"
+"h3><p>This offer ends at 2013-10-13.</p><br /><br /><a href=\"#\" class="
+"\"affiliate-power-hide-infotext\">Hide this message</a>"
 msgstr ""
-"<h3>Neu: Affiliate Power Newsletter</h3><p>Mit dem Affiliate Power "
-"Newsletter bekommst du etwa ein Mal pro Monat kostenlose Tipps wie du deine "
-"Affiliate Einnahmen verbessern kannst.</p><p>Überprüfe deine Daten und klick "
-"auf Anmelden.</p><form method=\"post\" target=\"_blank\" action="
-"\"http://47353.seu1.cleverreach.com/f/47353-107352/wcs/\"><input type=\"text"
-"\" name=\"1050108\" size=\"30\" value=\"%s\" placeholder=\"Vorname\"> <input "
-"type=\"text\" name=\"email\" size=\"30\" value=\"%s\" placeholder=\"E-Mail"
-"\"> <input type=\"submit\" value=\"Anmelden\" /></form>Du kannst den "
-"Newsletter natürlich jedezeit wieder abbestellen. Deine Daten werden "
-"selbstverständlich nicht weitergegeben.<br /><br /><p><a href=\"#\" class="
-"\"affiliate-power-hide-infotext\">Nicht mehr anzeigen</a></p>"
+"<h3>Premium Test Wochen</h3><p>Hi %s, wolltest du schon länger mal die "
+"Premium Version von Affiliate Power ausprobieren? Du warst dir nur nicht "
+"sicher, ob sich das Geld lohnt?</p><p>Dann kannst du jetzt Affiliate Power "
+"Premium 30 Tage lang für nur 1€ testen. <h3><a href=\"http://www.j-breuer.de/"
+"wordpress-plugins/affiliate-power-premium/\" target=\"_blank\">Ja, ich "
+"möchte Affiliate Power Premium für nur 1€ testen</a></h3><p>Dieses Angebot "
+"endet am 13.10.2013.</p><br /><br /><a href=\"#\" class=\"affiliate-power-"
+"hide-infotext\">Nicht mehr anzeigen</a>"
 
 #: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:125
 #, php-format
@@ -1345,7 +1339,7 @@ msgstr ""
 "a></h3><br /><br /><a href=\"#\" class=\"affiliate-power-hide-infotext"
 "\">Nicht mehr anzeigen</a>"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:146
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:150
 #, php-format
 msgid ""
 "<div id=\"message\" class=\"updated\"><img src=\"%s\" alt=\"Affiliate Power"
@@ -1365,7 +1359,7 @@ msgstr ""
 "Tracking verwenden möchtest, solltest du auf der <a href=\"%s"
 "\">Einstellungsseite</a> die Parameter hinterlegen, die du benutzt.</p></div>"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:149
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:153
 #, php-format
 msgid ""
 "<div id=\"message\" class=\"updated\"><img src=\"%s\" alt=\"Affiliate Power"
@@ -1388,6 +1382,32 @@ msgstr ""
 #: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/apis/webworker-dashboard.php:54
 msgid "Affiliate Power"
 msgstr "Affiliate Power"
+
+#~ msgid ""
+#~ "<h3>New: Affiliate Power Newsletter</h3><p>As a subscriber to the "
+#~ "Affiliate Power Newsletter you get tips and news about Affiliate "
+#~ "Marketing once a month.</p><p>Just check your data and click Subscribe.</"
+#~ "p><form method=\"post\" target=\"_blank\" action=\"http://47353.seu1."
+#~ "cleverreach.com/f/47353-107394/wcs/\"><input type=\"text\" name="
+#~ "\"1050108\" size=\"30\" value=\"%s\" placeholder=\"First Name\"> <input "
+#~ "type=\"text\" name=\"email\" size=\"30\" value=\"%s\" placeholder=\"Email"
+#~ "\"> <input type=\"submit\" value=\"Subscribe\" /></form>You can always "
+#~ "unsubscribe from the Newsletter and I will not give your Email to anyone "
+#~ "else.<br /><br /><p><a href=\"#\" class=\"affiliate-power-hide-infotext"
+#~ "\">Hide this message</a></p>"
+#~ msgstr ""
+#~ "<h3>Neu: Affiliate Power Newsletter</h3><p>Mit dem Affiliate Power "
+#~ "Newsletter bekommst du etwa ein Mal pro Monat kostenlose Tipps wie du "
+#~ "deine Affiliate Einnahmen verbessern kannst.</p><p>Überprüfe deine Daten "
+#~ "und klick auf Anmelden.</p><form method=\"post\" target=\"_blank\" action="
+#~ "\"http://47353.seu1.cleverreach.com/f/47353-107352/wcs/\"><input type="
+#~ "\"text\" name=\"1050108\" size=\"30\" value=\"%s\" placeholder=\"Vorname"
+#~ "\"> <input type=\"text\" name=\"email\" size=\"30\" value=\"%s\" "
+#~ "placeholder=\"E-Mail\"> <input type=\"submit\" value=\"Anmelden\" /></"
+#~ "form>Du kannst den Newsletter natürlich jedezeit wieder abbestellen. "
+#~ "Deine Daten werden selbstverständlich nicht weitergegeben.<br /><br /"
+#~ "><p><a href=\"#\" class=\"affiliate-power-hide-infotext\">Nicht mehr "
+#~ "anzeigen</a></p>"
 
 #~ msgid "Affiliate Income from Affiliate Power"
 #~ msgstr "Affiliate Einnahmen von Affiliate Power"

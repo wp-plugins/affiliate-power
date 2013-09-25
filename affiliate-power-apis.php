@@ -1,19 +1,13 @@
 <?php
 if (!defined('ABSPATH')) die; //no direct access
 
+
 class Affiliate_Power_Apis {
 
-	static protected $transaction_changes = array(
-			'new' => array(),
-			'confirmed' => array(),
-			'cancelled' => array()
-	);
-	
-	static protected $new_transactions_total_commission = 0;
-	static protected $cancelled_transactions_total_commission = 0;
 	
 	static public function downloadTransactionsQuick() {
 		check_ajax_referer( 'affiliate-power-download-transactions', 'nonce' );
+		
 		global $wpdb;
 		$transaction_count = $wpdb->get_var('SELECT count(*) FROM '.$wpdb->prefix.'ap_transaction');
 		if ($transaction_count == 0) $downloadDays = 99;
@@ -27,7 +21,7 @@ class Affiliate_Power_Apis {
 	
 		global $wpdb;
 		
-		$fromTS = time()-3600*2-3600*24*$days; //$days in the past
+		$fromTS = time()-3600*2-3600*24*$days; //$days in the psat
 		$tillTS = time()-3600*2; //now in UTC
 		
 		$options = get_option('affiliate-power-options');
@@ -38,8 +32,8 @@ class Affiliate_Power_Apis {
 			$transactions = Affiliate_Power_Api_Adcell::downloadTransactions($options['adcell-username'], $options['adcell-password'], $options['adcell-referer-filter'], $fromTS, $tillTS);
 			foreach ($transactions as $transaction) self::handleTransaction($transaction);
 		}
-				
 
+		
 		//affili
 		if(is_numeric($options['affili-id']) && strlen($options['affili-password']) == 20) {
 			include_once('apis/affili.php');
@@ -92,13 +86,13 @@ class Affiliate_Power_Apis {
 		if ($days == 100) {
 		
 			//1.1.0: sales for mail are all sales from the last day now
-			$transaction_changes['new'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(Date) = date(now() - INTERVAL 1 DAY) AND TransactionStatus <> "Cancelled"', ARRAY_A);
+			$transaction_changes['new'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus <> "Cancelled"', ARRAY_A);
 			$transaction_changes['confirmed'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Confirmed"', ARRAY_A);
 			$transaction_changes['cancelled'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Cancelled"', ARRAY_A);
 			
 			$new_transactions_total = $wpdb->get_row('SELECT sum(Commission) as commission, count(*) as cnt FROM '.$wpdb->prefix.'ap_transaction WHERE date(Date) = date(now() - INTERVAL 1 DAY) AND TransactionStatus <> "Cancelled"', ARRAY_A);
 			$confirmed_transactions_total = $wpdb->get_row('SELECT sum(Commission) as commission, count(*) as cnt FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Confirmed"', ARRAY_A);
-			$cancelled_transactions_total = $wpdb->get_var('SELECT sum(Commission), count(*) as cnt FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Cancelled"', ARRAY_A);
+			$cancelled_transactions_total = $wpdb->get_row('SELECT sum(Commission) as commission, count(*) as cnt FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Cancelled"', ARRAY_A);
 			
 			
 			//Send mail to admin (only when activated )
@@ -170,10 +164,21 @@ class Affiliate_Power_Apis {
 				$meta_options['hide-infotext'] = 0;
 				update_option('affiliate-power-meta-options', $meta_options);
 			}
+			
+			
+			//delete user data which led to no sales
+			
+			//$wpdb->query('delete from '.$wpdb->prefix.'ap_clickout left join '.$wpdb->prefix.'ap_transaction where '.$wpdb->prefix.'ap_transaction.ap_transactionID is null and '.$wpdb->prefix.'ap_clickout.clickout_datetime + interval 120 day < now()');
+			
+			if(AFFILIATE_POWER_PREMIUM) {
+				$wpdb->query('delete from '.$wpdb->prefix.'ap_visitor where not exists (select ap_clickoutID from '.$wpdb->prefix.'ap_clickout where ap_visitID in (select ap_visitID from '.$wpdb->prefix.'ap_visit where ap_visitorID = '.$wpdb->prefix.'ap_visitor.ap_visitorID)) and (select max(visit_datetime) from '.$wpdb->prefix.'ap_visit where ap_visitorID = '.$wpdb->prefix.'ap_visitor.ap_visitorID) + interval 30 day < now()');
+				
+				$wpdb->query('delete from '.$wpdb->prefix.'ap_visit where not exists (select ap_visitorID from '.$wpdb->prefix.'ap_visitor where ap_visitorID = '.$wpdb->prefix.'ap_visit.ap_visitorID)');
+			}
 		
 		
 		} //if ($days == 100)
-
+		
 		
 		die(); //for proper AJAX request
 		
@@ -199,8 +204,7 @@ class Affiliate_Power_Apis {
 			$transaction['number'], $transaction['network']);
 		
 		$existing_transaction = $wpdb->get_row( $sql );
-		
-		
+			
 		//Transaktion existiert noch nicht => INSERT
 		if ($existing_transaction == null) {
 			$wpdb->insert( 
@@ -259,7 +263,6 @@ class Affiliate_Power_Apis {
 				), 
 				array( '%d' ) //ap_transactionID
 			);
-			
 		}
 	
 	}
@@ -298,7 +301,7 @@ class Affiliate_Power_Apis {
 		if (is_wp_error($http_answer) || $http_answer['response']['code'] != 200) $new_version = AFFILIATE_POWER_VERSION;
 		else $new_version = $http_answer['body'];
 		
-	    if ( (version_compare(AFFILIATE_POWER_VERSION, $new_version, '<') && AFFILIATE_POWER_PREMIUM) || $updating_to_premium ) {
+	    if ( (version_compare(AFFILIATE_POWER_VERSION, $new_version, '<') && AFFILIATE_POWER_PREMIUM) || $updating_to_premium ) {  
             $obj = new stdClass();  
             $obj->slug = 'affiliate-power';
             $obj->new_version = $new_version;  

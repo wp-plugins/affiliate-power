@@ -8,7 +8,7 @@ jQuery(document).ready(function(){
 		
 		var source_url = window.location.href;
 		var target_url = jQuery(this).attr('href');
-		if (e.target.hasAttribute("target")) var new_window = window.open('about:blank', '_blank');
+		if (e.target.hasAttribute("target") || this.hasAttribute("target")) var new_window = window.open('about:blank', '_blank');
 		
 		var data = { action: 'ap_save_clickout', source_url: source_url, target_url: target_url};
 		jQuery.post(affiliatePower.ajaxurl, data, function(response) {

@@ -5,16 +5,16 @@ PLUGIN URI: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 DESCRIPTION: With Affiliate Power you can analyze your Affiliate income per Article, Referer, Keyword etc.
 AUTHOR: Jonas Breuer
 AUTHOR URI: http://www.j-breuer.de
-VERSION: 1.2.0
+VERSION: 1.2.1
 Min WP Version: 3.1
-Max WP Version: 3.6
+Max WP Version: 3.6.1
 */
 if (!defined('ABSPATH')) die; //no direct access
 
 
 
 
-define('AFFILIATE_POWER_VERSION', '1.2.0');
+define('AFFILIATE_POWER_VERSION', '1.2.1');
 define('AFFILIATE_POWER_PREMIUM', false);
 
 include_once("affiliate-power-menu.php"); //admin menu
@@ -120,7 +120,7 @@ class Affiliate_Power {
 		$first_name = ($user->user_firstname != '') ? $user->user_firstname : $user->user_login;
 		
 		//register infotexts
-		$meta_options['infotext'] = sprintf( __('<h3>New: Affiliate Power Newsletter</h3><p>As a subscriber to the Affiliate Power Newsletter you get tips and news about Affiliate Marketing once a month.</p><p>Just check your data and click Subscribe.</p><form method="post" target="_blank" action="http://47353.seu1.cleverreach.com/f/47353-107394/wcs/"><input type="text" name="1050108" size="30" value="%s" placeholder="First Name"> <input type="text" name="email" size="30" value="%s" placeholder="Email"> <input type="submit" value="Subscribe" /></form>You can always unsubscribe from the Newsletter and I will not give your Email to anyone else.<br /><br /><p><a href="#" class="affiliate-power-hide-infotext">Hide this message</a></p>', 'affiliate-power'), $first_name, $user->user_email );
+		$meta_options['infotext'] = sprintf( __('<h3>Premium Test Weeks</h3><p>Hey %s, have you always wanted to test the premium version of Affiliate Power but weren\'t sure if it\'s worth the price?</p><p>Now you can test Affiliate Power Premium for 30 days for just 1€.</p><h3><a href="http://www.affiliatepowerplugin.com/premium/" target="_blank">Yes, I want to test Affiliate Power Premium for just 1€</a></h3><p>This offer ends at 2013-10-13.</p><br /><br /><a href="#" class="affiliate-power-hide-infotext">Hide this message</a>', 'affiliate-power'), $first_name );
 		
 		$meta_options['infotext30'] = sprintf( __('<h3>Hey %s, do you like Affiliate Power?</h3><p>You are using Affiliate Power for more than 30 days now.</p><p>If you like the plugin, a positive review on <a href="http://wordpress.org/support/view/plugin-reviews/affiliate-power" target="_blank">wordpress.org</a> would be great.</p><p>You can also share the plugin in your favorite social networks.</p><ul><li><a href="http://www.facebook.com/sharer/sharer.php?s=100&p[url]=http://www.affiliatepowerplugin.com&p[images][0]=http://www.j-breuer.de/blog/wp-content/uploads/2013/04/affiliate-power-logo.png&p[title]=Affiliate%%20Power&p[summary]=With%%20the%%20WordPress%%20Plugin%%20Affiliate%%20Power%%20you%%20can%%20analyze%%20your%%20Affiliate%%20income%%20per%%20post,%%20traffic%%20source,%%20keyword%%20etc.%%20Focus%%20on%%20things%%20that%%20pay!" target="_blank">Share on Facebook</a></li><li><a href="https://plus.google.com/share?url=http://www.affiliatepowerplugin.com" target="_blank">Share on Google+</a></li><li><a href="http://twitter.com/home?status=With%%20Affiliate%%20Power%%20you%%20can%%20analyze%%20your%%20Affiliate%%20income.%%20Focus%%20on%%20things%%20that%%20pay!%%20http://www.affiliatepowerplugin.com" target="_blank">Share on Twitter</a></li></ul><br /><br /><a href="#" class="affiliate-power-hide-infotext">Hide this message</a>', 'affiliate-power'), $first_name );
 		
@@ -131,8 +131,12 @@ class Affiliate_Power {
 		$meta_options['infotext120'] = sprintf( __('<h3>Earn money with Affiliate Power!</h3><p>Hey %s, you are using Affiliate Power for more than 120 days now. I am glad, that you like the plugin that much.</p><p>Would you like to recommend the the plugin to others? With the Affiliate Program you earn awesome 30%% for each sale of the Premium version. Click the link below.</p><h3><a href="http://www.affiliatepowerplugin.com/affiliate-program/" target="_blank">All Information about the Affiliate program</a></h3><br /><br /><a href="#" class="affiliate-power-hide-infotext">Hide this message</a>', 'affiliate-power'), $first_name );
 		
 		//show infotext only for updating users
+		//always show premium test weeks
+		/*
 		if ($version != '0.0.0') $meta_options['hide-infotext'] = 0;
 		else $meta_options['hide-infotext'] = 1;
+		*/
+		$meta_options['hide-infotext'] = 0;
 		update_option('affiliate-power-meta-options', $meta_options);
 		
 		//welcome message when first install or just upgraded to premium
@@ -196,7 +200,7 @@ class Affiliate_Power {
 		
 		wp_localize_script( 'affiliate-power', 'affiliatePower', 
 			array( 
-				'ajaxurl' => admin_url( 'admin-ajax.php' )
+				'ajaxurl' => network_admin_url( 'admin-ajax.php' )
 			)
 		);
 	}
