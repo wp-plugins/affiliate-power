@@ -154,6 +154,9 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 == Changelog ==
 
 = 1.2.1 =
+* Fixed a bug where the path to admin-ajax.php was not correct on multisites
+
+= 1.2.1 =
 * Fixed a bug where image affiliate links were not opened into a new window
 * Better support for WP multisite
 * Fixed cancelled sales in infomail
