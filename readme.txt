@@ -3,7 +3,7 @@ Contributors: JonasBreuer
 Donate link: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 Tags: affiliate, tracking, subid, sales, leads, affili, affili.net, zanox, tradedoubler, belboon, superclix, cj, commission junction, adcell
 Requires at least: 3.1
-Tested up to: 3.6.1
+Tested up to: 3.7.1
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -153,7 +153,12 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 
 == Changelog ==
 
-= 1.2.1 =
+= 1.2.3 =
+* Full WordPress 3.7.1 compatibility
+* Earnings column in pages and posts visible for admins only
+* Some minor bugfixes
+
+= 1.2.2 =
 * Fixed a bug where the path to admin-ajax.php was not correct on multisites
 
 = 1.2.1 =

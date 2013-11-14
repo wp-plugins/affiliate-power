@@ -30,6 +30,7 @@ class Affiliate_Power_Api_Cj {
 	
 		$fromTS_temp = $fromTS;
 		$tillTS_temp = $fromTS + 3600*24*25; //cj does not allow more than 30 days
+		$output_transactions = array();
 		
 		while ($tillTS_temp <= $tillTS) {
 		
@@ -53,12 +54,12 @@ class Affiliate_Power_Api_Cj {
 			
 			if (is_wp_error($http_answer) || $http_answer['response']['code'] != 200) {
 				//todo: error handling, mail to admin etc.
-				return array();
+				return $output_transactions;
 			}
 			
 			if(!class_exists("DOMDocument")) {
 				//todo: error handling, mail to admin etc.
-				return array();
+				return $output_transactions;
 			}
 			
 			$dom = new DOMDocument();

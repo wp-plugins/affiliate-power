@@ -5,16 +5,16 @@ PLUGIN URI: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 DESCRIPTION: With Affiliate Power you can analyze your Affiliate income per Article, Referer, Keyword etc.
 AUTHOR: Jonas Breuer
 AUTHOR URI: http://www.j-breuer.de
-VERSION: 1.2.2
+VERSION: 1.2.3
 Min WP Version: 3.1
-Max WP Version: 3.6.1
+Max WP Version: 3.7.1
 */
 if (!defined('ABSPATH')) die; //no direct access
 
 
 
 
-define('AFFILIATE_POWER_VERSION', '1.2.2');
+define('AFFILIATE_POWER_VERSION', '1.2.3');
 define('AFFILIATE_POWER_PREMIUM', false);
 
 include_once("affiliate-power-menu.php"); //admin menu
@@ -45,7 +45,6 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 if(is_plugin_active('pretty-link/pretty-link.php') && $options['add-sub-ids'] == 1) {
 	include_once("affiliate-power-prli.php");
 }
-
 
 
 class Affiliate_Power {
@@ -120,7 +119,7 @@ class Affiliate_Power {
 		$first_name = ($user->user_firstname != '') ? $user->user_firstname : $user->user_login;
 		
 		//register infotexts
-		$meta_options['infotext'] = sprintf( __('<h3>Premium Test Weeks</h3><p>Hey %s, have you always wanted to test the premium version of Affiliate Power but weren\'t sure if it\'s worth the price?</p><p>Now you can test Affiliate Power Premium for 30 days for just 1€.</p><h3><a href="http://www.affiliatepowerplugin.com/premium/" target="_blank">Yes, I want to test Affiliate Power Premium for just 1€</a></h3><p>This offer ends at 2013-10-13.</p><br /><br /><a href="#" class="affiliate-power-hide-infotext">Hide this message</a>', 'affiliate-power'), $first_name );
+		$meta_options['infotext'] = sprintf( __('<h3>Affiliate Power 1.2.3</h3><p>Hey %s, thank you for updating to the new version of Affiliate Power. For security and compatibility reasons you should always use the newest version of the plugin. Affiliate Power 1.2.3 is just a little maintenance update, which includes:<ul><li>Full WordPress 3.7.1 compatibility</li><li>Earnings column in pages and posts visible for admins only</li><li>some minor bugfixes</li></ul><br /><a href="#" class="affiliate-power-hide-infotext">Hide this message</a>', 'affiliate-power'), $first_name );
 		
 		$meta_options['infotext30'] = sprintf( __('<h3>Hey %s, do you like Affiliate Power?</h3><p>You are using Affiliate Power for more than 30 days now.</p><p>If you like the plugin, a positive review on <a href="http://wordpress.org/support/view/plugin-reviews/affiliate-power" target="_blank">wordpress.org</a> would be great.</p><p>You can also share the plugin in your favorite social networks.</p><ul><li><a href="http://www.facebook.com/sharer/sharer.php?s=100&p[url]=http://www.affiliatepowerplugin.com&p[images][0]=http://www.j-breuer.de/blog/wp-content/uploads/2013/04/affiliate-power-logo.png&p[title]=Affiliate%%20Power&p[summary]=With%%20the%%20WordPress%%20Plugin%%20Affiliate%%20Power%%20you%%20can%%20analyze%%20your%%20Affiliate%%20income%%20per%%20post,%%20traffic%%20source,%%20keyword%%20etc.%%20Focus%%20on%%20things%%20that%%20pay!" target="_blank">Share on Facebook</a></li><li><a href="https://plus.google.com/share?url=http://www.affiliatepowerplugin.com" target="_blank">Share on Google+</a></li><li><a href="http://twitter.com/home?status=With%%20Affiliate%%20Power%%20you%%20can%%20analyze%%20your%%20Affiliate%%20income.%%20Focus%%20on%%20things%%20that%%20pay!%%20http://www.affiliatepowerplugin.com" target="_blank">Share on Twitter</a></li></ul><br /><br /><a href="#" class="affiliate-power-hide-infotext">Hide this message</a>', 'affiliate-power'), $first_name );
 		
@@ -131,12 +130,8 @@ class Affiliate_Power {
 		$meta_options['infotext120'] = sprintf( __('<h3>Earn money with Affiliate Power!</h3><p>Hey %s, you are using Affiliate Power for more than 120 days now. I am glad, that you like the plugin that much.</p><p>Would you like to recommend the the plugin to others? With the Affiliate Program you earn awesome 30%% for each sale of the Premium version. Click the link below.</p><h3><a href="http://www.affiliatepowerplugin.com/affiliate-program/" target="_blank">All Information about the Affiliate program</a></h3><br /><br /><a href="#" class="affiliate-power-hide-infotext">Hide this message</a>', 'affiliate-power'), $first_name );
 		
 		//show infotext only for updating users
-		//always show premium test weeks
-		/*
 		if ($version != '0.0.0') $meta_options['hide-infotext'] = 0;
 		else $meta_options['hide-infotext'] = 1;
-		*/
-		$meta_options['hide-infotext'] = 0;
 		update_option('affiliate-power-meta-options', $meta_options);
 		
 		//welcome message when first install or just upgraded to premium
@@ -176,6 +171,12 @@ class Affiliate_Power {
 		//load language file
 		$plugin_dir = basename(dirname(__FILE__));
 		load_plugin_textdomain( 'affiliate-power', '', $plugin_dir . '/languages/' );
+		
+		$meta_options = get_option('affiliate-power-meta-options');
+		$user = wp_get_current_user();
+		$first_name = ($user->user_firstname != '') ? $user->user_firstname : $user->user_login;
+		$meta_options['infotext'] = sprintf( __('<h3>Affiliate Power 1.2.3</h3><p>Hey %s, thank you for updating to the new version of Affiliate Power. For security and compatibility reasons you should always use the newest version of the plugin. Affiliate Power 1.2.3 is just a little maintenance update, which includes:<ul><li>Full WordPress 3.7.1 compatibility</li><li>Earnings column in pages and posts visible for admins only</li><li>some minor bugfixes</li></ul><br /><a href="#" class="affiliate-power-hide-infotext">Hide this message</a>', 'affiliate-power'), $first_name );
+		update_option('affiliate-power-meta-options', $meta_options);
 		
 		//create tables etc. if user updated the plugin
 		$version = get_option('affiliate-power-version', '0.0.0');

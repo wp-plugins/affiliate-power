@@ -89,7 +89,7 @@ class Affiliate_Power_Settings {
 		//Check Licence
 		$options = get_option('affiliate-power-options');
 		if (isset($options['licence-key'])) {
-			echo '<div class="updated"><p><strong>'.__('You entered a valid licence key but you did not download the premium version yet. Please go to the a href="update-core.php">Update Page</a> and update to the premium version. It can take up to 5 minutes until WordPress notifies you about the new version.', 'affiliate-power').'</strong></p></div>';
+			echo '<div class="updated"><p><strong>'.__('You entered a valid licence key but you did not download the premium version yet. Please go to the <a href="update-core.php">Update Page</a> and update to the premium version. It can take up to 5 minutes until WordPress notifies you about the new version.', 'affiliate-power').'</strong></p></div>';
 		}
 		//Infotext
 		if (isset($meta_options['infotext']) && $meta_options['hide-infotext'] == 0) {

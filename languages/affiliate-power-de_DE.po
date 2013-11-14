@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Affiliate Power\n"
-"POT-Creation-Date: 2013-09-23 12:51+0100\n"
-"PO-Revision-Date: 2013-09-23 12:51+0100\n"
+"POT-Creation-Date: 2013-11-11 09:57+0100\n"
+"PO-Revision-Date: 2013-11-11 10:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: Jonas Breuer <affiliate-power@j-breuer.de>\n"
 "Language: de_DE\n"
@@ -80,7 +80,7 @@ msgid "Affiliate Power Settings"
 msgstr "Affiliate Power Einstellungen"
 
 #: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:37
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:118
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:120
 msgid "Settings"
 msgstr "Einstellungen"
 
@@ -160,7 +160,7 @@ msgstr "Fr"
 msgid "Sat"
 msgstr "Sa"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:87
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:88
 #: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-widget.php:12
 msgid "Affiliate Income"
 msgstr "Affiliate Einnahmen"
@@ -310,7 +310,7 @@ msgstr "Zanox Werbefläche Name"
 #: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:19
 msgid ""
 "You entered a valid licence key but you did not download the premium version "
-"yet. Please go to the a href=\"update-core.php\">Update Page</a> and update "
+"yet. Please go to the <a href=\"update-core.php\">Update Page</a> and update "
 "to the premium version. It can take up to 5 minutes until WordPress notifies "
 "you about the new version."
 msgstr ""
@@ -318,7 +318,7 @@ msgstr ""
 "noch nicht heruntergeladen.Bitte begib dich zur <a href=\"update-core.php"
 "\">Update Seite</a> und aktualisiere auf die Premium-Version. Unter "
 "Umständen  kann es bis zu 5 Minuten dauern, bis Wordpress die neue Version "
-"meldet."
+"meldet.\v"
 
 #: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:99
 msgid ""
@@ -1014,7 +1014,7 @@ msgid "Zanox test login failed. Please check your data."
 msgstr "Testlogin bei Zanox fehlgeschlagen. Bitte überprüfe Deine Daten."
 
 #: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:85
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:213
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:214
 msgid ""
 "<a href=\"http://www.affiliatepowerplugin.com/premium/\" target=\"_blank"
 "\">Only in the premium version</a>"
@@ -1129,47 +1129,47 @@ msgstr "Ansehen"
 msgid "Edit"
 msgstr "Edit"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:235
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:236
 msgid "Post"
 msgstr "Artikel"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:236
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:237
 msgid "SubId"
 msgstr "SubId"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:239
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:240
 msgid "Date"
 msgstr "Datum"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:240
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:241
 msgid "Network"
 msgstr "Netzwerk"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:241
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:242
 msgid "Merchant"
 msgstr "Merchant"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:242
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:243
 msgid "Type"
 msgstr "Typ"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:243
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:244
 msgid "Price"
 msgstr "Preis"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:244
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:245
 msgid "Commission"
 msgstr "Provision"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:245
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:246
 msgid "Status"
 msgstr "Status"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:247
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:248
 msgid "Referer"
 msgstr "Besucherquelle"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:248
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:249
 msgid "Landing Page"
 msgstr "Einsteigsseite"
 
@@ -1193,27 +1193,28 @@ msgstr "Gesamt"
 msgid "Details"
 msgstr "Details"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:123
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:122
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:178
 #, php-format
 msgid ""
-"<h3>Premium Test Weeks</h3><p>Hey %s, have you always wanted to test the "
-"premium version of Affiliate Power but weren't sure if it's worth the price?"
-"</p><p>Now you can test Affiliate Power Premium for 30 days for just 1€.</"
-"p><h3><a href=\"http://www.affiliatepowerplugin.com/premium/\" target="
-"\"_blank\">Yes, I want to test Affiliate Power Premium for just 1€</a></"
-"h3><p>This offer ends at 2013-10-13.</p><br /><br /><a href=\"#\" class="
+"<h3>Affiliate Power 1.2.3</h3><p>Hey %s, thank you for updating to the new "
+"version of Affiliate Power. For security and compatibility reasons you "
+"should always use the newest version of the plugin. Affiliate Power 1.2.3 is "
+"just a little maintenance update, which includes:<ul><li>Full WordPress "
+"3.7.1 compatibility</li><li>Earnings column in pages and posts visible for "
+"admins only</li><li>some minor bugfixes</li></ul><br /><a href=\"#\" class="
 "\"affiliate-power-hide-infotext\">Hide this message</a>"
 msgstr ""
-"<h3>Premium Test Wochen</h3><p>Hi %s, wolltest du schon länger mal die "
-"Premium Version von Affiliate Power ausprobieren? Du warst dir nur nicht "
-"sicher, ob sich das Geld lohnt?</p><p>Dann kannst du jetzt Affiliate Power "
-"Premium 30 Tage lang für nur 1€ testen. <h3><a href=\"http://www.j-breuer.de/"
-"wordpress-plugins/affiliate-power-premium/\" target=\"_blank\">Ja, ich "
-"möchte Affiliate Power Premium für nur 1€ testen</a></h3><p>Dieses Angebot "
-"endet am 13.10.2013.</p><br /><br /><a href=\"#\" class=\"affiliate-power-"
-"hide-infotext\">Nicht mehr anzeigen</a>"
+"<h3>Affiliate Power 1.2.3</h3><p>Hey %s, danke, dass du auf die neueste "
+"Version von Affiliate Power aktualisiert hast. Aus Sicherheits- und "
+"Kompatibilitätsgründen solltest du immer auf die neueste Version "
+"aktualisieren. Affiliate Power 1.2.3 ist ein Wartungsupdates mit den "
+"folgenden Änderungen:<ul><li>Volle WordPress 3.7.1 Kompatibilität</"
+"li><li>Einnahmen-spalte in Artikeln und Seiten ist nur noch für Admins "
+"sichtbar</li><li>Kleine Bugfixes</li></ul><br /><a href=\"#\" class="
+"\"affiliate-power-hide-infotext\">Nicht mehr anzeigen</a>"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:125
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:124
 #, php-format
 msgid ""
 "<h3>Hey %s, do you like Affiliate Power?</h3><p>You are using Affiliate "
@@ -1258,7 +1259,7 @@ msgstr ""
 "a></li></ul><br /><br /></p><a href=\"#\" class=\"affiliate-power-hide-"
 "infotext\">Nicht mehr anzeigen</a>"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:127
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:126
 #, php-format
 msgid ""
 "<h3>Affiliate Power Newsletter</h3><p>You are using Affiliate Power for more "
@@ -1288,7 +1289,7 @@ msgstr ""
 "href=\"#\" class=\"affiliate-power-hide-infotext\">Nicht mehr anzeigen</a></"
 "p>"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:129
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:128
 #, php-format
 msgid ""
 "<h3>Your opinion about Affiliate Power</h3><p>Hey %s, you are using "
@@ -1318,7 +1319,7 @@ msgstr ""
 "name=\"submit\" value=\"Senden\" /></form><br /><br /><p><a href=\"#\" class="
 "\"affiliate-power-hide-infotext\">Nicht mehr anzeigen</a></p>"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:131
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:130
 #, php-format
 msgid ""
 "<h3>Earn money with Affiliate Power!</h3><p>Hey %s, you are using Affiliate "
@@ -1339,7 +1340,7 @@ msgstr ""
 "a></h3><br /><br /><a href=\"#\" class=\"affiliate-power-hide-infotext"
 "\">Nicht mehr anzeigen</a>"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:150
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:145
 #, php-format
 msgid ""
 "<div id=\"message\" class=\"updated\"><img src=\"%s\" alt=\"Affiliate Power"
@@ -1359,7 +1360,7 @@ msgstr ""
 "Tracking verwenden möchtest, solltest du auf der <a href=\"%s"
 "\">Einstellungsseite</a> die Parameter hinterlegen, die du benutzt.</p></div>"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:153
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:148
 #, php-format
 msgid ""
 "<div id=\"message\" class=\"updated\"><img src=\"%s\" alt=\"Affiliate Power"
@@ -1382,6 +1383,24 @@ msgstr ""
 #: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/apis/webworker-dashboard.php:54
 msgid "Affiliate Power"
 msgstr "Affiliate Power"
+
+#~ msgid ""
+#~ "<h3>Premium Test Weeks</h3><p>Hey %s, have you always wanted to test the "
+#~ "premium version of Affiliate Power but weren't sure if it's worth the "
+#~ "price?</p><p>Now you can test Affiliate Power Premium for 30 days for "
+#~ "just 1€.</p><h3><a href=\"http://www.affiliatepowerplugin.com/premium/\" "
+#~ "target=\"_blank\">Yes, I want to test Affiliate Power Premium for just "
+#~ "1€</a></h3><p>This offer ends at 2013-10-13.</p><br /><br /><a href=\"#\" "
+#~ "class=\"affiliate-power-hide-infotext\">Hide this message</a>"
+#~ msgstr ""
+#~ "<h3>Premium Test Wochen</h3><p>Hi %s, wolltest du schon länger mal die "
+#~ "Premium Version von Affiliate Power ausprobieren? Du warst dir nur nicht "
+#~ "sicher, ob sich das Geld lohnt?</p><p>Dann kannst du jetzt Affiliate "
+#~ "Power Premium 30 Tage lang für nur 1€ testen. <h3><a href=\"http://www.j-"
+#~ "breuer.de/wordpress-plugins/affiliate-power-premium/\" target=\"_blank"
+#~ "\">Ja, ich möchte Affiliate Power Premium für nur 1€ testen</a></"
+#~ "h3><p>Dieses Angebot endet am 13.10.2013.</p><br /><br /><a href=\"#\" "
+#~ "class=\"affiliate-power-hide-infotext\">Nicht mehr anzeigen</a>"
 
 #~ msgid ""
 #~ "<h3>New: Affiliate Power Newsletter</h3><p>As a subscriber to the "

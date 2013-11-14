@@ -84,13 +84,15 @@ class Affiliate_Power_Menu {
 	//CHANGE EXISTING ADMIN PAGES
 	//--------------
 	static public function addEarningsColummnToPosts($defaults) {
-		$defaults['earnings'] = __('Affiliate Income', 'affiliate-power');
+		if ( current_user_can('manage_options') ) {
+			$defaults['earnings'] = __('Affiliate Income', 'affiliate-power');
+		}
 		return $defaults;
 	}
 	
 	
 	static public function addEarningsToPosts($column_name, $id) {
-		if ( $column_name == 'earnings' ) {
+		if ( $column_name == 'earnings' && current_user_can('manage_options') ) {
 		
 			global $wpdb;
 			$sql = $wpdb->prepare('

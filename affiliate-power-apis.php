@@ -86,11 +86,11 @@ class Affiliate_Power_Apis {
 		if ($days == 100) {
 		
 			//1.1.0: sales for mail are all sales from the last day now
-			$transaction_changes['new'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus <> "Cancelled"', ARRAY_A);
+			$transaction_changes['new'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(Date) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Open"', ARRAY_A);
 			$transaction_changes['confirmed'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Confirmed"', ARRAY_A);
 			$transaction_changes['cancelled'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Cancelled"', ARRAY_A);
 			
-			$new_transactions_total = $wpdb->get_row('SELECT sum(Commission) as commission, count(*) as cnt FROM '.$wpdb->prefix.'ap_transaction WHERE date(Date) = date(now() - INTERVAL 1 DAY) AND TransactionStatus <> "Cancelled"', ARRAY_A);
+			$new_transactions_total = $wpdb->get_row('SELECT sum(Commission) as commission, count(*) as cnt FROM '.$wpdb->prefix.'ap_transaction WHERE date(Date) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Open"', ARRAY_A);
 			$confirmed_transactions_total = $wpdb->get_row('SELECT sum(Commission) as commission, count(*) as cnt FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Confirmed"', ARRAY_A);
 			$cancelled_transactions_total = $wpdb->get_row('SELECT sum(Commission) as commission, count(*) as cnt FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Cancelled"', ARRAY_A);
 			
@@ -167,14 +167,17 @@ class Affiliate_Power_Apis {
 			
 			
 			//delete user data which led to no sales
+			//deactivated, to much db load, todo: find better solution
 			
 			//$wpdb->query('delete from '.$wpdb->prefix.'ap_clickout left join '.$wpdb->prefix.'ap_transaction where '.$wpdb->prefix.'ap_transaction.ap_transactionID is null and '.$wpdb->prefix.'ap_clickout.clickout_datetime + interval 120 day < now()');
 			
+			/*
 			if(AFFILIATE_POWER_PREMIUM) {
 				$wpdb->query('delete from '.$wpdb->prefix.'ap_visitor where not exists (select ap_clickoutID from '.$wpdb->prefix.'ap_clickout where ap_visitID in (select ap_visitID from '.$wpdb->prefix.'ap_visit where ap_visitorID = '.$wpdb->prefix.'ap_visitor.ap_visitorID)) and (select max(visit_datetime) from '.$wpdb->prefix.'ap_visit where ap_visitorID = '.$wpdb->prefix.'ap_visitor.ap_visitorID) + interval 30 day < now()');
 				
 				$wpdb->query('delete from '.$wpdb->prefix.'ap_visit where not exists (select ap_visitorID from '.$wpdb->prefix.'ap_visitor where ap_visitorID = '.$wpdb->prefix.'ap_visit.ap_visitorID)');
 			}
+			*/
 		
 		
 		} //if ($days == 100)
