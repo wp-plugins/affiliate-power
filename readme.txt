@@ -3,7 +3,7 @@ Contributors: JonasBreuer
 Donate link: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 Tags: affiliate, tracking, subid, sales, leads, affili, affili.net, zanox, tradedoubler, belboon, superclix, cj, commission junction, adcell
 Requires at least: 3.1
-Tested up to: 3.7.1
+Tested up to: 3.8
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -152,6 +152,10 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 3. Statistics (Premium-Version)
 
 == Changelog ==
+
+= 1.2.4 =
+* Full WordPress 3.7.1 compatibility
+* Bugfix with Zanox deeplinks
 
 = 1.2.3 =
 * Full WordPress 3.7.1 compatibility
