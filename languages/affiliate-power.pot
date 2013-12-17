@@ -1,0 +1,1188 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Affiliate Power\n"
+"POT-Creation-Date: 2013-11-11 09:57+0100\n"
+"PO-Revision-Date: 2013-11-14 10:01+0100\n"
+"Last-Translator: \n"
+"Language-Team: Jonas Breuer <affiliate-power@j-breuer.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e;_x:2c,1\n"
+"X-Poedit-Basepath: C:\\develop\\j-breuer\\affiliate-power\\affiliate-power-"
+"basic\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: C:\\develop\\j-breuer\\affiliate-power\\affiliate-"
+"power-basic\n"
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:103
+msgctxt "multiple"
+msgid "New"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:104
+msgctxt "multiple"
+msgid "Confirmed"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:105
+msgctxt "multiple"
+msgid "Cancelled"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:122
+msgid "Transactions"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:124
+#, php-format
+msgid "Total: %d Transactions, %s"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:134
+#, php-format
+msgid ""
+"<p>Hello Admin,</p><p>This is your daily income report from Affiliate Power "
+"for your page <strong>%s</strong>. You can always deactivate this report in "
+"the Affiliate Power settings, if you are annoyed about it.</p>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-apis.php:138
+#, php-format
+msgid "Affiliate-Power Report for %s"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:35
+msgid "Affiliate Power Sales"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:35
+msgid "Leads / Sales"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:36
+msgid "Affiliate Power Statistics"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:36
+msgid "Statistics"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:37
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:86
+msgid "Affiliate Power Settings"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:37
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:120
+msgid "Settings"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:56
+msgid "January"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:57
+msgid "February"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:58
+msgid "March"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:59
+msgid "April"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:60
+msgid "May"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:61
+msgid "June"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:62
+msgid "July"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:63
+msgid "August"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:64
+msgid "September"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:65
+msgid "October"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:66
+msgid "November"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:67
+msgid "December"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:68
+msgid "Sun"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:69
+msgid "Mon"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:70
+msgid "Tue"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:71
+msgid "Wed"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:72
+msgid "Thu"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:73
+msgid "Fri"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:74
+msgid "Sat"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-menu.php:88
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-widget.php:12
+msgid "Affiliate Income"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:14
+msgid "Basic settings"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:15
+msgid "Activate tracking"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:17
+msgid "Daily email report"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:18
+msgid "Licence key"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:19
+msgid "URL-Parameter"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:24
+msgid "Webworker Dashboard"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:25
+msgid "Webworker Dashboard Email address"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:26
+msgid "Webworker Dashboard API Key"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:29
+msgid "Affiliate-Networks"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:32
+msgid "Adcell"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:33
+msgid "Adcell Username"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:34
+msgid "Adcell API Password"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:35
+msgid "Adcell Website Filter"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:38
+msgid "Affili.net"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:39
+msgid "Affili.net UserId"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:40
+msgid "Affili.net PublisherWebservice Password"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:43
+msgid "Belboon"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:44
+msgid "Belboon Username"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:45
+msgid "Belboon WebService Password"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:46
+msgid "Belboon Ad Platform Name"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:49
+msgid "Commission Junction"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:50
+msgid "Commission Junction PID"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:51
+msgid "Commission Junction Developer Key"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:54
+msgid "Superclix"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:55
+msgid "Superclix Username"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:56
+msgid "Superclix Export Password"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:57
+msgid "Superclix Website Filter"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:60
+msgid "Tradedoubler"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:61
+msgid "Tradedoubler Report Key"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:62
+msgid "Tradedoubler Site name"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:65
+msgid "Zanox"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:66
+msgid "Zanox ConnectId"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:67
+msgid "Zanox Public Key"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:68
+msgid "Zanox Secret Key"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:69
+msgid "Zanox Ad space name"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:92
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:168
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:19
+msgid ""
+"You entered a valid licence key but you did not download the premium version "
+"yet. Please go to the <a href=\"update-core.php\">Update Page</a> and update "
+"to the premium version. It can take up to 5 minutes until WordPress notifies "
+"you about the new version."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:99
+msgid ""
+"<p>If you have problems or ideas for new features I always appreciate a "
+"comment on the <a href=\"http://www.affiliatepowerplugin.com\" target="
+"\"_blank\">Plugin Page</a> or a <a href=\"http://www.affiliatepowerplugin."
+"com/contact/\" target=\"_blank\">Message</a>.</p>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:101
+msgid ""
+"<p>You like the plugin but you want to know more about your income? There is "
+"also a premium version of Affiliate Power where you can track the User "
+"Source, Keyword, Landing Page and URL-Parameters like utm_campaign. Find "
+"more information on the <a href=\"http://www.affiliatepowerplugin.com/"
+"premium/\" target=\"_blank\">Premium Page</a>.<p>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:103
+msgid ""
+"<p><strong>Now you can earn directly money with Affiliate Power.</strong> "
+"You get 30% Commission for each sale of the Premium-Version. <a href="
+"\"http://www.affiliatepowerplugin.com/affiliate-program/\" target=\"_blank"
+"\"><strong>All Information about the Affiliate program.</strong></a></p>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:105
+msgid ""
+"<p>Please be patient when saving the settings. The plugin performs a test "
+"login at the networks while saving.</p>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:109
+#, php-format
+msgid ""
+"<h3>Newsletter</h3><p>As a subscriber to the Affiliate Power Newsletter you "
+"get tips and news about Affiliate Marketing once a month. Just check your "
+"data and click Subscribe.</p><form method=\"post\" target=\"_blank\" action="
+"\"http://47353.seu1.cleverreach.com/f/47353-107394/wcs/\"><input type=\"text"
+"\" name=\"1050108\" size=\"30\" value=\"%s\" placeholder=\"First Name\"> "
+"<input type=\"text\" name=\"email\" size=\"30\" value=\"%s\" placeholder="
+"\"Email\"> <input type=\"submit\" value=\"Subscribe\"></form>You can always "
+"unsubscribe from the Newsletter and I will not give your Email to anyone "
+"else."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:134
+msgid ""
+"<div id='ap_sub_id_info' style='display:none;'>With the activated tracking, "
+"you can find out which articles/referer/keywords etc. led to which income. "
+"Sales, which occurred before the plugin installation can not be analyzed. "
+"This option makes sense for almost all plugin users.</div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:144
+msgid ""
+"<div id='ap_send_mail_transactions_info' style='display:none;'>Receive a "
+"daily email with all new or changed sales. If there aren't any sales, no "
+"email will be send.</div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:152
+msgid ""
+"<div id='ap_licence_key_info' style='display:none;'>There is also a premium "
+"version of Affiliate Power which requires a licence key. Find more "
+"information about the premium version on the <a href='http://www."
+"affiliatepowerplugin.com/premium/' target='_blank'>Premium Page</a>. For "
+"using the basic version, leave this field empty.</div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:157
+msgid "Only in the premium version"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:157
+msgid "http://www.affiliatepowerplugin.com/premium/"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:159
+msgid ""
+"<div id='ap_landing_params_info' style='display:none;'>Here you can define "
+"URL-Parameters you want to track. You can separate several parameters with "
+"comma. If you are using Google Analytics campaign tracking, this values may "
+"be a good start: <em>utm_campaign,utm_source,utm_medium,utm_term,"
+"utm_content</em>.</div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:165
+msgid ""
+"With the <a href=\"https://www.webworker-dashboard.de\" target=\"_blank"
+"\">Webworker Dashboard</a> you can keep track of all your projects. If you "
+"have an account there, you can import your affiliate earnings automatically "
+"by entering your account details here. This is completely optional. If you "
+"do not enter your account details, no data will be send."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:173
+msgid ""
+"<div id='ap_webworker_dashboard_username_info' style='display:none;'>This is "
+"the normal Email address you use to login at the Webworker Dashboard.</div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:181
+msgid ""
+"<div id='ap_webworker_dashboard_apikey_info' style='display:none;'>The API "
+"password is a special access to the Webworker Dashboard API. Please do "
+"<strong>not</strong> enter your normal Webworker Dashboard password here. "
+"The API Key can be created in the login area, menu item Settings -> APIs. "
+"Select \"Webworker Dashboard\" in the select box and click \"Add API\".</div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:188
+msgid ""
+"<p>In order to download your sales, you have to enter your data of the "
+"affiliate networks you are using. <a href=\" http://www.affiliatepowerplugin."
+"com/#data-security\" target=\"_blank\">Whats about data security?</a></p>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:198
+msgid ""
+"<div id='ap_adcell_username_info' style='display:none;'>The Adcell Username "
+"is the number, you are using to login on the adcell page.</div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:206
+msgid ""
+"<div id='ap_adcell_password_info' style='display:none;'>The Adcell API "
+"password is a special access to the Adcell API. Please do <strong>not</"
+"strong> enter your normal Adcell password here. The API password can be "
+"defined in the publisher area, menu item \"My Data\".</div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:215
+msgid ""
+"<div id='ap_adcell_referer_filter_info' style='display:none;'>Only save "
+"sales, which came from this domain. This option makes only sense if you are "
+"using your Adcell account for several pages"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:225
+msgid ""
+"<div id='ap_affili_id_info' style='display:none;'>The Affili.net UserId is "
+"the 6-digit number, you are using to login on affili.net.</div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:233
+msgid ""
+"<div id='ap_affili_password_info' style='display:none;'>The affili.net "
+"PublisherWebservice Password is a special access the the affili.net API. "
+"Please do <strong>not</strong> enter your normal affili.net password here. "
+"You can find the PublisherWebservice Password in the publisher area of "
+"affili.net, menu item Account -> Technical settings -> Webservices. It may "
+"be necessary to request the password via the request button first.</div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:244
+msgid ""
+"<div id='ap_belboon_username_info' style='display:none;'>The Belboon "
+"username is the name you use to login on the Belboon page. This name is case-"
+"sensitive.</div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:252
+msgid ""
+"<div id='ap_belboon_password_info' style='display:none;'>The belboon "
+"WebService Password is a special access the the belboon API. Please do "
+"<strong>not</strong> enter your normal belboon password here. You can find "
+"the WebService Password in the publisher area, left-hand side, menu item "
+"Tools & Services -> Webservices. It may be necessary to request the password "
+"first.</div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:260
+msgid ""
+"<div id='ap_belboon_platform_info' style='display:none;'>If you are using "
+"your belboon account for several pages, you can enter the ad platform name "
+"for this page here. The plugin will only import sales from this ad platform. "
+"Please do <strong>not</strong> enter the ad platform id but the name. You "
+"can find the ad platform name in the publisher area, left-hand side, menu "
+"item Overview ad platforms. If you are using several ad platforms for this "
+"page you can separate the ad platform names with comma. If you are using "
+"your belboon account only for this page anyway, just leave the field empty. "
+"In this case, the plugin will download all sales.</div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:270
+msgid ""
+"<div id='ap_cj_id_info' style='display:none;'>The PID identifies your "
+"website at Commission Junction. You can find it in the publisher area of "
+"Commission Junction at the menu item Account -> Website Settings.</div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:278
+msgid ""
+"<div id='ap_cj_key_info' style='display:none;'>The Commission Junction "
+"Developer Key is a special access to the Commission Junction API. Please do "
+"<strong>not</strong> enter your normal password here. In order to get the "
+"key, you have to go to the <a href='http://www.cj.com/webservices' "
+"target='_blank'>Webservice-Site of Commission Junction</a>, click on "
+"\"Register for a Key\" and login with your normal account data.</div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:289
+msgid ""
+"<div id='ap_superclix_username_info' style='display:none;'>The Superclix "
+"username is the name you use to login on the Superclix page. This name is "
+"case-sensitive.</div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:297
+msgid ""
+"<div id='ap_superclix_password_info' style='display:none;'>The Superclix "
+"export password is a special access to the Superclix API. Please do "
+"<strong>not</strong> enter your normal password here. The export password "
+"can be defined in the publisher area, menu item \"Account -> Change password "
+"\".</div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:306
+msgid ""
+"<div id='ap_superclix_referer_filter_info' style='display:none;'>Only save "
+"sales, which came from this domain. This option makes only sense if you are "
+"using your Superclix account for several pages"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:316
+msgid ""
+"<div id='ap_tradedoubler_key_info' style='display:none;'>The Tradedoubler "
+"Report Key is a special access to the Tradedoubler API. Please do "
+"<strong>not</strong> enter your normal Tradedoubler password here. In order "
+"to get the Tradedoubler Report Key, you have to wirte an email with your "
+"username to <a href='mailto:support.uk@tradedoubler.com'>support."
+"uk@tradedoubler.com</a> (you can also change the country code if you are not "
+"in the UK) and ask for a Report Key. You will get an email with the key.</"
+"div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:324
+msgid ""
+"<div id='ap_tradedoubler_sitename_info' style='display:none;'>If you are "
+"using your Tradedoubler account for several pages, enter the site name you "
+"defined in the Tradedoubler login area for this page. The plugin will only "
+"import sales from this site name. Please do <strong>not</strong> enter the "
+"site id but the name. You can find the site name in the publisher area, menu "
+"item Sites -> Sites. If you are using several sites for this page you can "
+"separate the site names with comma. If you are using your account only for "
+"this page anyway, just leave the field empty. In this case, the plugin will "
+"download all sales.</div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:335
+msgid ""
+"<div id='ap_zanox_connect_info' style='display:none;'>The Zanox ConnectId is "
+"required to import sales from zanox. It's not that simple to get it, but "
+"together we will work it out:<ol><li>Go to <a href='http://apps.zanox.com' "
+"target='_blank'>http://apps.zanox.com</a>, click on \"Connect with Zanox\" "
+"in the top-right corner and login with your normal Zanox account data</"
+"li><li>Go to the tab \"Developers\" -> \"My own Applications\", accept the "
+"terms and click on \"Become a developer\"</li><li>Click on the new button "
+"\"New application\" and then \"zanox keys\"</li></ol></div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:343
+msgid ""
+"<div id='ap_zanox_public_info' style='display:none;'>The Zanox PublicKey is "
+"required to import sales from zanox. It's not that simple to get it, but "
+"together we will work it out:<ol><li>Go to <a href='http://apps.zanox.com' "
+"target='_blank'>http://apps.zanox.com</a>, click on \"Connect with Zanox\" "
+"in the top-right corner and login with your normal Zanox account data</"
+"li><li>Go to the tab \"Developers\" -> \"My own Applications\", accept the "
+"terms and click on \"Become a developer\"</li><li>Click on the new button "
+"\"New application\" and then \"zanox keys\"</li></ol></div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:351
+msgid ""
+"<div id='ap_zanox_secret_info' style='display:none;'>The Zanox SecretKey is "
+"required to import sales from zanox. It's not that simple to get it, but "
+"together we will work it out:<ol><li>Go to <a href='http://apps.zanox.com' "
+"target='_blank'>http://apps.zanox.com</a>, click on \"Connect with Zanox\" "
+"in the top-right corner and login with your normal Zanox account data</"
+"li><li>Go to the tab \"Developers\" -> \"My own Applications\", accept the "
+"terms and click on \"Become a developer\"</li><li>Click on the new button "
+"\"New application\" and then \"zanox keys\"</li></ol></div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:359
+msgid ""
+"<div id='ap_zanox_adspace_info' style='display:none;'>If you are using your "
+"Zanox account for several pages, enter the ad space name you defined in the  "
+"login area for this page. The plugin will only import sales from this ad "
+"space name. Please do <strong>not</strong> enter the ad space id but the "
+"name. You can find the ad space name in the publisher area, menu item "
+"Profile -> My Ad Spaces. If you are using several ad spaces for this page "
+"you can separate the ad space names with comma. If you are using your "
+"account only for this page anyway, just leave the field empty. In this case, "
+"the plugin will download all sales.</div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:379
+msgid ""
+"The licence key could not be checked. Please try again later and <a href="
+"\"http://www.affiliatepowerplugin.com/contact/\" target=\"_blank\">let me "
+"know</a> if it is still not working."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:380
+msgid "The licence key is outdated. Please renew your licence key."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:381
+msgid ""
+"The licence key is invalid. Please check again. If you are sure you entered "
+"the right key, <a href=\"http://www.affiliatepowerplugin.com/contact/\" "
+"target=\"_blank\">let me know</a>, and I will check it out."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:384
+msgid "Invalid licence key. The key should only contain numbers and letters."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:391
+msgid ""
+"Invalid Webworker Dashboard email address. This is not a valid email address."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:394
+msgid ""
+"Invalid Webworker Dashboard Apikey. The Apikey should be 32 characters long "
+"and only contain numbers and letters. Please do not enter your normal "
+"Webworker Dashboard password, but yourApikey"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:399
+msgid "Webworker Dashboard test login failed. Please check your data."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:407
+msgid ""
+"Invalid Adcell username. The username should only contain numbers and "
+"letters."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:417
+msgid "Adcell test login failed. Please check your data."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:425
+msgid "Invalid Affili.net Id. The Id should only contain numbers."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:428
+msgid ""
+"Invalid Affili.net PublisherWebservice password. The password should be 20 "
+"characters long and only contain numbers and letters. Please do not enter "
+"your normal Affili.net password, but your PublisherWebservice password"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:433
+msgid ""
+"In order to download the Affili.net sales the PHP-module SOAP is required. "
+"This seems to be not activated on your server. Please activate the module. "
+"If you don't know how to do this, your webhoster can assist you."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:436
+msgid "Affili.net test login failed. Please check your data."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:446
+msgid ""
+"Invalid Belboon WebService password. The password should be 20 characters "
+"long and only contain numbers and letters. Please do not enter your normal "
+"Belboon password, but your WebService password."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:451
+msgid ""
+"In order to download the Belboon sales the PHP-module SOAP is required. This "
+"seems to be not activated on your server. Please activate the module. If you "
+"don't know how to do this, your webhoster can assist you."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:454
+msgid "Belboon test login failed. Please check your data."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:463
+msgid "Invalid Commission Junction PID. The  PID should only contain numbers."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:466
+msgid ""
+"Invalid cj developer key. The key should be longer than 20 characters Please "
+"do not enter your normal cj password, but your developer key."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:471
+msgid ""
+"In order to download the Commission Junction Sales, the PHP-Class "
+"DomDocument is required. This class semms to be not included on your server. "
+"Please include the class. If you don't know how to do this, your webhoster "
+"can assist you."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:474
+msgid "Commission Junction test login failed. Please check your data."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:491
+msgid ""
+"Superclix test login failed. Please check your data. Don't forget to specify "
+"your export password, not your normal password."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:498
+msgid ""
+"Invalid tradedoubler report key. The key should be at least 32 characters "
+"long. Please do not enter your normal password, but your report key."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:503
+msgid "Tradedoubler test login failed. Please check your data."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:513
+msgid ""
+"Invalid Zanox Connect Id. The Id should contain 20 characters of numbers and "
+"letters only. Please do not specify your normal Zanox account, but your "
+"Connect Id."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:516
+msgid ""
+"Invalid Zanox Public Key. The key should contain 20 characters of numbers "
+"and letters only. Please do not specify your normal Zanox account or "
+"password, but your Public Key."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:519
+msgid ""
+"Invalid Zanox Secret Key. The key should contain at least 20 characters of "
+"numbers and letters only. Please do not specify your normal Zanox password, "
+"but your Secret Key."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:524
+msgid ""
+"In order to download the Zanox sales the PHP-module SOAP is required. This "
+"seems to be not activated on your server. Please activate the module. If you "
+"don't know how to do this, your webhoster can assist you."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-settings.php:527
+msgid "Zanox test login failed. Please check your data."
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:85
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:214
+msgid ""
+"<a href=\"http://www.affiliatepowerplugin.com/premium/\" target=\"_blank"
+"\">Only in the premium version</a>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:164
+msgid "<h2>Affiliate Power Statistics</h2>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:180
+msgid "Custom"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:181
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-widget.php:91
+msgid "Today"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:182
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-widget.php:92
+msgid "Yesterday"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:183
+msgid "Last 7 days"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:184
+msgid "Last 30 days"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:185
+msgid "All"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:206
+msgid "From"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:206
+msgid "Till"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:207
+msgid "Period"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:226
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:232
+msgid "Income"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:32
+msgid "<h2>Affiliate Power Sales</h2>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:39
+msgid "Update Sales"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:40
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:57
+msgid "CSV/Excel Download"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:46
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:54
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-widget.php:79
+msgid "Please wait"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:77
+msgid "Id;Date;Network;Merchant;Type;Price;Commission;Status;PostId;PostName"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:150
+msgid "Sale"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:151
+msgid "Sales"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:183
+msgctxt "single"
+msgid "Cancelled"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:184
+msgctxt "single"
+msgid "Confirmed"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:185
+msgctxt "single"
+msgid "Open"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:195
+msgid "- unknown -"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:202
+msgid "View"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:203
+msgid "Edit"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:236
+msgid "Post"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:237
+msgid "SubId"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:240
+msgid "Date"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:241
+msgid "Network"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:242
+msgid "Merchant"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:243
+msgid "Type"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:244
+msgid "Price"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:245
+msgid "Commission"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:246
+msgid "Status"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:248
+msgid "Referer"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:249
+msgid "Landing Page"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-widget.php:74
+msgid "Refresh"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-widget.php:93
+msgid "This month"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-widget.php:94
+msgid "Last month"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-widget.php:95
+msgid "Total"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-widget.php:97
+msgid "Details"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:122
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:178
+#, php-format
+msgid ""
+"<h3>Affiliate Power 1.2.3</h3><p>Hey %s, thank you for updating to the new "
+"version of Affiliate Power. For security and compatibility reasons you "
+"should always use the newest version of the plugin. Affiliate Power 1.2.3 is "
+"just a little maintenance update, which includes:<ul><li>Full WordPress "
+"3.7.1 compatibility</li><li>Earnings column in pages and posts visible for "
+"admins only</li><li>some minor bugfixes</li></ul><br /><a href=\"#\" class="
+"\"affiliate-power-hide-infotext\">Hide this message</a>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:124
+#, php-format
+msgid ""
+"<h3>Hey %s, do you like Affiliate Power?</h3><p>You are using Affiliate "
+"Power for more than 30 days now.</p><p>If you like the plugin, a positive "
+"review on <a href=\"http://wordpress.org/support/view/plugin-reviews/"
+"affiliate-power\" target=\"_blank\">wordpress.org</a> would be great.</"
+"p><p>You can also share the plugin in your favorite social networks.</"
+"p><ul><li><a href=\"http://www.facebook.com/sharer/sharer.php?s=100&p[url]"
+"=http://www.affiliatepowerplugin.com&p[images][0]=http://www.j-breuer.de/"
+"blog/wp-content/uploads/2013/04/affiliate-power-logo.png&p[title]=Affiliate"
+"%%20Power&p[summary]=With%%20the%%20WordPress%%20Plugin%%20Affiliate%%20Power"
+"%%20you%%20can%%20analyze%%20your%%20Affiliate%%20income%%20per%%20post,"
+"%%20traffic%%20source,%%20keyword%%20etc.%%20Focus%%20on%%20things%%20that"
+"%%20pay!\" target=\"_blank\">Share on Facebook</a></li><li><a href=\"https://"
+"plus.google.com/share?url=http://www.affiliatepowerplugin.com\" target="
+"\"_blank\">Share on Google+</a></li><li><a href=\"http://twitter.com/home?"
+"status=With%%20Affiliate%%20Power%%20you%%20can%%20analyze%%20your"
+"%%20Affiliate%%20income.%%20Focus%%20on%%20things%%20that%%20pay!%%20http://"
+"www.affiliatepowerplugin.com\" target=\"_blank\">Share on Twitter</a></li></"
+"ul><br /><br /><a href=\"#\" class=\"affiliate-power-hide-infotext\">Hide "
+"this message</a>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:126
+#, php-format
+msgid ""
+"<h3>Affiliate Power Newsletter</h3><p>You are using Affiliate Power for more "
+"than 60 days now. I am glad, that you like the plugin that much. How about a "
+"Newsletter to further increase your Affiliate income? As a subscriber to the "
+"Affiliate Power Newsletter you get tips and news about Affiliate Marketing "
+"once a month.</p><p>Just check your data and click Subscribe.</p><form "
+"method=\"post\" target=\"_blank\" action=\"http://47353.seu1.cleverreach.com/"
+"f/47353-107394/wcs/\"><input type=\"text\" name=\"1050108\" size=\"30\" "
+"value=\"%s\" placeholder=\"First Name\"> <input type=\"text\" name=\"email\" "
+"size=\"30\" value=\"%s\" placeholder=\"Email\"> <input type=\"submit\" value="
+"\"Subscribe\" /></form>You can always unsubscribe from the Newsletter and I "
+"will not give your Email to anyone else.<br /><br /><p><a href=\"#\" class="
+"\"affiliate-power-hide-infotext\">Hide this message</a></p>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:128
+#, php-format
+msgid ""
+"<h3>Your opinion about Affiliate Power</h3><p>Hey %s, you are using "
+"Affiliate Power for 3 months now. What do you think about the plugin?<form "
+"method=\"post\" target=\"_blank\" action=\"http://www.affiliatepowerplugin."
+"com/contact/\"><input type=\"text\" name=\"ec_name\" value=\"%s\" "
+"placeholder=\"First Name\"><br /><input type=\"text\" name=\"ec_email\" "
+"value=\"%s\" placeholder=\"Email\" /><br /><textarea rows=\"4\" cols=\"40\" "
+"name=\"ec_message\" placeholder=\"Your opinion\"></textarea><br /><input "
+"type=\"hidden\" name=\"ec_subject\" value=\"Affiliate Power Opinion\" /"
+"><input type=\"hidden\" value=\"process\" name=\"ec_stage\"><input type="
+"\"hidden\" value=\"\" name=\"ec_referer\"><input type=\"hidden\" value=\"\" "
+"name=\"ec_orig_referer\"><input type=\"submit\"  name=\"submit\" value=\"Send"
+"\" /></form><br /><br /><p><a href=\"#\" class=\"affiliate-power-hide-"
+"infotext\">Hide this message</a></p>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:130
+#, php-format
+msgid ""
+"<h3>Earn money with Affiliate Power!</h3><p>Hey %s, you are using Affiliate "
+"Power for more than 120 days now. I am glad, that you like the plugin that "
+"much.</p><p>Would you like to recommend the the plugin to others? With the "
+"Affiliate Program you earn awesome 30%% for each sale of the Premium "
+"version. Click the link below.</p><h3><a href=\"http://www."
+"affiliatepowerplugin.com/affiliate-program/\" target=\"_blank\">All "
+"Information about the Affiliate program</a></h3><br /><br /><a href=\"#\" "
+"class=\"affiliate-power-hide-infotext\">Hide this message</a>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:145
+#, php-format
+msgid ""
+"<div id=\"message\" class=\"updated\"><img src=\"%s\" alt=\"Affiliate Power"
+"\" style=\"float:left; width:36px; margin:6px;\" /><h2>Welcome to Affiliate "
+"Power Premium!</h2><p>Congratulations again to your decision to shed light "
+"on your affiliate income. The plugin will now automatically create the new "
+"statistics for all your new sales. IF you want to use the URL-Parameter "
+"Tracking, you should enter your parameters on the <a href=\"%s\">Settings "
+"Page</a>.</p></div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:148
+#, php-format
+msgid ""
+"<div id=\"message\" class=\"updated\"><img src=\"%s\" alt=\"Affiliate Power"
+"\" style=\"float:left; width:36px; margin:6px;\" /><h2>Welcome to Affiliate "
+"Power Premium!</h2><p>Whats next? First, you should enter your Affiliate "
+"network data on the <a href=\"%s\">Settings Page</a>. Then, you can download "
+"your old sales and the plugin will create the first statistics. The article "
+"statistic can only be created for new sales. All other statistics also work "
+"for old sales.</p></div>"
+msgstr ""
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/apis/webworker-dashboard.php:54
+msgid "Affiliate Power"
+msgstr ""
+
+#~ msgid ""
+#~ "<h3>Premium Test Weeks</h3><p>Hey %s, have you always wanted to test the "
+#~ "premium version of Affiliate Power but weren't sure if it's worth the "
+#~ "price?</p><p>Now you can test Affiliate Power Premium for 30 days for "
+#~ "just 1€.</p><h3><a href=\"http://www.affiliatepowerplugin.com/premium/\" "
+#~ "target=\"_blank\">Yes, I want to test Affiliate Power Premium for just "
+#~ "1€</a></h3><p>This offer ends at 2013-10-13.</p><br /><br /><a href=\"#\" "
+#~ "class=\"affiliate-power-hide-infotext\">Hide this message</a>"
+#~ msgstr ""
+#~ "<h3>Premium Test Wochen</h3><p>Hi %s, wolltest du schon länger mal die "
+#~ "Premium Version von Affiliate Power ausprobieren? Du warst dir nur nicht "
+#~ "sicher, ob sich das Geld lohnt?</p><p>Dann kannst du jetzt Affiliate "
+#~ "Power Premium 30 Tage lang für nur 1€ testen. <h3><a href=\"http://www.j-"
+#~ "breuer.de/wordpress-plugins/affiliate-power-premium/\" target=\"_blank"
+#~ "\">Ja, ich möchte Affiliate Power Premium für nur 1€ testen</a></"
+#~ "h3><p>Dieses Angebot endet am 13.10.2013.</p><br /><br /><a href=\"#\" "
+#~ "class=\"affiliate-power-hide-infotext\">Nicht mehr anzeigen</a>"
+
+#~ msgid ""
+#~ "<h3>New: Affiliate Power Newsletter</h3><p>As a subscriber to the "
+#~ "Affiliate Power Newsletter you get tips and news about Affiliate "
+#~ "Marketing once a month.</p><p>Just check your data and click Subscribe.</"
+#~ "p><form method=\"post\" target=\"_blank\" action=\"http://47353.seu1."
+#~ "cleverreach.com/f/47353-107394/wcs/\"><input type=\"text\" name="
+#~ "\"1050108\" size=\"30\" value=\"%s\" placeholder=\"First Name\"> <input "
+#~ "type=\"text\" name=\"email\" size=\"30\" value=\"%s\" placeholder=\"Email"
+#~ "\"> <input type=\"submit\" value=\"Subscribe\" /></form>You can always "
+#~ "unsubscribe from the Newsletter and I will not give your Email to anyone "
+#~ "else.<br /><br /><p><a href=\"#\" class=\"affiliate-power-hide-infotext"
+#~ "\">Hide this message</a></p>"
+#~ msgstr ""
+#~ "<h3>Neu: Affiliate Power Newsletter</h3><p>Mit dem Affiliate Power "
+#~ "Newsletter bekommst du etwa ein Mal pro Monat kostenlose Tipps wie du "
+#~ "deine Affiliate Einnahmen verbessern kannst.</p><p>Überprüfe deine Daten "
+#~ "und klick auf Anmelden.</p><form method=\"post\" target=\"_blank\" action="
+#~ "\"http://47353.seu1.cleverreach.com/f/47353-107352/wcs/\"><input type="
+#~ "\"text\" name=\"1050108\" size=\"30\" value=\"%s\" placeholder=\"Vorname"
+#~ "\"> <input type=\"text\" name=\"email\" size=\"30\" value=\"%s\" "
+#~ "placeholder=\"E-Mail\"> <input type=\"submit\" value=\"Anmelden\" /></"
+#~ "form>Du kannst den Newsletter natürlich jedezeit wieder abbestellen. "
+#~ "Deine Daten werden selbstverständlich nicht weitergegeben.<br /><br /"
+#~ "><p><a href=\"#\" class=\"affiliate-power-hide-infotext\">Nicht mehr "
+#~ "anzeigen</a></p>"
+
+#~ msgid "Affiliate Income from Affiliate Power"
+#~ msgstr "Affiliate Einnahmen von Affiliate Power"
+
+#~ msgid ""
+#~ "<div id='ap_licence_key_info' style='display:none;'>Please paste the "
+#~ "licence key you got when purchasing this plugin. The licence key will be "
+#~ "sent to my server to check it. If you didn't get a licence key or if "
+#~ "there are any problems, <a href='http://www.affiliatepowerplugin.com/"
+#~ "contact/' target='_blank'>let me know</a>.</div>"
+#~ msgstr ""
+#~ "<div id='ap_licence_key_info' style='display:none;'>Bitte kopiere hier "
+#~ "den Lizenzschlüssel rein, den du zusammen mit dem Plugin bekommen hast. "
+#~ "Der Lizenzschlüssel wird an meinen Server geschickt, um ihn zu "
+#~ "überprüfen. Solltest du keinen Lizenzschlüssel bekommen haben oder es ein "
+#~ "Problem geben, <a href='http://www.j-breuer.de/kontakt/' "
+#~ "target='_blank'>schreib mir</a>.</div>"
+
+#~ msgid "Your URL-Parameter contain invalid characters and were not saved."
+#~ msgstr ""
+#~ "Deine URL-Parameter enthalten ungültige Zeichen und wurden nicht "
+#~ "gespeichert."
+
+#~ msgid "Total Income"
+#~ msgstr "Gesamteinnahmen"
+
+#~ msgid ""
+#~ "<div class=\"error\"><p><strong>Sales can't be importet at the moment, "
+#~ "because there is no valid <a href=\"admin.php?page=affiliate-power-"
+#~ "settings\">licence key</a> specified.</strong></p></div>"
+#~ msgstr ""
+#~ "<div class=\"error\"><p><strong>Es können momentan keine Transaktionen "
+#~ "heruntergeladen werden, da kein <a href=\"admin.php?page=affiliate-power-"
+#~ "settings\">Lizenzschlüssel</a> eingegeben wurde.</strong></p></div>"
+
+#~ msgid "Sunday"
+#~ msgstr "Sonntag"
+
+#~ msgid "Monday"
+#~ msgstr "Montag"
+
+#~ msgid "Tuesday"
+#~ msgstr "Dienstag"
+
+#~ msgid "Wednesday"
+#~ msgstr "Mittwoch"
+
+#~ msgid "Thursday"
+#~ msgstr "Donnerstrag"
+
+#~ msgid "Friday"
+#~ msgstr "Freitag"
+
+#~ msgid "Saturday"
+#~ msgstr "Samstag"
+
+#~ msgid "Partner"
+#~ msgstr "Partner"
+
+#~ msgid "Keyword"
+#~ msgstr "Keyword"
+
+#~ msgid "Day"
+#~ msgstr "Tag"
+
+#~ msgid "Week"
+#~ msgstr "Woche"
+
+#~ msgid "Month"
+#~ msgstr "Monat"
+
+#~ msgid "- Homepage -"
+#~ msgstr "- Startseite -"
+
+#~ msgid "direct"
+#~ msgstr "direkt"
+
+#~ msgid "Back to overview"
+#~ msgstr "Zurück zur Übersicht"
+
+#~ msgid "Graph"
+#~ msgstr "Graph"
+
+#~ msgid "Confirmed Income"
+#~ msgstr "davon bestätigt"
+
+#~ msgid "Income per Sale"
+#~ msgstr "Einnahmen pro Sale"
