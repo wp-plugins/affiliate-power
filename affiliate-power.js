@@ -3,6 +3,7 @@ jQuery(document).ready(function(){
 	jQuery("body").delegate("a", "click", function(e){
 	
 		if (!this.href.match(/^http/) || (this.hostname == location.hostname)) return true;
+		if (!this.href.match(/(adcell)|(webmasterplan\.com)|(belboon)|(superclix)|(tradedoubler)|(zanox)|(click-[0-9]+-[0-9]+)/)) return true;
 
 		e.preventDefault();
 		

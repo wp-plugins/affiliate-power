@@ -39,6 +39,12 @@ class Affiliate_Power_Settings {
 		add_settings_field('affiliate-power-affili-id', __('Affili.net UserId', 'affiliate-power'), array('Affiliate_Power_Settings', 'addAffiliIdField'), 'affiliate-power-options', 'affiliate-power-networks-affili');
 		add_settings_field('affiliate-power-affili-password', __('Affili.net PublisherWebservice Password', 'affiliate-power'), array('Affiliate_Power_Settings', 'addAffiliPasswordField'), 'affiliate-power-options', 'affiliate-power-networks-affili');
 		
+		//amazon
+		add_settings_section('affiliate-power-networks-amazon', __('Amazon', 'affiliate-power'), array('Affiliate_Power_Settings', 'optionsAmazonText'), 'affiliate-power-options');
+		add_settings_field('affiliate-power-amazon-email', __('Amazon E-Mail', 'affiliate-power'), array('Affiliate_Power_Settings', 'addAmazonEmailField'), 'affiliate-power-options', 'affiliate-power-networks-amazon');
+		add_settings_field('affiliate-power-amazon-password', __('Amazon Password', 'affiliate-power'), array('Affiliate_Power_Settings', 'addAmazonPasswordField'), 'affiliate-power-options', 'affiliate-power-networks-amazon');
+		add_settings_field('affiliate-power-amazon-tag', __('Amazon Tracking ID', 'affiliate-power'), array('Affiliate_Power_Settings', 'addAmazonTagField'), 'affiliate-power-options', 'affiliate-power-networks-amazon');
+		
 		//belboon
 		add_settings_section('affiliate-power-networks-belboon', __('Belboon', 'affiliate_power'), array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
 		add_settings_field('affiliate-power-belboon-username', __('Belboon Username', 'affiliate-power'), array('Affiliate_Power_Settings', 'addBelboonUsernameField'), 'affiliate-power-options', 'affiliate-power-networks-belboon');
@@ -231,6 +237,30 @@ class Affiliate_Power_Settings {
 		echo "<input type='text' id='affiliate-power-affili-password' name='affiliate-power-options[affili-password]' size='40' value='".$options['affili-password']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_affili_password_info\").style.display=\"block\"; return false;'>[?]</a></span>";
 		_e("<div id='ap_affili_password_info' style='display:none;'>The affili.net PublisherWebservice Password is a special access the the affili.net API. Please do <strong>not</strong> enter your normal affili.net password here. You can find the PublisherWebservice Password in the publisher area of affili.net, menu item Account -> Technical settings -> Webservices. It may be necessary to request the password via the request button first.</div>", "affiliate-power");
+	}
+	
+	
+	//Amazon
+	static public function optionsAmazonText() {
+		_e('Amazon does not support individual tracking. You can import your sales data, but not track the income per post, referer etc.', 'affiliate-power');
+	}
+	
+	static public function addAmazonEmailField() {
+		echo "<input type='text' size='40' value='".__('Only in the premium version', 'affiliate-power')."' readonly='readonly' style='color:#888; cursor:pointer;' onclick='window.open(\"".__('http://www.affiliatepowerplugin.com/premium/', 'affiliate-power')."\", \"_blank\")' /> ";
+		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_amazon_email_info\").style.display=\"block\"; return false;'>[?]</a></span>";
+		_e("<div id='ap_amazon_email_info' style='display:none;'>For security reasons, you should not use your normal login here. Login into your account and create a new login. It's not that simple to get it, but together we will work it out: <ol><li>Click on \"My Account\" on top of the page, then on \"Add User\"</li><li>Insert a secondary email in the new user email field</li><li>Logout from your account</li><li>Check your secondary email account and click on the confirmation link</li><li>Create the new account by entering the email and a password</li><li>Log back in into your normal account and confirm the new user at \"My Account\" - \"Add User\"</li></ol></div>", "affiliate-power");
+	}
+	
+	static public function addAmazonPasswordField() {
+		echo "<input type='text' size='40' value='".__('Only in the premium version', 'affiliate-power')."' readonly='readonly' style='color:#888; cursor:pointer;' onclick='window.open(\"".__('http://www.affiliatepowerplugin.com/premium/', 'affiliate-power')."\", \"_blank\")' /> ";
+		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_amazon_password_info\").style.display=\"block\"; return false;'>[?]</a></span>";
+		_e("<div id='ap_amazon_password_info' style='display:none;'>For security reasons, you should not use your normal login here. Login into your account and create a new login. It's not that simple to get it, but together we will work it out: <ol><li>Click on \"My Account\" on top of the page, then on \"Add User\"</li><li>Insert a secondary email in the new user email field</li><li>Logout from your account</li><li>Check your secondary email account and click on the confirmation link</li><li>Create the new account by entering the email and a password</li><li>Log back in into your normal account and confirm the new user at \"My Account\" - \"Add User\"</li></ol></div>", "affiliate-power");
+	}
+	
+	static public function addAmazonTagField() {
+		echo "<input type='text' size='40' value='".__('Only in the premium version', 'affiliate-power')."' readonly='readonly' style='color:#888; cursor:pointer;' onclick='window.open(\"".__('http://www.affiliatepowerplugin.com/premium/', 'affiliate-power')."\", \"_blank\")' /> ";
+		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_amazon_tag_info\").style.display=\"block\"; return false;'>[?]</a></span>";
+		_e("<div id='ap_amazon_tag_info' style='display:none;'>Please enter your tracking ID. You can find it in the top left corner of the publisher area</div>", "affiliate-power");
 	}
 	
 	

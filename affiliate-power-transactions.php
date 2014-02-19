@@ -10,7 +10,9 @@ class Affiliate_Power_Transactions {
 	static public function transactionsPage() {
 		
 		$transactionList = new Affiliate_Power_Transaction_List();
-		$transactionList->prepare_items();
+		
+		if( isset($_GET['s']) )$transactionList->prepare_items($_GET['s']);
+        else $transactionList->prepare_items();
 		
 		$options = get_option('affiliate-power-options');
 		
@@ -31,9 +33,10 @@ class Affiliate_Power_Transactions {
 			<div class="icon32" style="background:url(<?php echo plugins_url('affiliate-power/img/affiliate-power-36.png'); ?>) no-repeat;"><br/></div>
 			<?php _e ('<h2>Affiliate Power Sales</h2>', 'affiliate-power'); ?>
 			
-			<form id="movies-filter" method="get">
+			<form id="sales-filter" method="get">
 				<input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
-				<?php $transactionList->display() ?>
+				<?php $transactionList->search_box('Suche', 'sales'); ?>
+				<?php $transactionList->display(); ?>
 			</form>
 			
 			<input type="button" style="float:left; width:170px;" id="button_download_transactions" value="<?php _e('Update Sales', 'affiliate-power'); ?>" /><span class="spinner" id="spinner1" style="float:left;"></span><br />
@@ -74,7 +77,7 @@ class Affiliate_Power_Transactions {
 		check_ajax_referer( 'affiliate-power-export-csv', 'nonce' );
 		
 		global $wpdb;
-		$csv_content = __('Id;Date;Network;Merchant;Type;Price;Commission;Status;PostId;PostName', 'affiliate-power') . "\r\n";
+		$csv_content = __('Id;Date;Network;Merchant;Type;Price;Commission;Status;Check Date;PostId;PostName', 'affiliate-power') . "\r\n";
 		
 		$sql = $wpdb->prepare('
 			SELECT 
@@ -87,6 +90,7 @@ class Affiliate_Power_Transactions {
 				'.$wpdb->prefix.'ap_transaction.Price,
 				'.$wpdb->prefix.'ap_transaction.Commission,
 				'.$wpdb->prefix.'ap_transaction.TransactionStatus,
+				date_format('.$wpdb->prefix.'ap_transaction.CheckDate, "%d.%m.%Y") AS germanCheckDate,
 				'.$wpdb->prefix.'posts.ID AS postID,
 			    '.$wpdb->posts.'.post_title
 			FROM '.$wpdb->prefix.'ap_transaction
@@ -106,6 +110,7 @@ class Affiliate_Power_Transactions {
 				'.$wpdb->prefix.'ap_transaction.Price,
 				'.$wpdb->prefix.'ap_transaction.Commission,
 				'.$wpdb->prefix.'ap_transaction.TransactionStatus,
+				'.$wpdb->prefix.'ap_transaction.CheckDate,
 				'.$wpdb->prefix.'posts.ID AS postID,
 			    '.$wpdb->posts.'.post_title
 			FROM '.$wpdb->prefix.'ap_transaction
@@ -180,8 +185,8 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 				break;
 				
 			case 'TransactionStatus' :
-				if ($item['TransactionStatus'] == 'Cancelled') $value = _x('Cancelled', 'single', 'affiliate-power');
-				elseif ($item['TransactionStatus'] == 'Confirmed') $value = _x('Confirmed', 'single', 'affiliate-power');
+				if ($item['TransactionStatus'] == 'Cancelled') $value = _x('Cancelled', 'single', 'affiliate-power') . ' ('.$item['germanCheckDate'].')';
+				elseif ($item['TransactionStatus'] == 'Confirmed') $value = _x('Confirmed', 'single', 'affiliate-power') . ' ('.$item['germanCheckDate'].')';
 				else $value = _x('Open', 'single', 'affiliate-power');
 				break;
 				
@@ -271,8 +276,9 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 	
 	
 	
-	function prepare_items() {
+	function prepare_items($search = NULL) {
         
+		global $wpdb;
         $per_page = 20;
         
         
@@ -299,10 +305,15 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
                
         
         
-		$orderby = (!empty($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : 'Date'; //If no sort, default to date, todo: whitelist
+		$orderby = (!empty($_REQUEST['orderby']) && ctype_alnum($_REQUEST['orderby'] )) ? $_REQUEST['orderby'] : 'Date'; //If no sort, default to date
         $order = (isset($_REQUEST['order']) && $_REQUEST['order'] == 'asc') ?  'asc' : 'desc'; //If no order, default to asc
 			
-        global $wpdb;
+		
+		if( $search != NULL ){
+			$additional_where = $wpdb->prepare(' AND (network like "%%%s%%" OR ProgramTitle like "%%%s%%" OR TransactionStatus like "%%%s%%" ) ', $search, $search, $search);
+		}
+		else $additional_where = '';
+		
 	
 		$sql = ' 
 		SELECT '.$wpdb->prefix.'ap_transaction.ap_transactionID,
@@ -316,6 +327,8 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 			   '.$wpdb->prefix.'ap_transaction.Commission,
 			   '.$wpdb->prefix.'ap_transaction.Confirmed,
 			   '.$wpdb->prefix.'ap_transaction.TransactionStatus,
+			    '.$wpdb->prefix.'ap_transaction.CheckDate,
+			   date_format('.$wpdb->prefix.'ap_transaction.CheckDate, "%d.%m.%Y") AS germanCheckDate,
 			   "- unknown -" as referer,
 			   '.$wpdb->prefix.'posts.ID AS postID,
 			   '.$wpdb->posts.'.post_title
@@ -325,6 +338,7 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 		LEFT JOIN '.$wpdb->posts.'
 		ON '.$wpdb->prefix.'ap_clickout.postID = '.$wpdb->prefix.'posts.ID
 		WHERE '.$wpdb->prefix.'ap_transaction.SubId >= 1000000
+		'.$additional_where.'
 		UNION
 		SELECT '.$wpdb->prefix.'ap_transaction.ap_transactionID,
 			   '.$wpdb->prefix.'ap_transaction.network,
@@ -337,6 +351,8 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 			   '.$wpdb->prefix.'ap_transaction.Commission,
 			   '.$wpdb->prefix.'ap_transaction.Confirmed,
 			   '.$wpdb->prefix.'ap_transaction.TransactionStatus,
+			    '.$wpdb->prefix.'ap_transaction.CheckDate,
+			   date_format('.$wpdb->prefix.'ap_transaction.CheckDate, "%d.%m.%Y") AS germanCheckDate,
 			   "- unknown -" as referer,
 			   '.$wpdb->prefix.'posts.ID AS postID,
 			   '.$wpdb->posts.'.post_title
@@ -344,6 +360,7 @@ class Affiliate_Power_Transaction_List extends WP_List_Table {
 		LEFT JOIN '.$wpdb->posts.'
 		ON '.$wpdb->prefix.'ap_transaction.SubId = '.$wpdb->prefix.'posts.ID
 		WHERE '.$wpdb->prefix.'ap_transaction.SubId < 1000000
+		'.$additional_where.'
 		ORDER BY '.$orderby.' '.$order;
 		
 		$transactionData = $wpdb->get_results($sql, ARRAY_A);

@@ -1,9 +1,9 @@
 === Affiliate Power ===
 Contributors: JonasBreuer
 Donate link: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
-Tags: affiliate, tracking, subid, sales, leads, affili, affili.net, zanox, tradedoubler, belboon, superclix, cj, commission junction, adcell
+Tags: affiliate, tracking, subid, sales, leads, affili, affili.net, zanox, tradedoubler, belboon, superclix, cj, commission junction, adcell, amazon
 Requires at least: 3.1
-Tested up to: 3.8
+Tested up to: 3.8.1
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -23,13 +23,13 @@ If you have questions, just leave a comment on the [Plugin Page](http://www.affi
 
 **Premium Version**
 
-In addition to the free basic version, there is a premium version of the plugin, where you can also analyze your income per Referer, Keyword, Campaign etc. Find out more on the [Premium Page](http://www.affiliatepowerplugin.com/premium/).
+In addition to the free basic version, there is a premium version of the plugin, where you can also analyze your income per Referer, Keyword, Campaign etc. You can also import Amazon sales in the premium version. Find out more on the [Premium Page](http://www.affiliatepowerplugin.com/premium/).
 
 **Features**
 
 Features, which only exist in the premium version are *emphasized*.
 
-* Supported Networks: adcell, affili.net, commission junction, belboon, superclix, tradedoubler, zanox
+* Supported Networks: adcell, affili.net, commission junction, belboon, superclix, tradedoubler, zanox, *amazon*
 * Track income per Posts, Pages, *Referer, Keywords and URL-Parameters like utm_campaign*
 * Filter your import per website
 * Overview over all Leads and Sales
@@ -47,13 +47,13 @@ Bei Fragen oder Problemen hinterlasse einfach einen Kommentar auf der [Plugin Se
 
 **Premium Version**
 
-Zusätzlich zur kostenlosen Basic-Version gibt es eine Premium-Version des Plugins. Dort können neben den Artikeln auch Besucherquellen, Keywords etc. ausgewertet werden. Mehr Infos gibt es auf der [Premium Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/).
+Zusätzlich zur kostenlosen Basic-Version gibt es eine Premium-Version des Plugins. Dort können neben den Artikeln auch Besucherquellen, Keywords etc. ausgewertet werden. Außerdem können Amazon Sales erfasst werden. Mehr Infos gibt es auf der [Premium Seite](http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/).
 
 **Features**
 
 Features die nur in der Premium-Version verfügbar sind, sind *kursiv*
 
-* Aktuell verfügbare Netzwerke: adcell, affili.net, commission junction, belboon, superclix, tradedoubler, zanox
+* Aktuell verfügbare Netzwerke: adcell, affili.net, commission junction, belboon, superclix, tradedoubler, zanox, *amazon*
 * Automatische Zuweisung von Einnahmen zu Artikeln, Seiten, *Landing-Pages, Besucherquellen, Keywords und URL-Parametern wie utm_campaign*
 * Filterung des Imports nach Webseiten
 * Übersicht über alle Leads und Sales (ausführlich und als Dashboard-Widget)
@@ -152,6 +152,14 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 3. Statistics (Premium-Version)
 
 == Changelog ==
+
+= 1.3.0 =
+* *Amazon support*
+* Search field in sales overview
+* Confirmation date in sales overview
+* Spanish translation
+* Better performance
+
 
 = 1.2.4 =
 * Full WordPress 3.7.1 compatibility
