@@ -153,6 +153,9 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 
 == Changelog ==
 
+= 1.4.1 =
+* Fixed a bug which crashed the sales import
+
 = 1.4.0 =
 * Website filter for affili.net
 * Show check date as own sortable column in sales overview

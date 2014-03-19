@@ -24,7 +24,7 @@ class Affiliate_Power_Api_Affili {
 	
 	
 	
-	static public function downloadTransactions($username, $password, $fromTS, $tillTS) {
+	static public function downloadTransactions($username, $password, $prefix_filter, $subid_prefix, $fromTS, $tillTS) {
 		define ("WSDL_LOGON", "https://api.affili.net/V2.0/Logon.svc?wsdl");
 		define ("WSDL_STATS",  "https://api.affili.net/V2.0/PublisherStatistics.svc?wsdl");
 		
