@@ -25,6 +25,7 @@ class Affiliate_Power_Apis {
 		$tillTS = time()-3600*2; //now in UTC
 		
 		$options = get_option('affiliate-power-options');
+		$meta_options = get_option('affiliate-power-meta-options');
 		//adcell
 		if(is_numeric($options['adcell-username']) && isset($options['adcell-password'])) {
 			include_once('apis/adcell.php');
@@ -37,7 +38,8 @@ class Affiliate_Power_Apis {
 		//affili
 		if(is_numeric($options['affili-id']) && strlen($options['affili-password']) == 20) {
 			include_once('apis/affili.php');
-			$transactions = Affiliate_Power_Api_Affili::downloadTransactions($options['affili-id'], $options['affili-password'], $fromTS, $tillTS);
+			if (!isset($options['affili-prefix-filter'])) $options['affili-prefix-filter'] = 0;
+			$transactions = Affiliate_Power_Api_Affili::downloadTransactions($options['affili-id'], $options['affili-password'], $options['affili-prefix-filter'], $meta_options['subid-prefix'], $fromTS, $tillTS);
 			foreach ($transactions as $transaction) self::handleTransaction($transaction);
 		}
 		
@@ -86,11 +88,11 @@ class Affiliate_Power_Apis {
 		if ($days == 100) {
 		
 			//1.1.0: sales for mail are all sales from the last day now
-			$transaction_changes['new'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(Date) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Open"', ARRAY_A);
+			$transaction_changes['new'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(Date) = date(now() - INTERVAL 1 DAY) AND TransactionStatus <> "Cancelled"', ARRAY_A);
 			$transaction_changes['confirmed'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Confirmed"', ARRAY_A);
 			$transaction_changes['cancelled'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Cancelled"', ARRAY_A);
 			
-			$new_transactions_total = $wpdb->get_row('SELECT sum(Commission) as commission, count(*) as cnt FROM '.$wpdb->prefix.'ap_transaction WHERE date(Date) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Open"', ARRAY_A);
+			$new_transactions_total = $wpdb->get_row('SELECT sum(Commission) as commission, count(*) as cnt FROM '.$wpdb->prefix.'ap_transaction WHERE date(Date) = date(now() - INTERVAL 1 DAY) AND TransactionStatus <> "Cancelled"', ARRAY_A);
 			$confirmed_transactions_total = $wpdb->get_row('SELECT sum(Commission) as commission, count(*) as cnt FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Confirmed"', ARRAY_A);
 			$cancelled_transactions_total = $wpdb->get_row('SELECT sum(Commission) as commission, count(*) as cnt FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Cancelled"', ARRAY_A);
 			
@@ -230,7 +232,7 @@ class Affiliate_Power_Apis {
 						'%s', //network
 						'%s', //number	
 						'%s', //datetime_db
-						'%d', //sub_id
+						'%s', //sub_id
 						'%d', //shop_id
 						'%s', //shop_name
 						'%s', //transaction_type

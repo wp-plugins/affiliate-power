@@ -93,6 +93,12 @@ class Affiliate_Power_Api_Affili {
 					$status = $obj_transaction->TransactionStatus;
 					$checkdate = $obj_transaction->CheckDate;
 					
+					if ($prefix_filter) {
+						$current_sub_id_prefix = substr($sub_id, 0, 3);
+						if ($current_sub_id_prefix != $subid_prefix) { echo 'wrong prefix'; continue; }
+					}
+					if (!is_numeric($sub_id)) $sub_id = substr($sub_id, 3);
+					
 					if (is_object($obj_transaction->RateInfo)) $transaction_fulltext = $obj_transaction->RateInfo->RateMode;
 					else $transaction_fulltext = 'PayPerLead';
 					

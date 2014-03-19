@@ -153,6 +153,12 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 
 == Changelog ==
 
+= 1.4.0 =
+* Website filter for affili.net
+* Show check date as own sortable column in sales overview
+* *Fixed Amazon tag filter*
+* Little bugfixes and improvements
+
 = 1.3.0 =
 * *Amazon support*
 * Search field in sales overview

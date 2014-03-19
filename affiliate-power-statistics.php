@@ -203,7 +203,7 @@ class Affiliate_Power_Statistics {
 			var first_transaction_ts = "'.$first_transaction.'";
 			</script>
 			<form method="post" action="" name="formDate"><p>
-				'.__('From', 'affiliate-power').': <input type="text" name="date_from" id="datepicker_from" value="'.esc_attr($date_from).'" /> '.__('Till', 'affiliate-power').':  <input type="text" name="date_to" id="datepicker_to" value="'.esc_attr($date_to).'" /> <input type="submit" value="OK" /><br />
+				'.__('From', 'affiliate-power').': <input type="text" name="date_from" id="datepicker_from" value="'.esc_attr($date_from).'" /> '.__('Till', 'affiliate-power').':  <input type="text" name="date_to" id="datepicker_to" value="'.esc_attr($date_to).'" /> <input type="submit" class="button" value="OK" /><br />
 				'.__('Period', 'affiliate-power').': <select id="datepicker_predefined" name="datepicker_predefined">
 					'.$dates_predefined_options.'
 				</select>

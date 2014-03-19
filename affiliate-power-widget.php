@@ -71,7 +71,7 @@ class Affiliate_Power_Widget {
 		';
 		$sum_total = $wpdb->get_var($sql);
 		
-		$refresh_button = '<input type="button" style="float:left; width:100px;" id="button_download_transactions" value="'.__('Refresh', 'affiliate-power').'" /><span class="spinner" style="float:left;"></span>
+		$refresh_button = '<input type="button" class="button" style="float:left; width:100px;" id="button_download_transactions" value="'.__('Refresh', 'affiliate-power').'" /><span class="spinner" style="float:left;"></span>
 			<script type="text/javascript">
 				jQuery(document).ready(function($) {
 					var data = { action: \'ap_download_transactions\', nonce: \'' . wp_create_nonce( 'affiliate-power-download-transactions' ) . '\'};

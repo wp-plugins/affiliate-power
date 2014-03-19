@@ -38,6 +38,7 @@ class Affiliate_Power_Settings {
 		add_settings_section('affiliate-power-networks-affili', __('Affili.net', 'affiliate-power'), array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
 		add_settings_field('affiliate-power-affili-id', __('Affili.net UserId', 'affiliate-power'), array('Affiliate_Power_Settings', 'addAffiliIdField'), 'affiliate-power-options', 'affiliate-power-networks-affili');
 		add_settings_field('affiliate-power-affili-password', __('Affili.net PublisherWebservice Password', 'affiliate-power'), array('Affiliate_Power_Settings', 'addAffiliPasswordField'), 'affiliate-power-options', 'affiliate-power-networks-affili');
+		add_settings_field('affiliate-power-affili-prefix', __('Affili.net Website Filter', 'affiliate-power'), array('Affiliate_Power_Settings', 'addAffiliPrefixField'), 'affiliate-power-options', 'affiliate-power-networks-affili');
 		
 		//amazon
 		add_settings_section('affiliate-power-networks-amazon', __('Amazon', 'affiliate-power'), array('Affiliate_Power_Settings', 'optionsAmazonText'), 'affiliate-power-options');
@@ -112,12 +113,12 @@ class Affiliate_Power_Settings {
 		
 		$user = wp_get_current_user();
 		$first_name = ($user->user_firstname != '') ? $user->user_firstname : $user->user_login;
-		printf( __('<h3>Newsletter</h3><p>As a subscriber to the Affiliate Power Newsletter you get tips and news about Affiliate Marketing once a month. Just check your data and click Subscribe.</p><form method="post" target="_blank" action="http://47353.seu1.cleverreach.com/f/47353-107394/wcs/"><input type="text" name="1050108" size="30" value="%s" placeholder="First Name"> <input type="text" name="email" size="30" value="%s" placeholder="Email"> <input type="submit" value="Subscribe"></form>You can always unsubscribe from the Newsletter and I will not give your Email to anyone else.', 'affiliate-power'), $first_name, $user->user_email );
+		printf( __('<h3>Newsletter</h3><p>As a subscriber to the Affiliate Power Newsletter you get tips and news about Affiliate Marketing once a month. Just check your data and click Subscribe.</p><form method="post" target="_blank" action="http://47353.seu1.cleverreach.com/f/47353-107394/wcs/"><input type="text" name="1050108" size="30" value="%s" placeholder="First Name"> <input type="text" name="email" size="30" value="%s" placeholder="Email"> <input type="submit" class="button-primary" value="Subscribe"></form>You can always unsubscribe from the Newsletter and I will not give your Email to anyone else.', 'affiliate-power'), $first_name, $user->user_email );
 		?>
 		<form action="options.php" method="post">
 		<?php settings_fields('affiliate-power-options'); ?>
 		<?php do_settings_sections('affiliate-power-options'); ?>
-		<p><input name="Submit" type="submit" value="<?php esc_attr_e('Save Changes'); ?>" /></p>
+		<p><input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e('Save Changes'); ?>" /></p>
 		</form>
 		
 		</div>
@@ -236,9 +237,17 @@ class Affiliate_Power_Settings {
 		if (!isset($options['affili-password'])) $options['affili-password'] = '';
 		echo "<input type='text' id='affiliate-power-affili-password' name='affiliate-power-options[affili-password]' size='40' value='".$options['affili-password']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_affili_password_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		_e("<div id='ap_affili_password_info' style='display:none;'>The affili.net PublisherWebservice Password is a special access the the affili.net API. Please do <strong>not</strong> enter your normal affili.net password here. You can find the PublisherWebservice Password in the publisher area of affili.net, menu item Account -> Technical settings -> Webservices. It may be necessary to request the password via the request button first.</div>", "affiliate-power");
+		_e("<div id='ap_affili_password_info' style='display:none;'>The affili.net Publisher Webservice Password is a special access the the affili.net API. Please do <strong>not</strong> enter your normal affili.net password here. You can find the Publisher Webservice Password in the publisher area of affili.net, menu item Solutions -> Webservices -> Access data. It may be necessary to request the password via the request button first.</div>", "affiliate-power");
 	}
 	
+	static public function addAffiliPrefixField() {
+		$options = get_option('affiliate-power-options');
+		if (!isset($options['affili-prefix-filter'])) $options['affili-prefix-filter'] = 0;
+		$checked = $options['affili-prefix-filter'] ? ' checked' : '';
+		echo "<input type='checkbox' id='affiliate-power-affili-prefix-filter' name='affiliate-power-options[affili-prefix-filter]' value='1' ".$checked." /> ";
+		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_affili_prefix_filter_info\").style.display=\"block\"; return false;'>[?]</a></span>";
+		_e("<div id='ap_affili_prefix_filter_info' style='display:none;'>Only save sales, which came from this domain. This option makes only sense if you are using your Affili.net account for several pages", "affiliate-power");
+	}
 	
 	//Amazon
 	static public function optionsAmazonText() {
@@ -457,6 +466,8 @@ class Affiliate_Power_Settings {
 		if (ctype_alnum($input['affili-password']) && strlen($input['affili-password']) == 20) $whitelist['affili-password'] = $input['affili-password'];
 		elseif (!empty($input['affili-password'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-affili-password', __('Invalid Affili.net PublisherWebservice password. The password should be 20 characters long and only contain numbers and letters. Please do not enter your normal Affili.net password, but your PublisherWebservice password', 'affiliate-power'), 'error');
 		
+		if ($input['affili-prefix-filter'] != 1) $input['affili-prefix-filter'] = 0;
+		$whitelist['affili-prefix-filter'] = $input['affili-prefix-filter'];
 		if (isset($whitelist['affili-id']) && isset($whitelist['affili-password'])) {
 			include_once('apis/affili.php');	
 			if (!extension_loaded('soap')) {

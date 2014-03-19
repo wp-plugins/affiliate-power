@@ -5,7 +5,7 @@ PLUGIN URI: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 DESCRIPTION: With Affiliate Power you can analyze your Affiliate income per Article, Referer, Keyword etc.
 AUTHOR: Jonas Breuer
 AUTHOR URI: http://www.j-breuer.de
-VERSION: 1.3.0
+VERSION: 1.4.0
 Min WP Version: 3.1
 Max WP Version: 3.8.1
 */
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) die; //no direct access
 
 
 
-define('AFFILIATE_POWER_VERSION', '1.3.0');
+define('AFFILIATE_POWER_VERSION', '1.4.0');
 define('AFFILIATE_POWER_PREMIUM', false);
 
 include_once("affiliate-power-menu.php"); //admin menu
@@ -68,7 +68,7 @@ class Affiliate_Power {
 				network varchar(32) NOT NULL,
 				TransactionId_network varchar(128) NOT NULL,
 				Date datetime NOT NULL,
-				SubId int(10) unsigned NOT NULL,
+				SubId varchar(64) NOT NULL,
 				ProgramId int(10) unsigned NOT NULL,
 				ProgramTitle varchar(1024) NOT NULL,
 				Transaction char(1) NOT NULL,
@@ -115,11 +115,19 @@ class Affiliate_Power {
 		$meta_options = get_option('affiliate-power-meta-options');
 		if (!$meta_options) $meta_options = array();
 		if (!isset($meta_options['installstamp']) || $meta_options['installstamp'] == '') $meta_options['installstamp'] = date('U');
+		//create subid prefix if not exists
+		if (!isset($meta_options['subid-prefix']) || $meta_options['subid-prefix'] == '') {
+			$subid_prefix = '';
+			$chars = 'abcdefghijklmnopqrstuvwxyz';
+			for ($i=1; $i <= 3; $i++) $subid_prefix .= substr($chars, mt_rand(0,strlen($chars)-1), 1);
+			$meta_options['subid-prefix'] = $subid_prefix;
+		}
 		$user = wp_get_current_user();
 		$first_name = ($user->user_firstname != '') ? $user->user_firstname : $user->user_login;
 		
 		//register infotexts
-		$meta_options['infotext'] = sprintf( __('<h3>Now: 20%s Discount On The Premium Version</h3><p>Hey %s, the new premium version of Affiliate Power has finally partial Amazon support. This is a big step. To celebrate this, there is a 20%s discount until the end of February. There is a good chance, that the Premium Version will never be so cheap again. Just enter the following coupon code when purchasing the Premium Version:<br /><strong>february20</strong><br><h3><a href="http://www.affiliatepowerplugin.com/premium/">Buy your discounted Premium Version now</a></h3><a href="#" class="affiliate-power-hide-infotext">Hide this message</a>', 'affiliate-power'), '%', $first_name, '%' );
+		$meta_options['infotext'] = sprintf( __('<h3>Affiliate Power 1.4.0</h3><p>Hey %s, thank you for updating to the new version of Affiliate Power. For security and compatibility reasons (and for all the cool new features) you should always use the newest version of the plugin. The new version has the following changes:<ul><li>Website filter for affili.net</li><li>Show check date as own sortable column in sales overview</li><li>Fixed Amazon tag filter</li><li>Little bugfixes and improvements</li></ul><br /><a href="#" class="affiliate-power-hide-infotext">Hide this message</a>', 'affiliate-power'), $first_name );
+		
 		
 		$meta_options['infotext30'] = sprintf( __('<h3>Hey %s, do you like Affiliate Power?</h3><p>You are using Affiliate Power for more than 30 days now.</p><p>If you like the plugin, a positive review on <a href="http://wordpress.org/support/view/plugin-reviews/affiliate-power" target="_blank">wordpress.org</a> would be great.</p><p>You can also share the plugin in your favorite social networks.</p><ul><li><a href="http://www.facebook.com/sharer/sharer.php?s=100&p[url]=http://www.affiliatepowerplugin.com&p[images][0]=http://www.j-breuer.de/blog/wp-content/uploads/2013/04/affiliate-power-logo.png&p[title]=Affiliate%%20Power&p[summary]=With%%20the%%20WordPress%%20Plugin%%20Affiliate%%20Power%%20you%%20can%%20analyze%%20your%%20Affiliate%%20income%%20per%%20post,%%20traffic%%20source,%%20keyword%%20etc.%%20Focus%%20on%%20things%%20that%%20pay!" target="_blank">Share on Facebook</a></li><li><a href="https://plus.google.com/share?url=http://www.affiliatepowerplugin.com" target="_blank">Share on Google+</a></li><li><a href="http://twitter.com/home?status=With%%20Affiliate%%20Power%%20you%%20can%%20analyze%%20your%%20Affiliate%%20income.%%20Focus%%20on%%20things%%20that%%20pay!%%20http://www.affiliatepowerplugin.com" target="_blank">Share on Twitter</a></li></ul><br /><br /><a href="#" class="affiliate-power-hide-infotext">Hide this message</a>', 'affiliate-power'), $first_name );
 		
@@ -130,9 +138,7 @@ class Affiliate_Power {
 		$meta_options['infotext120'] = sprintf( __('<h3>Earn money with Affiliate Power!</h3><p>Hey %s, you are using Affiliate Power for more than 120 days now. I am glad, that you like the plugin that much.</p><p>Would you like to recommend the the plugin to others? With the Affiliate Program you earn awesome 30%% for each sale of the Premium version. Click the link below.</p><h3><a href="http://www.affiliatepowerplugin.com/affiliate-program/" target="_blank">All Information about the Affiliate program</a></h3><br /><br /><a href="#" class="affiliate-power-hide-infotext">Hide this message</a>', 'affiliate-power'), $first_name );
 		
 		//show infotext only for updating users
-		//1.3.0: show for all during february
-		//if ($version != '0.0.0' ) $meta_options['hide-infotext'] = 0;
-		if (date('n') == 2) $meta_options['hide-infotext'] = 0;
+		if ($version != '0.0.0') $meta_options['hide-infotext'] = 0;
 		else $meta_options['hide-infotext'] = 1;
 		update_option('affiliate-power-meta-options', $meta_options);
 		
@@ -320,6 +326,11 @@ class Affiliate_Power {
 				break;
 				
 			case 'affili':
+				$options = get_option('affiliate-power-options');
+				if ($options['affili-prefix-filter']) {
+					$meta_options = get_option('affiliate-power-meta-options');
+					$subid = $meta_options['subid-prefix'].$subid;
+				}
 				if (strpos($target_url, '&diurl=') !== false) $target_url = str_replace('&diurl=', '&subid='.$subid.'&diurl=', $target_url);
 				else $target_url .= '&subid='.$subid;
 				break;
