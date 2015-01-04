@@ -276,7 +276,7 @@ class Affiliate_Power_Apis {
 	static public function checkLicenceKey ($licence_key) {
 		
 		$licence_key_hash = md5($licence_key);
-		$http_answer = wp_remote_post('http://www.j-breuer.de/ap-api/api.php', array(
+		$http_answer = wp_remote_post('http://www.affiliatepowerplugin.com/ap-api/api.php', array(
 			'headers' => array('referer' => $_SERVER['HTTP_HOST']),
 			'body' => array('action' => 'check', 'key' => $licence_key_hash)
 		));
@@ -302,7 +302,7 @@ class Affiliate_Power_Apis {
 		if (!AFFILIATE_POWER_PREMIUM && $premium_valid) $updating_to_premium = true;
 		else $updating_to_premium = false;
 	
-		$http_answer = wp_remote_post('http://www.j-breuer.de/ap-api/api.php', array('body' => array('action' => 'version')));
+		$http_answer = wp_remote_post('http://www.affiliatepowerplugin.com/ap-api/api.php', array('body' => array('action' => 'version')));
 		if (is_wp_error($http_answer) || $http_answer['response']['code'] != 200) $new_version = AFFILIATE_POWER_VERSION;
 		else $new_version = $http_answer['body'];
 		
@@ -310,8 +310,8 @@ class Affiliate_Power_Apis {
             $obj = new stdClass();  
             $obj->slug = 'affiliate-power';
             $obj->new_version = $new_version;  
-            $obj->url = 'http://www.j-breuer.de/ap-api/api.php';  
-            $obj->package = 'http://www.j-breuer.de/ap-api/api.php?key=' . md5($options['licence-key']);
+            $obj->url = 'http://www.affiliatepowerplugin.com/ap-api/api.php';  
+            $obj->package = 'http://www.affiliatepowerplugin.com/ap-api/api.php?key=' . md5($options['licence-key']);
             $transient->response['affiliate-power/affiliate-power.php'] = $obj;  
         }  
 	
@@ -323,7 +323,7 @@ class Affiliate_Power_Apis {
 		
 		if (isset($arg->slug) && $arg->slug == 'affiliate-power') {  
 			
-			$http_answer = wp_remote_post('http://www.j-breuer.de/ap-api/api.php', array('body' => array('action' => 'info')));  
+			$http_answer = wp_remote_post('http://www.affiliatepowerplugin.com/ap-api/api.php', array('body' => array('action' => 'info')));  
 			if (is_wp_error($http_answer) || $http_answer['response']['code'] != 200) return $false;
 			
 			$information = unserialize($http_answer['body']);

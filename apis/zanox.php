@@ -4,7 +4,7 @@ class Affiliate_Power_Api_Zanox {
 
 
 	static public function checkLogin($connect_id, $public_key, $secret_key) {
-		include_once ("zanox-api/ApiClient.php");
+		if (!class_exists('ApiClientException')) include_once ("zanox-api/ApiClient.php");
 		
 		try {
 			$zx = ApiClient::factory(PROTOCOL_SOAP);
@@ -23,7 +23,7 @@ class Affiliate_Power_Api_Zanox {
 	
 	
 	static public function downloadTransactions($connect_id, $public_key, $secret_key, $filter_adspace, $fromTS, $tillTS) {
-		include_once ("zanox-api/ApiClient.php");
+		if (!class_exists('ApiClientException')) include_once ("zanox-api/ApiClient.php");
 		
 		$zx = ApiClient::factory(PROTOCOL_SOAP);
 		$zx->setConnectId($connect_id);
