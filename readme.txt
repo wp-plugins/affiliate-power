@@ -153,6 +153,9 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 
 == Changelog ==
 
+= 1.4.2 =
+* Changed the location of the premium licence server
+
 = 1.4.1 =
 * Fixed a bug which crashed the sales import
 
