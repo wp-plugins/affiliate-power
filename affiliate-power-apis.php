@@ -59,6 +59,22 @@ class Affiliate_Power_Apis {
 			foreach ($transactions as $transaction) self::handleTransaction($transaction);
 		}
 		
+		
+		//Digistore24
+		if(isset($options['digistore24-key']) && strlen($options['digistore24-key']) > 20) {
+			include_once('apis/digistore24.php');
+			$transactions = Affiliate_Power_Api_Digistore24::downloadTransactions($options['digistore24-key'], $fromTS, $tillTS);
+			foreach ($transactions as $transaction) self::handleTransaction($transaction);
+		}
+		
+		
+		//eBay
+		if(is_email($options['ebay-email']) && isset($options['ebay-password'])) {
+			include_once('apis/ebay.php');
+			$transactions = Affiliate_Power_Api_Ebay::downloadTransactions($options['ebay-email'], $options['ebay-password'], $options['ebay-campaign'], $fromTS, $tillTS);
+			foreach ($transactions as $transaction) self::handleTransaction($transaction);
+		}
+		
 				
 		//superclix
 		if (isset($options['superclix-username']) && isset($options['superclix-password'])) {
@@ -68,12 +84,30 @@ class Affiliate_Power_Apis {
 			foreach ($transactions as $transaction) self::handleTransaction($transaction);
 		}	
 		
+		
 		//tradedoubler
 		if(strlen($options['tradedoubler-key']) >= 32) {
 			include_once('apis/tradedoubler.php');
 			$transactions = Affiliate_Power_Api_Tradedoubler::downloadTransactions($options['tradedoubler-key'], $options['tradedoubler-sitename'], $fromTS, $tillTS);
 			foreach ($transactions as $transaction) self::handleTransaction($transaction);
 		}
+		
+		
+		//Tradetracker
+		if(isset($options['tradetracker-userid']) && isset($options['tradetracker-password']) && isset($options['tradetracker-siteid'])) {
+			include_once('apis/tradetracker.php');
+			$transactions = Affiliate_Power_Api_Tradetracker::downloadTransactions($options['tradetracker-userid'], $options['tradetracker-password'], $options['tradetracker-siteid'], $fromTS, $tillTS);
+			foreach ($transactions as $transaction) self::handleTransaction($transaction);
+		}
+		
+		
+		//Webgains
+		if(isset($options['webgains-username']) && isset($options['webgains-password']) && isset($options['webgains-campaign'])) {
+			include_once('apis/webgains.php');
+			$transactions = Affiliate_Power_Api_Webgains::downloadTransactions($options['webgains-username'], $options['webgains-password'], $options['webgains-campaign'], $fromTS, $tillTS);
+			foreach ($transactions as $transaction) self::handleTransaction($transaction);
+		}
+		
 		
 		//zanox
 		if(strlen($options['zanox-connect-id']) == 20 && strlen($options['zanox-public-key']) == 20 && strlen($options['zanox-secret-key']) >= 20) {
@@ -88,7 +122,7 @@ class Affiliate_Power_Apis {
 		if ($days == 100) {
 		
 			//1.1.0: sales for mail are all sales from the last day now
-			$transaction_changes['new'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(Date) = date(now() - INTERVAL 1 DAY) AND TransactionStatus <> "Cancelled"', ARRAY_A);
+			$transaction_changes['new'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus <> "Cancelled"', ARRAY_A);
 			$transaction_changes['confirmed'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Confirmed"', ARRAY_A);
 			$transaction_changes['cancelled'] = $wpdb->get_results('SELECT Date, ProgramTitle, Commission FROM '.$wpdb->prefix.'ap_transaction WHERE date(CheckDate) = date(now() - INTERVAL 1 DAY) AND TransactionStatus = "Cancelled"', ARRAY_A);
 			
@@ -136,28 +170,12 @@ class Affiliate_Power_Apis {
 					$mailtext = sprintf (__('<p>Hello Admin,</p><p>This is your daily income report from Affiliate Power for your page <strong>%s</strong>. You can always deactivate this report in the Affiliate Power settings, if you are annoyed about it.</p>', 'affiliate-power'), $blogname);
 						
 					$mailtext .= $list_transactions;
+					$headers = array('Content-Type: text/html; charset=UTF-8');
 						
-					mail($admin_email, sprintf(__('Affiliate-Power Report for %s', 'affiliate-power'), $blogname), $mailtext, 'content-type: text/html; charset=UTF-8');
+					wp_mail($admin_email, sprintf(__('Affiliate Power Report for %s', 'affiliate-power'), $blogname), $mailtext, $headers);
 				}
 			
 			}
-			
-			
-			//Send new transactions to webworker dashboard(only when activated)
-			if (isset($options['webworker-dashboard-username']) && isset($options['webworker-dashboard-apikey']) ) {
-				
-				
-				include_once('apis/webworker-dashboard.php');
-				if ($new_transactions_total['commission'] > 0) {
-					Affiliate_Power_Api_Webworker_Dashboard::sendEarnings($options['webworker-dashboard-username'], $options['webworker-dashboard-apikey'], time()-3600*12, $new_transactions_total['commission']);
-				}
-				if ($cancelled_transactions_total['commission'] > 0) {
-					Affiliate_Power_Api_Webworker_Dashboard::sendEarnings($options['webworker-dashboard-username'], $options['webworker-dashboard-apikey'], time()-3600*12, $cancelled_transactions_total['commission']*(-1));
-				}
-				
-			}
-					
-					
 			//Is it time to activate a new infotext?
 			$meta_options = get_option('affiliate-power-meta-options');
 			$days_since_install = round( (date('U') - $meta_options['installstamp']) / 86400 );

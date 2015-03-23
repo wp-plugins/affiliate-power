@@ -44,6 +44,10 @@ class Affiliate_Power_Menu {
 	
 	
 	static public function addJs() {
+		wp_register_style('jquery-custom-style', 'https://code.jquery.com/ui/1.11.3/themes/black-tie/jquery-ui.css', array(), '1', 'screen');
+		wp_enqueue_style('jquery-custom-style');
+		
+		wp_enqueue_script('jquery-ui-accordion');
 		wp_enqueue_script(
 			'affiliate-power-menu',
 			plugins_url('affiliate-power-menu.js', __FILE__),

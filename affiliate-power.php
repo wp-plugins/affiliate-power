@@ -5,16 +5,16 @@ PLUGIN URI: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 DESCRIPTION: With Affiliate Power you can analyze your Affiliate income per Article, Referer, Keyword etc.
 AUTHOR: Jonas Breuer
 AUTHOR URI: http://www.j-breuer.de
-VERSION: 1.4.2
+VERSION: 1.5.0
 Min WP Version: 3.1
-Max WP Version: 4.1
+Max WP Version: 4.2
 */
 if (!defined('ABSPATH')) die; //no direct access
 
 
 
 
-define('AFFILIATE_POWER_VERSION', '1.4.2');
+define('AFFILIATE_POWER_VERSION', '1.5.0');
 define('AFFILIATE_POWER_PREMIUM', false);
 
 include_once("affiliate-power-menu.php"); //admin menu
@@ -126,8 +126,7 @@ class Affiliate_Power {
 		$first_name = ($user->user_firstname != '') ? $user->user_firstname : $user->user_login;
 		
 		//register infotexts
-		$meta_options['infotext'] = sprintf( __('<h3>Affiliate Power 1.4.0</h3><p>Hey %s, thank you for updating to the new version of Affiliate Power. For security and compatibility reasons (and for all the cool new features) you should always use the newest version of the plugin. The new version has the following changes:<ul><li>Website filter for affili.net</li><li>Show check date as own sortable column in sales overview</li><li>Fixed Amazon tag filter</li><li>Little bugfixes and improvements</li></ul><br /><a href="#" class="affiliate-power-hide-infotext">Hide this message</a>', 'affiliate-power'), $first_name );
-		
+		$meta_options['infotext'] = sprintf( __('<h3>Now: 30%s Discount On The Premium Version until 6th of April</h3><p>Hey %s, the new version of Affiliate Power is a big update. The plugin now supports 4 new networks: eBay, Digistore24, Tradetracker and Webgains. There is also a new pricing structure with separate licences for one or multiple sites. To celebrate the new version I\'m offering a huge 30%s discount on the multisite licence. There is a good chance, that the Premium Version will never be so cheap again.<br><h3><a href="http://www.affiliatepowerplugin.com/premium/">Buy your discounted Premium Version now</a></h3><a href="#" class="affiliate-power-hide-infotext">Hide this message</a>', 'affiliate-power'), '%', $first_name, '%');
 		
 		$meta_options['infotext30'] = sprintf( __('<h3>Hey %s, do you like Affiliate Power?</h3><p>You are using Affiliate Power for more than 30 days now.</p><p>If you like the plugin, a positive review on <a href="http://wordpress.org/support/view/plugin-reviews/affiliate-power" target="_blank">wordpress.org</a> would be great.</p><p>You can also share the plugin in your favorite social networks.</p><ul><li><a href="http://www.facebook.com/sharer/sharer.php?s=100&p[url]=http://www.affiliatepowerplugin.com&p[images][0]=http://www.j-breuer.de/blog/wp-content/uploads/2013/04/affiliate-power-logo.png&p[title]=Affiliate%%20Power&p[summary]=With%%20the%%20WordPress%%20Plugin%%20Affiliate%%20Power%%20you%%20can%%20analyze%%20your%%20Affiliate%%20income%%20per%%20post,%%20traffic%%20source,%%20keyword%%20etc.%%20Focus%%20on%%20things%%20that%%20pay!" target="_blank">Share on Facebook</a></li><li><a href="https://plus.google.com/share?url=http://www.affiliatepowerplugin.com" target="_blank">Share on Google+</a></li><li><a href="http://twitter.com/home?status=With%%20Affiliate%%20Power%%20you%%20can%%20analyze%%20your%%20Affiliate%%20income.%%20Focus%%20on%%20things%%20that%%20pay!%%20http://www.affiliatepowerplugin.com" target="_blank">Share on Twitter</a></li></ul><br /><br /><a href="#" class="affiliate-power-hide-infotext">Hide this message</a>', 'affiliate-power'), $first_name );
 		
@@ -138,7 +137,9 @@ class Affiliate_Power {
 		$meta_options['infotext120'] = sprintf( __('<h3>Earn money with Affiliate Power!</h3><p>Hey %s, you are using Affiliate Power for more than 120 days now. I am glad, that you like the plugin that much.</p><p>Would you like to recommend the the plugin to others? With the Affiliate Program you earn awesome 30%% for each sale of the Premium version. Click the link below.</p><h3><a href="http://www.affiliatepowerplugin.com/affiliate-program/" target="_blank">All Information about the Affiliate program</a></h3><br /><br /><a href="#" class="affiliate-power-hide-infotext">Hide this message</a>', 'affiliate-power'), $first_name );
 		
 		//show infotext only for updating users
-		if ($version != '0.0.0') $meta_options['hide-infotext'] = 0;
+		//1.5.0 show infotext for everyone until 07.04.
+		//if ($version != '0.0.0') $meta_options['hide-infotext'] = 0;
+		if (date('n') == 3 || date('n') == 4 && date('d') < 8) $meta_options['hide-infotext'] = 0;
 		else $meta_options['hide-infotext'] = 1;
 		update_option('affiliate-power-meta-options', $meta_options);
 		
@@ -279,8 +280,13 @@ class Affiliate_Power {
 			'adcell' => array('adcell', 'string'),
 			'affili' => array('webmasterplan.com', 'string'),
 			'belboon' => array('belboon', 'string'),
+			'digistore24_classic' => array('digistore24', 'string'),
+			'digistore24_plugin' => array('#aff=', 'string'),
+			'ebay' => array('ebay', 'string'),
 			'superclix' => array('superclix', 'string'),
 			'tradedoubler' => array('tradedoubler', 'string'),
+			'tradetracker' => array('tradetracker', 'string'),
+			'webgains' => array('webgains', 'string'),
 			'zanox' => array('zanox', 'string'),
 			'CJ' =>  array('/click-[0-9]+-[0-9]+/', 'regexp')
 		);
@@ -345,7 +351,20 @@ class Affiliate_Power {
 				elseif (strpos($target_url, "?") !== false) $target_url .= '&sid='.$subid;
 				else $target_url .= '?sid='.$subid;
 				break;
+			case 'digistore24_classic':
+				if (substr($target_url, -1) == '/') $target_url .= $subid;
+				else $target_url .= '/'.$subid;
+				break;
 				
+			case 'digistore24_plugin':
+				$target_url .= '&cam='.$subid;
+				break;
+				
+			case 'ebay':
+				if (strpos($target_url, "customid=&") !== false) $target_url = str_replace('customid=&', 'customid='.$subid.'&', $target_url);
+				elseif (strpos($target_url, "?") !== false) $target_url .= '&customid='.$subid;
+				else $target_url .= '?customid='.$subid;
+				break;
 			case 'superclix':
 				if (strpos($target_url, '&page=') !== false) $target_url = str_replace('&page=', '&subid='.$subid.'&page=', $target_url);
 				else $target_url .= '&subid='.$subid;
@@ -358,6 +377,17 @@ class Affiliate_Power {
 				else $target_url .= 'epi('.$subid.')';
 				break;
 				
+			case 'tradetracker':
+				if (strpos($target_url, "r=&") !== false) $target_url = str_replace('r=&', 'r='.$subid.'&', $target_url);
+				elseif (strpos($target_url, '&u=') !== false) $target_url = str_replace('&u=', '&r='.$subid.'&u=', $target_url);
+				else $target_url .= '&r='.$subid;
+				break;
+				
+			case 'webgains':
+				if (strpos($target_url, "clickref=&") !== false || preg_match('/&clickref=$/', $target_url)) $target_url = str_replace('clickref=', 'clickref='.$subid, $target_url);
+				elseif (strpos($target_url, '&wgtarget=') !== false) $target_url = str_replace('&wgtarget=', '&clickref='.$subid.'&wgtarget=', $target_url);
+				else $target_url .= '&clickref='.$subid;
+				break;
 			case 'zanox':
 				$target_url .= '&zpar4=[['.$subid.']]';
 				break;

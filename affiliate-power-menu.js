@@ -68,5 +68,12 @@ jQuery(document).ready(function(){
 	});
 	
 	
+	jQuery('body.affiliate-power_page_affiliate-power-settings .accordion').accordion({
+		active:false,
+		navigation:true, 
+        collapsible: true,
+		heightStyle: "content"
+	});
+	
 	
 });

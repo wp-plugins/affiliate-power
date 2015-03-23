@@ -1,9 +1,9 @@
 === Affiliate Power ===
 Contributors: JonasBreuer
 Donate link: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
-Tags: affiliate, tracking, subid, sales, leads, affili, affili.net, zanox, tradedoubler, belboon, superclix, cj, commission junction, adcell, amazon
+Tags: affiliate, tracking, subid, sales, leads, affili, affili.net, zanox, tradedoubler, belboon, superclix, cj, commission junction, adcell, amazon, ebay, digistore24, tradetracker, webgains
 Requires at least: 3.1
-Tested up to: 4.1
+Tested up to: 4.2
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -29,7 +29,7 @@ In addition to the free basic version, there is a premium version of the plugin,
 
 Features, which only exist in the premium version are *emphasized*.
 
-* Supported Networks: adcell, affili.net, commission junction, belboon, superclix, tradedoubler, zanox, *amazon*
+* Supported Networks: adcell, affili.net, belboon, commission junction, ebay, digistore24, superclix, tradedoubler, tradetracker, webgains, zanox, *amazon*
 * Track income per Posts, Pages, *Referer, Keywords and URL-Parameters like utm_campaign*
 * Filter your import per website
 * Overview over all Leads and Sales
@@ -53,7 +53,7 @@ Zusätzlich zur kostenlosen Basic-Version gibt es eine Premium-Version des Plugi
 
 Features die nur in der Premium-Version verfügbar sind, sind *kursiv*
 
-* Aktuell verfügbare Netzwerke: adcell, affili.net, commission junction, belboon, superclix, tradedoubler, zanox, *amazon*
+* Aktuell verfügbare Netzwerke: adcell, affili.net, belboon, commission junction, ebay, digistore24, superclix, tradedoubler, tradetracker, webgains, zanox, *amazon*
 * Automatische Zuweisung von Einnahmen zu Artikeln, Seiten, *Landing-Pages, Besucherquellen, Keywords und URL-Parametern wie utm_campaign*
 * Filterung des Imports nach Webseiten
 * Übersicht über alle Leads und Sales (ausführlich und als Dashboard-Widget)
@@ -152,6 +152,14 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 3. Statistics (Premium-Version)
 
 == Changelog ==
+
+= 1.5.0 =
+* New network: eBay 
+* New network: Digistore24
+* New network: Tradetracker
+* New network: Webgains
+* Improved settings screen
+* Little bugfixes and improvements
 
 = 1.4.2 =
 * Changed the location of the premium licence server

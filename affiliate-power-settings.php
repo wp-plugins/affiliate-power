@@ -19,12 +19,7 @@ class Affiliate_Power_Settings {
 		add_settings_field('affiliate-power-landing-params', __('URL-Parameter', 'affiliate-power'), array('Affiliate_Power_Settings', 'addLandingParamsField'), 'affiliate-power-options', 'affiliate-power-main');
 		
 		//add_settings_field('affiliate-power-download-method', 'Methode Sale/Lead Download', array('Affiliate_Power_Settings', 'downloadMethod'), 'affiliate-power-options', 'affiliate-power-main');
-		
-		//Webworker Dashboard
-		add_settings_section('affiliate-power-webworker-dashboard', __('Webworker Dashboard', 'affiliate-power'), array('Affiliate_Power_Settings', 'optionsWebworkerDashboardText'), 'affiliate-power-options');
-		add_settings_field('affiliate-power-webworker-dashboard-username', __('Webworker Dashboard Email address', 'affiliate-power'), array('Affiliate_Power_Settings', 'addWebworkerDashboardUsernameField'), 'affiliate-power-options', 'affiliate-power-webworker-dashboard');
-		add_settings_field('affiliate-power-webworker-dashboard-apikey', __('Webworker Dashboard API Key', 'affiliate-power'), array('Affiliate_Power_Settings', 'addWebworkerDashboardApiKeyField'), 'affiliate-power-options', 'affiliate-power-webworker-dashboard');
-		
+
 		
 		add_settings_section('affiliate-power-networks', __('Affiliate-Networks', 'affiliate-power'), array('Affiliate_Power_Settings', 'optionsNetworksText'), 'affiliate-power-options');
 		
@@ -37,7 +32,7 @@ class Affiliate_Power_Settings {
 		//affili.net
 		add_settings_section('affiliate-power-networks-affili', __('Affili.net', 'affiliate-power'), array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
 		add_settings_field('affiliate-power-affili-id', __('Affili.net UserId', 'affiliate-power'), array('Affiliate_Power_Settings', 'addAffiliIdField'), 'affiliate-power-options', 'affiliate-power-networks-affili');
-		add_settings_field('affiliate-power-affili-password', __('Affili.net PublisherWebservice Password', 'affiliate-power'), array('Affiliate_Power_Settings', 'addAffiliPasswordField'), 'affiliate-power-options', 'affiliate-power-networks-affili');
+		add_settings_field('affiliate-power-affili-password', __('Affili.net Publisher Webservice Password', 'affiliate-power'), array('Affiliate_Power_Settings', 'addAffiliPasswordField'), 'affiliate-power-options', 'affiliate-power-networks-affili');
 		add_settings_field('affiliate-power-affili-prefix', __('Affili.net Website Filter', 'affiliate-power'), array('Affiliate_Power_Settings', 'addAffiliPrefixField'), 'affiliate-power-options', 'affiliate-power-networks-affili');
 		
 		//amazon
@@ -57,6 +52,15 @@ class Affiliate_Power_Settings {
 		add_settings_field('affiliate-power-cj-id', __('Commission Junction PID', 'affiliate-power'), array('Affiliate_Power_Settings', 'addCjIdField'), 'affiliate-power-options', 'affiliate-power-networks-cj');
 		add_settings_field('affiliate-power-cj-key', __('Commission Junction Developer Key', 'affiliate-power'), array('Affiliate_Power_Settings', 'addCjKeyField'), 'affiliate-power-options', 'affiliate-power-networks-cj');
 		
+		//Digistore24
+		add_settings_section('affiliate-power-networks-digistore24', __('Digistore 24', 'affiliate-power'), array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
+		add_settings_field('affiliate-power-digistore24-key', __('Digistore24 API Key', 'affiliate-power'), array('Affiliate_Power_Settings', 'addDigistore24KeyField'), 'affiliate-power-options', 'affiliate-power-networks-digistore24');
+
+		//ebay
+		add_settings_section('affiliate-power-networks-ebay', __('eBay', 'affiliate-power'), array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
+		add_settings_field('affiliate-power-ebay-email', __('eBay E-Mail', 'affiliate-power'), array('Affiliate_Power_Settings', 'addEbayEmailField'), 'affiliate-power-options', 'affiliate-power-networks-ebay');
+		add_settings_field('affiliate-power-ebay-password', __('eBay Password', 'affiliate-power'), array('Affiliate_Power_Settings', 'addEbayPasswordField'), 'affiliate-power-options', 'affiliate-power-networks-ebay');
+		add_settings_field('affiliate-power-ebay-campaign', __('eBay Campaign', 'affiliate-power'), array('Affiliate_Power_Settings', 'addEbayCampaignField'), 'affiliate-power-options', 'affiliate-power-networks-ebay');
 		//superclix
 		add_settings_section('affiliate-power-networks-superclix', __('Superclix', 'affiliate-power'), array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
 		add_settings_field('affiliate-power-superclix-usename', __('Superclix Username', 'affiliate-power'), array('Affiliate_Power_Settings', 'addSuperclixUSernameField'), 'affiliate-power-options', 'affiliate-power-networks-superclix');
@@ -67,6 +71,18 @@ class Affiliate_Power_Settings {
 		add_settings_section('affiliate-power-networks-tradedoubler', __('Tradedoubler', 'affiliate-power'), array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
 		add_settings_field('affiliate-power-tradedoubler-key', __('Tradedoubler Report Key', 'affiliate-power'), array('Affiliate_Power_Settings', 'addTradedoublerKeyField'), 'affiliate-power-options', 'affiliate-power-networks-tradedoubler');
 		add_settings_field('affiliate-power-tradedoubler-sitename', __('Tradedoubler Site name', 'affiliate-power'), array('Affiliate_Power_Settings', 'addTradedoublerSitenameField'), 'affiliate-power-options', 'affiliate-power-networks-tradedoubler');
+		
+		//tradetracker
+		add_settings_section('affiliate-power-networks-tradetracker', __('Tradetracker', 'affiliate-power'), array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
+		add_settings_field('affiliate-power-tradetracker-userid', __('Tradetracker Customer ID', 'affiliate-power'), array('Affiliate_Power_Settings', 'addTradetrackerUserIdField'), 'affiliate-power-options', 'affiliate-power-networks-tradetracker');
+		add_settings_field('affiliate-power-tradetracker-password', __('Tradetracker Passphrase', 'affiliate-power'), array('Affiliate_Power_Settings', 'addTradetrackerPasswordField'), 'affiliate-power-options', 'affiliate-power-networks-tradetracker');
+		add_settings_field('affiliate-power-tradetracker-siteid', __('Tradetracker Site ID', 'affiliate-power'), array('Affiliate_Power_Settings', 'addTradetrackerSiteIdField'), 'affiliate-power-options', 'affiliate-power-networks-tradetracker');
+		
+		//webgains
+		add_settings_section('affiliate-power-networks-webgains', __('Webgains', 'affiliate-power'), array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
+		add_settings_field('affiliate-power-webgains-username', __('Webgains Username', 'affiliate-power'), array('Affiliate_Power_Settings', 'addWebgainsUsernameField'), 'affiliate-power-options', 'affiliate-power-networks-webgains');
+		add_settings_field('affiliate-power-webgains-password', __('Webgains Password', 'affiliate-power'), array('Affiliate_Power_Settings', 'addWebgainsPasswordField'), 'affiliate-power-options', 'affiliate-power-networks-webgains');
+		add_settings_field('affiliate-power-webgains-campaign', __('Webgains Campaign Id', 'affiliate-power'), array('Affiliate_Power_Settings', 'addWebgainsCampaignField'), 'affiliate-power-options', 'affiliate-power-networks-webgains');
 		
 		//zanox
 		add_settings_section('affiliate-power-networks-zanox', __('Zanox', 'affiliate-power'), array('Affiliate_Power_Settings', 'dummyFunction'), 'affiliate-power-options');
@@ -117,7 +133,25 @@ class Affiliate_Power_Settings {
 		?>
 		<form action="options.php" method="post">
 		<?php settings_fields('affiliate-power-options'); ?>
-		<?php do_settings_sections('affiliate-power-options'); ?>
+		<?php
+			//this is a customized copy of do_settings_sections()
+			$page = 'affiliate-power-options';
+			global $wp_settings_sections, $wp_settings_fields;
+
+			foreach ( (array) $wp_settings_sections[$page] as $section ) {
+				//print_r($section);
+				if ( $section['title'] ) echo '<h3>'.$section['title'].'</h3>';
+				echo '<div>'; // a div for the accordion content
+				if ( $section['callback'] ) call_user_func( $section['callback'], $section );
+				if ($section['id'] == 'affiliate-power-networks') echo '<div class="accordion">'; //open an accordion for the following networks
+				if ( ! isset( $wp_settings_fields ) || !isset( $wp_settings_fields[$page] ) || !isset( $wp_settings_fields[$page][$section['id']] ) ) continue;
+				echo '<table class="form-table">';
+				do_settings_fields( $page, $section['id'] );
+				echo '</table>';
+				echo '</div>';
+			}
+		?>
+		</div> <!--accordion-->
 		<p><input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e('Save Changes'); ?>" /></p>
 		</form>
 		
@@ -165,31 +199,7 @@ class Affiliate_Power_Settings {
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_landing_params_info\").style.display=\"block\"; return false;'>[?]</a></span>";
 		_e("<div id='ap_landing_params_info' style='display:none;'>Here you can define URL-Parameters you want to track. You can separate several parameters with comma. If you are using Google Analytics campaign tracking, this values may be a good start: <em>utm_campaign,utm_source,utm_medium,utm_term,utm_content</em>.</div>", "affiliate-power");
 	}
-	
-	
-	//Webworker Dashboard
-	static public function optionsWebworkerDashboardText() {
-		_e('With the <a href="https://www.webworker-dashboard.de" target="_blank">Webworker Dashboard</a> you can keep track of all your projects. If you have an account there, you can import your affiliate earnings automatically by entering your account details here. This is completely optional. If you do not enter your account details, no data will be send.', 'affiliate-power');
-	}
-	
-	static public function addWebworkerDashboardUsernameField() {
-		$options = get_option('affiliate-power-options');
-		if (!isset($options['webworker-dashboard-username'])) $options['webworker-dashboard-username'] = '';
-		echo "<input type='text' id='affiliate-power-webworker-dashboard-username' name='affiliate-power-options[webworker-dashboard-username]' size='40' value='".$options['webworker-dashboard-username']."' /> ";
-		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_webworker_dashboard_username_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		_e("<div id='ap_webworker_dashboard_username_info' style='display:none;'>This is the normal Email address you use to login at the Webworker Dashboard.</div>", "affiliate-power");
-	}
-	
-	static public function addWebworkerDashboardApiKeyField() {
-		$options = get_option('affiliate-power-options');
-		if (!isset($options['webworker-dashboard-apikey'])) $options['webworker-dashboard-apikey'] = '';
-		echo "<input type='text' id='affiliate-power-webworker-dashboard-apikey' name='affiliate-power-options[webworker-dashboard-apikey]' size='40' value='".$options['webworker-dashboard-apikey']."' /> ";
-		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_webworker_dashboard_apikey_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		_e("<div id='ap_webworker_dashboard_apikey_info' style='display:none;'>The API password is a special access to the Webworker Dashboard API. Please do <strong>not</strong> enter your normal Webworker Dashboard password here. The API Key can be created in the login area, menu item Settings -> APIs. Select \"Webworker Dashboard\" in the select box and click \"Add API\".</div>", "affiliate-power");
-	}
-	
-	
-	
+
 	//Network Settings
 	static public function optionsNetworksText() {
 		_e('<p>In order to download your sales, you have to enter your data of the affiliate networks you are using. <a href=" http://www.affiliatepowerplugin.com/#data-security" target="_blank">Whats about data security?</a></p>', 'affiliate-power');
@@ -316,8 +326,42 @@ class Affiliate_Power_Settings {
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_cj_key_info\").style.display=\"block\"; return false;'>[?]</a></span>";
 		_e("<div id='ap_cj_key_info' style='display:none;'>The Commission Junction Developer Key is a special access to the Commission Junction API. Please do <strong>not</strong> enter your normal password here. In order to get the key, you have to go to the <a href='http://www.cj.com/webservices' target='_blank'>Webservice-Site of Commission Junction</a>, click on \"Register for a Key\" and login with your normal account data.</div>", "affiliate-power");
 	}
+		
+		
+	//Digistore24
+	static public function addDigistore24KeyField() {
+		$options = get_option('affiliate-power-options');
+		if (!isset($options['digistore24-key'])) $options['digistore24-key'] = '';
+		echo "<input type='text' id='affiliate-power-digistore24-key' name='affiliate-power-options[digistore24-key]' size='40' value='".$options['digistore24-key']."' /> ";
+		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_digistore24_key_info\").style.display=\"block\"; return false;'>[?]</a></span>";
+		_e("<div id='ap_digistore24_key_info' style='display:none;'>The Digistore24 API key is a special access to the Digistore24 API. Please do <strong>not</strong> enter your normal password here. Follow these steps to get the key:<ol><li>Login on the <a href='https://www.digistore24.com' target='_blank'>Digistore24 Page</a></li><li>Make sure you are in the vendor view. You can change that in the top left corner</li><li>Click on Settings -> Account access -> Api keys</li><li>Create a new key with the name 'Affiliate Power' and Read access</li><li>Copy the created API key into this field. It should look something like 1234-XYZ123xyz...</li></ol></div>", "affiliate-power");
+	}
 	
 	
+	//eBay
+	static public function addEbayEmailField() {
+		$options = get_option('affiliate-power-options');
+		if (!isset($options['ebay-email'])) $options['ebay-email'] = '';
+		echo "<input type='text' id='affiliate-power-ebay-email' name='affiliate-power-options[ebay-email]' size='40' value='".$options['ebay-email']."' /> ";
+		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_ebay_email_info\").style.display=\"block\"; return false;'>[?]</a></span>";
+		_e("<div id='ap_ebay_email_info' style='display:none;'>The ebay E-Mail is your normal email address you use to login into the ebay partner network.</div>", "affiliate-power");
+	}
+	
+	static public function addEbayPasswordField() {
+		$options = get_option('affiliate-power-options');
+		if (!isset($options['ebay-password'])) $options['ebay-password'] = '';
+		echo "<input type='password' id='affiliate-power-ebay-password' name='affiliate-power-options[ebay-password]' size='40' value='".$options['ebay-password']."' /> ";
+		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_ebay_password_info\").style.display=\"block\"; return false;'>[?]</a></span>";
+		_e("<div id='ap_ebay_password_info' style='display:none;'>The ebay Password is your normal password you use to login into the ebay partner network.</div>", "affiliate-power");
+	}
+	
+	static public function addEbayCampaignField() {
+		$options = get_option('affiliate-power-options');
+		if (!isset($options['ebay-campaign'])) $options['ebay-campaign'] = '';
+		echo "<input type='text' id='affiliate-power-ebay-campaign' name='affiliate-power-options[ebay-campaign]' size='40' value='".$options['ebay-campaign']."' /> ";
+		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_ebay_campaign_info\").style.display=\"block\"; return false;'>[?]</a></span>";
+		_e("<div id='ap_ebay_campaign_info' style='display:none;'>If you are using your ebay partner network account for several pages, enter the campaign name you defined in the login area for this page. The plugin will only import sales from this campaign name. Please do <strong>not</strong> enter the campaign id but the name. You can find the campaign name in the publisher area, menu item Campaigns. If you are using several campaigns for this page you can separate the campaign names with comma. If you are using your account only for this page anyway, just leave the field empty. In this case, the plugin will download all sales.</div>", "affiliate-power");
+	}
 	
 	//Superclix
 	static public function addSuperclixUsernameField() {
@@ -363,7 +407,57 @@ class Affiliate_Power_Settings {
 		_e("<div id='ap_tradedoubler_sitename_info' style='display:none;'>If you are using your Tradedoubler account for several pages, enter the site name you defined in the Tradedoubler login area for this page. The plugin will only import sales from this site name. Please do <strong>not</strong> enter the site id but the name. You can find the site name in the publisher area, menu item Sites -> Sites. If you are using several sites for this page you can separate the site names with comma. If you are using your account only for this page anyway, just leave the field empty. In this case, the plugin will download all sales.</div>", "affiliate-power");
 	}
 	
+	//Tradetracker
+	static public function addTradetrackerUserIdField() {
+		$options = get_option('affiliate-power-options');
+		if (!isset($options['tradetracker-userid'])) $options['tradetracker-userid'] = '';
+		echo "<input type='text' id='affiliate-power-tradetracker-userid' name='affiliate-power-options[tradetracker-userid]' size='40' value='".$options['tradetracker-userid']."' /> ";
+		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_tradetracker_userid_info\").style.display=\"block\"; return false;'>[?]</a></span>";
+		_e("<div id='ap_tradetracker_userid_info' style='display:none;'>Please do not use your normal username here. Log into your account and click on the menu item 'Web-Service'. You find your Customer ID on the right hand side. It may be necessary to request the ID via the request button first.</div>", "affiliate-power");
+	}
 	
+	static public function addTradetrackerPasswordField() {
+		$options = get_option('affiliate-power-options');
+		if (!isset($options['tradetracker-password'])) $options['tradetracker-password'] = '';
+		echo "<input type='text' id='affiliate-power-tradetracker-password' name='affiliate-power-options[tradetracker-password]' size='40' value='".$options['tradetracker-password']."' /> ";
+		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_tradetracker_password_info\").style.display=\"block\"; return false;'>[?]</a></span>";
+		_e("<div id='ap_tradetracker_password_info' style='display:none;'>Please do not use your normal password here. Log into your account and click on the menu item 'Tools' -> 'Web-Service'. You find your passphrase on the right hand side. It may be necessary to request the passphrase via the request button first.</div>", "affiliate-power");
+	}
+	
+	static public function addTradetrackerSiteIdField() {
+		$options = get_option('affiliate-power-options');
+		if (!isset($options['tradetracker-siteid'])) $options['tradetracker-siteid'] = '';
+		echo "<input type='text' id='affiliate-power-tradetracker-siteid' name='affiliate-power-options[tradetracker-siteid]' size='40' value='".$options['tradetracker-siteid']."' /> ";
+		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_tradetracker_siteid_info\").style.display=\"block\"; return false;'>[?]</a></span>";
+		_e("<div id='ap_tradetracker_siteid_info' style='display:none;'>To find your Site Id log into your account and click on Account -> My websites.</div>", "affiliate-power");
+	}
+	
+
+	//Webgains
+	static public function addWebgainsUsernameField() {
+		$options = get_option('affiliate-power-options');
+		if (!isset($options['webgains-username'])) $options['webgains-username'] = '';
+		echo "<input type='text' id='affiliate-power-webgains-username' name='affiliate-power-options[webgains-username]' size='40' value='".$options['webgains-username']."' /> ";
+		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_webgains_username_info\").style.display=\"block\"; return false;'>[?]</a></span>";
+		_e("<div id='ap_webgains_username_info' style='display:none;'>For security reasons, you should not use your normal login here. Login into your account and create a new user. You can do this via the top menu item Account -> Add new User. Put whatever you want into First name and last name. Enter 'Viewer' in the default access level and 'Accounts' in the Contact types box. Enter the username of the new user into this field.</div>", "affiliate-power");
+	}
+	
+	static public function addWebgainsPasswordField() {
+		$options = get_option('affiliate-power-options');
+		if (!isset($options['webgains-password'])) $options['webgains-password'] = '';
+		echo "<input type='password' id='affiliate-power-webgains-password' name='affiliate-power-options[webgains-password]' size='40' value='".$options['webgains-password']."' /> ";
+		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_webgains_password_info\").style.display=\"block\"; return false;'>[?]</a></span>";
+		_e("<div id='ap_webgains_password_info' style='display:none;'>For security reasons, you should not use your normal login here. Login into your account and create a new user. You can do this via the top menu item Account -> Add new User. Put whatever you want into First name and last name. Enter 'Viewer' in the default access level and 'Accounts' in the Contact types box. Enter the password of the new user into this field.</div>", "affiliate-power");
+	}
+	
+	static public function addWebgainsCampaignField() {
+		$options = get_option('affiliate-power-options');
+		if (!isset($options['webgains-campaign'])) $options['webgains-campaign'] = '';
+		echo "<input type='text' id='affiliate-power-webgains-campaign' name='affiliate-power-options[webgains-campaign]' size='40' value='".$options['webgains-campaign']."' /> ";
+		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_webgains_campaign_info\").style.display=\"block\"; return false;'>[?]</a></span>";
+		_e("<div id='ap_webgains_campaign_info' style='display:none;'>Enter the Campaign Id of your website into this field. You can find the campaign Id in the publisher area via the top menu item Account -> Manage my sites/campaigns. Make sure to use the numeric Campaign Id.</div>", "affiliate-power");
+	}
+
 	
 	//Zanox
 	static public function addZanoxConnectIdField() {
@@ -425,19 +519,7 @@ class Affiliate_Power_Settings {
 		//if (is_numeric($input['download-method'])) $whitelist['download-method'] = (int)$input['download-method'];
 		
 		
-		//Webworker Dashboard
-		if (is_email($input['webworker-dashboard-username'])) $whitelist['webworker-dashboard-username'] = $input['webworker-dashboard-username'];
-		elseif (!empty($input['webworker-dashboard-username'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-webworker-dashboard-username', __('Invalid Webworker Dashboard email address. This is not a valid email address.', 'affiliate-power'), 'error');
 		
-		if (ctype_alnum($input['webworker-dashboard-apikey']) && strlen($input['webworker-dashboard-apikey']) == 32) $whitelist['webworker-dashboard-apikey'] = $input['webworker-dashboard-apikey'];
-		elseif (!empty($input['webworker-dashboard-apikey'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-webworker-dashboard-apikey', __('Invalid Webworker Dashboard Apikey. The Apikey should be 32 characters long and only contain numbers and letters. Please do not enter your normal Webworker Dashboard password, but yourApikey', 'affiliate-power'), 'error');
-		
-		if (isset($whitelist['webworker-dashboard-username']) && isset($whitelist['webworker-dashboard-apikey'])) {
-			include_once('apis/webworker-dashboard.php');
-			if (!Affiliate_Power_Api_Webworker_Dashboard::checkLogin($whitelist['webworker-dashboard-username'], $whitelist['webworker-dashboard-apikey'])){
-				add_settings_error('affiliate-power-options', 'affiliate-power-error-webworker-dashboard-login', __('Webworker Dashboard test login failed. Please check your data.', 'affiliate-power'), 'error');
-			}
-		}
 		
 		
 		
@@ -517,6 +599,35 @@ class Affiliate_Power_Settings {
 		}
 		
 		
+		//Digistore24
+		if (strlen($input['digistore24-key']) > 20) $whitelist['digistore24-key'] = esc_html(trim($input['digistore24-key']));
+		elseif (!empty($input['cj-key'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-cj-key',  __('Invalid digistore24 API key. The key should be longer than 20 characters. Please do not enter your normal password, but your API key.', 'affiliate-power'), 'error');
+		if (isset($whitelist['digistore24-key'])) {
+			include_once('apis/digistore24.php');	
+			if (!extension_loaded('curl')) {
+				add_settings_error('affiliate-power-options', 'affiliate-power-error-curl', __('In order to download the Digistore24 sales the PHP-module curl is required. This seems to be not activated on your server. Please activate the module. If you don\'t know how to do this, your webhoster can assist you.', 'affiliate-power'), 'error');
+			}
+			elseif (!Affiliate_Power_Api_Digistore24::checkLogin($whitelist['digistore24-key'])){
+				add_settings_error('affiliate-power-options', 'affiliate-power-error-digistore24-login', __('Digistore24 test login failed. Please check your data.', 'affiliate-power'), 'error');
+			}
+		}
+		
+		
+		//eBay
+		if (is_email($input['ebay-email'])) $whitelist['ebay-email'] = $input['ebay-email'];
+		elseif (!empty($input['ebay-email'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-ebay-email', __('Invalid eBay email.', 'affiliate-power'), 'error');
+		
+		if (!empty($input['ebay-password'])) $whitelist['ebay-password'] = esc_html($input['ebay-password']);
+		elseif (!empty($input['ebay-email'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-ebay-password', __('Please enter your eBay password', 'affiliate-power'), 'error');
+		
+		if (isset($whitelist['ebay-email']) && isset($whitelist['ebay-password'])) {
+			include_once('apis/ebay.php');	
+			if (!Affiliate_Power_Api_Ebay::checkLogin($whitelist['ebay-email'], $whitelist['ebay-password'])){
+				add_settings_error('affiliate-power-options', 'affiliate-power-error-ebay-email', __('eBay test login failed. Please check your data.', 'affiliate-power'), 'error');
+			}
+		}
+		
+		if (!empty($input['ebay-campaign'])) $whitelist['ebay-campaign'] = esc_html($input['ebay-campaign']);
 		
 		//Superclix
 		if (!empty($input['superclix-username'])) $whitelist['superclix-username'] = esc_html($input['superclix-username']);
@@ -547,6 +658,47 @@ class Affiliate_Power_Settings {
 		
 		if (!empty($input['tradedoubler-sitename'])) $whitelist['tradedoubler-sitename'] = esc_html($input['tradedoubler-sitename']);
 		
+		//Tradetracker
+		if (ctype_digit($input['tradetracker-userid'])) $whitelist['tradetracker-userid'] = $input['tradetracker-userid'];
+		elseif (!empty($input['tradetracker-userid'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-tradetracker-userid', __('Invalid Tradetracker User Id. The User ID should only contain numbers. Please make sure to specify your User ID, not your username.', 'affiliate-power'), 'error');
+		
+		if (ctype_alnum($input['tradetracker-password']) && strlen($input['tradetracker-password']) > 20) $whitelist['tradetracker-password'] = $input['tradetracker-password'];
+		elseif (!empty($input['tradetracker-password'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-tradetracker-password', __('Invalid Tradetracker passphrase. Please do not enter your normal password, but your passphrase.', 'affiliate-power'), 'error');
+		
+		if (ctype_digit($input['tradetracker-siteid'])) $whitelist['tradetracker-siteid'] = $input['tradetracker-siteid'];
+		elseif (empty($input['tradetracker-siteid']) && !empty($input['tradetracker-userid'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-tradetracker-userid', __('Missing Tradetracker Site Id. Please specify your Site Id.', 'affiliate-power'), 'error');
+		elseif (!empty($input['tradetracker-siteid'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-tradetracker-userid', __('Invalid Tradetracker Site Id. The Site ID should only contain numbers. Please make sure to specify your Site ID, not your sitename.', 'affiliate-power'), 'error');
+		
+		if (isset($whitelist['tradetracker-userid']) && isset($whitelist['tradetracker-password']) && isset($whitelist['tradetracker-siteid'])) {
+			include_once('apis/tradetracker.php');
+			if (!extension_loaded('soap')) {
+				add_settings_error('affiliate-power-options', 'affiliate-power-error-soap', __('In order to download the Tradetracker sales the PHP-module SOAP is required. This seems to be not activated on your server. Please activate the module. If you don\'t know how to do this, your webhoster can assist you.', 'affiliate-power'), 'error');
+			}
+			elseif (!Affiliate_Power_Api_Tradetracker::checkLogin($whitelist['tradetracker-userid'], $whitelist['tradetracker-password'], $whitelist['tradetracker-siteid'])){
+				add_settings_error('affiliate-power-options', 'affiliate-power-error-tradetracker-login', __('Tradetracker test login failed. Please check your data.', 'affiliate-power'), 'error');
+			}
+		}
+		
+		
+		
+		//Webgains
+		if (!empty($input['webgains-username'])) $whitelist['webgains-username'] = esc_html($input['webgains-username']);
+		
+		if (!empty($input['webgains-password'])) $whitelist['webgains-password'] = esc_html($input['webgains-password']);
+		
+		if (!empty($input['webgains-username']) && empty($input['webgains-campaign'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-webgains-campaign', __('Please enter your Webgains Campaign Id', 'affiliate-power'), 'error');
+		elseif (!empty($input['webgains-campaign']) && !is_numeric($input['webgains-campaign'])) add_settings_error('affiliate-power-options', 'affiliate-power-error-webgains-campaign', __('Invalid Webgains Campaign Id. Make sure to use the numeric Campaign Id, not the Campaign name.', 'affiliate-power'), 'error');
+		elseif (is_numeric($input['webgains-campaign'])) $whitelist['webgains-campaign'] = esc_html($input['webgains-campaign']);
+		
+		if (isset($whitelist['webgains-username']) && isset($whitelist['webgains-password']) && isset($whitelist['webgains-campaign'])) {
+			include_once('apis/webgains.php');
+			if (!extension_loaded('soap')) {
+				add_settings_error('affiliate-power-options', 'affiliate-power-error-soap', __('In order to download the Webgains sales the PHP-module SOAP is required. This seems to be not activated on your server. Please activate the module. If you don\'t know how to do this, your webhoster can assist you.', 'affiliate-power'), 'error');
+			}
+			elseif (!Affiliate_Power_Api_Webgains::checkLogin($whitelist['webgains-username'], $whitelist['webgains-password'], $whitelist['webgains-campaign'])){
+				add_settings_error('affiliate-power-options', 'affiliate-power-error-webgains-login', __('Webgains test login failed. Please check your data.', 'affiliate-power'), 'error');
+			}
+		}
 			
 		
 		//Zanox
