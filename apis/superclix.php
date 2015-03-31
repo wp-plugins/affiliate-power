@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) die; //no direct access
 
 class Affiliate_Power_Api_Superclix {
 

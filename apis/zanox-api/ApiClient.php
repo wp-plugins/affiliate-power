@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) die; //no direct access
 
 require_once 'includes/ApiConst.php';
 require_once 'includes/ApiError.php';
@@ -148,7 +149,10 @@ define("DIR", dirname(__FILE__));
 /**
  * ApiClient
  */
-final class ApiClient
+
+//Class renamed to avoid collisions, Jonas Breuer, 31.03.2015
+ 
+final class ZanoxApiClient
 {
 
     /**

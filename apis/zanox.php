@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) die; //no direct access
 
 class Affiliate_Power_Api_Zanox {
 
@@ -7,7 +8,7 @@ class Affiliate_Power_Api_Zanox {
 		if (!class_exists('ApiClientException')) include_once ("zanox-api/ApiClient.php");
 		
 		try {
-			$zx = ApiClient::factory(PROTOCOL_SOAP);
+			$zx = ZanoxApiClient::factory(PROTOCOL_SOAP); //Class renamed to avoid collisions
 			$zx->setConnectId($connect_id);
 			$zx->setSecretKey($secret_key);
 			$zx->setPublicKey($public_key);
@@ -25,7 +26,7 @@ class Affiliate_Power_Api_Zanox {
 	static public function downloadTransactions($connect_id, $public_key, $secret_key, $filter_adspace, $fromTS, $tillTS) {
 		if (!class_exists('ApiClientException')) include_once ("zanox-api/ApiClient.php");
 		
-		$zx = ApiClient::factory(PROTOCOL_SOAP);
+		$zx = ZanoxApiClient::factory(PROTOCOL_SOAP); //Class renamed to avoid collisions
 		$zx->setConnectId($connect_id);
 		$zx->setSecretKey($secret_key);
 		$zx->setPublicKey($public_key);

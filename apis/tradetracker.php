@@ -10,14 +10,15 @@ class Affiliate_Power_Api_Tradetracker {
 		
 		try { 
 			$soap->authenticate($username, $password); 
+			//$soap->authenticate($username, $password, false, 'de_DE', true); //demo login, use 38593 as siteid (username and password are not relevant)
 		}
 		catch (Exception $e) { 
 			return false; 
 		}
 
 		$options = array (
-			'registrationDateFrom' => date('Y-m-d', time()-86400),
-			'registrationDateTo' => date('Y-m-d')
+			'registrationDateFrom' => date('Y-m-d', time() - 86400),
+			'registrationDateTo' => date('Y-m-d', time() + 86400)
 		);
 		
 		try { 
@@ -33,13 +34,14 @@ class Affiliate_Power_Api_Tradetracker {
 	
 	static public function downloadTransactions($username, $password, $siteid, $fromTS, $tillTS) {
 	
-		$StartDate = date('Y-m-d', $fromTS);
-		$EndDate = date('Y-m-d', $tillTS);
+		$StartDate = date('Y-m-d', $fromTS - 86400);
+		$EndDate = date('Y-m-d', $tillTS + 86400); //tradetracker excludes the boundaries from the import, so we push them one more day
 	
 		$soap = new SoapClient('http://ws.tradetracker.com/soap/affiliate?wsdl', array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP));
 		
 		try { 
 			$soap->authenticate($username, $password); 
+			//$soap->authenticate($username, $password, false, 'de_DE', true); //demo login, use 38593 as siteid (username and password are not relevant)
 		}
 		catch (Exception $e) { 
 			//todo: error handling, mail to admin etc.

@@ -153,6 +153,13 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 
 == Changelog ==
 
+= 1.5.1 =
+* Updated eBay infotext
+* Bugfixes eBay API
+* Zanox class renamed to avoid collisions
+* Tradetracker API timeframe improved
+* Automail bug fixed
+
 = 1.5.0 =
 * New network: eBay 
 * New network: Digistore24

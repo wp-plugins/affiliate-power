@@ -344,7 +344,7 @@ class Affiliate_Power_Settings {
 		if (!isset($options['ebay-email'])) $options['ebay-email'] = '';
 		echo "<input type='text' id='affiliate-power-ebay-email' name='affiliate-power-options[ebay-email]' size='40' value='".$options['ebay-email']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_ebay_email_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		_e("<div id='ap_ebay_email_info' style='display:none;'>The ebay E-Mail is your normal email address you use to login into the ebay partner network.</div>", "affiliate-power");
+		_e("<div id='ap_ebay_email_info' style='display:none;'>For security reasons, you should not use your normal login here. Login into your account and create a new login. You can do that at the menu item Account->Users. Enter a secondary email and a password. Use 'Standard User' as the user role. Click on the confirmation link, which is sent to your secondary email.</div>", "affiliate-power");
 	}
 	
 	static public function addEbayPasswordField() {
@@ -352,7 +352,7 @@ class Affiliate_Power_Settings {
 		if (!isset($options['ebay-password'])) $options['ebay-password'] = '';
 		echo "<input type='password' id='affiliate-power-ebay-password' name='affiliate-power-options[ebay-password]' size='40' value='".$options['ebay-password']."' /> ";
 		echo "<span style='font-size:1em;'><a href='#' onclick='document.getElementById(\"ap_ebay_password_info\").style.display=\"block\"; return false;'>[?]</a></span>";
-		_e("<div id='ap_ebay_password_info' style='display:none;'>The ebay Password is your normal password you use to login into the ebay partner network.</div>", "affiliate-power");
+		_e("<div id='ap_ebay_password_info' style='display:none;'>For security reasons, you should not use your normal login here. Login into your account and create a new login. You can do that at the menu item Account->Users. Enter a secondary email and a password. Use 'Standard User' as the user role. Click on the confirmation link, which is sent to your secondary email.</div>", "affiliate-power");
 	}
 	
 	static public function addEbayCampaignField() {

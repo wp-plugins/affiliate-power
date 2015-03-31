@@ -1,4 +1,5 @@
 <?php
+if (!defined('ABSPATH')) die; //no direct access
 
 class Affiliate_Power_Api_Cj {
 
@@ -54,11 +55,13 @@ class Affiliate_Power_Api_Cj {
 			
 			if (is_wp_error($http_answer) || $http_answer['response']['code'] != 200) {
 				//todo: error handling, mail to admin etc.
+
 				return $output_transactions;
 			}
 			
 			if(!class_exists("DOMDocument")) {
 				//todo: error handling, mail to admin etc.
+
 				return $output_transactions;
 			}
 			

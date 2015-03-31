@@ -1,4 +1,6 @@
 <?php
+if (!defined('ABSPATH')) die; //no direct access
+
 /**
  * Digistore24 REST Api Connector
  * @author Christian Neise

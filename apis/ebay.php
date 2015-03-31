@@ -9,7 +9,9 @@ class Affiliate_Power_Api_Ebay {
 		$StartDate = date('m/d/y', time()-86400);
 		$EndDate = date('m/d/y', time());
 		
-		$report_url = 'https://publisher.ebaypartnernetwork.com/PublisherReportsTx?user_name='.$username.'&user_password='.$password.'&start_date='.$StartDate.'&end_date='.$EndDate;
+		$password = urlencode(html_entity_decode($password, ENT_QUOTES | ENT_HTML5));
+		
+		$report_url = 'https://publisher.ebaypartnernetwork.com/PublisherReportsTx?pt=2&user_name='.$username.'&user_password='.$password.'&start_date='.$StartDate.'&end_date='.$EndDate;
 		$http_answer = wp_remote_get($report_url);
 		//print_r($http_answer);
 		if (is_wp_error($http_answer) || $http_answer['response']['code'] != 200) return false;
@@ -25,10 +27,13 @@ class Affiliate_Power_Api_Ebay {
 		$StartDate = date('m/d/y', $fromTS);
 		$EndDate = date('m/d/y', $tillTS);
 		
-		$report_url = 'https://publisher.ebaypartnernetwork.com/PublisherReportsTx?user_name='.$username.'&user_password='.$password.'&start_date='.$StartDate.'&end_date='.$EndDate;
+		$password = urlencode(html_entity_decode($password, ENT_QUOTES | ENT_HTML5));
+		
+		$report_url = 'https://publisher.ebaypartnernetwork.com/PublisherReportsTx?pt=2&user_name='.$username.'&user_password='.$password.'&start_date='.$StartDate.'&end_date='.$EndDate;
 		
 		//echo $report_url.'<br><br>';
-		$http_answer = wp_remote_get($report_url);
+		$args = array('timeout' => 20);
+		$http_answer = wp_remote_get($report_url, $args);
 		
 		//print_r($http_answer);
 		
@@ -70,9 +75,10 @@ class Affiliate_Power_Api_Ebay {
 			$checkdatetime_db =  $arr_transaction[1] . ' 00:00:00';
 			$status = 'Confirmed';
 			
-			if ($commission == '' || $commission == 0) continue;
-			
-			if ($price == '') $price = 0;
+			$str_commission = (string)$commission;
+			$str_price = (string)$price;
+			if ($str_commission == '') continue;
+			if ($str_price == '') $price = 0;
 			
 			$output_transactions[] = array(
 				'network' => 'ebay', 

@@ -5,7 +5,7 @@ PLUGIN URI: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 DESCRIPTION: With Affiliate Power you can analyze your Affiliate income per Article, Referer, Keyword etc.
 AUTHOR: Jonas Breuer
 AUTHOR URI: http://www.j-breuer.de
-VERSION: 1.5.0
+VERSION: 1.5.1
 Min WP Version: 3.1
 Max WP Version: 4.2
 */
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) die; //no direct access
 
 
 
-define('AFFILIATE_POWER_VERSION', '1.5.0');
+define('AFFILIATE_POWER_VERSION', '1.5.1');
 define('AFFILIATE_POWER_PREMIUM', false);
 
 include_once("affiliate-power-menu.php"); //admin menu
@@ -137,7 +137,7 @@ class Affiliate_Power {
 		$meta_options['infotext120'] = sprintf( __('<h3>Earn money with Affiliate Power!</h3><p>Hey %s, you are using Affiliate Power for more than 120 days now. I am glad, that you like the plugin that much.</p><p>Would you like to recommend the the plugin to others? With the Affiliate Program you earn awesome 30%% for each sale of the Premium version. Click the link below.</p><h3><a href="http://www.affiliatepowerplugin.com/affiliate-program/" target="_blank">All Information about the Affiliate program</a></h3><br /><br /><a href="#" class="affiliate-power-hide-infotext">Hide this message</a>', 'affiliate-power'), $first_name );
 		
 		//show infotext only for updating users
-		//1.5.0 show infotext for everyone until 07.04.
+		//1.5.X show infotext for everyone until 07.04.
 		//if ($version != '0.0.0') $meta_options['hide-infotext'] = 0;
 		if (date('n') == 3 || date('n') == 4 && date('d') < 8) $meta_options['hide-infotext'] = 0;
 		else $meta_options['hide-infotext'] = 1;
