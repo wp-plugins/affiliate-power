@@ -141,21 +141,21 @@ class Affiliate_Power_Statistics {
 		
 		//statistics to create
 		$arr_statistics = array(
-			'Artikel' => $topArticleData,
-			'Partner' => $topPartnerData,
-			'Netzwerk' => $networkData,
-			'Einstiegsseite' => $landingData,
-			'Besucherquelle' => $refererData,
-			'Keyword' => $keywordData,
-			'Tag' => $dayData,
-			'Woche' => $weekData,
-			'Monat' => $monthData
+			'posts' => $topArticleData,
+			'partner' => $topPartnerData,
+			'network' => $networkData,
+			'landing' => $landingData,
+			'referer' => $refererData,
+			'keyword' => $keywordData,
+			'day' => $dayData,
+			'week' => $weekData,
+			'month' => $monthData
 		);
 		
 		$statisticHtml = '';
 		$i = 1;
-		foreach ($arr_statistics as $headline => $statistic) {
-			$statisticHtml .= self::getStatisticHtml($headline, $statistic);
+		foreach ($arr_statistics as $type => $statistic) {
+			$statisticHtml .= self::getStatisticHtml($type, $statistic);
 			if ($i % 3 == 0) $statisticHtml .= '<div style="clear:both;">&nbsp;</div>';
 			$i += 1;
 		}
@@ -215,7 +215,20 @@ class Affiliate_Power_Statistics {
 	}
 	
 	
-	function getStatisticHtml($headline, $statistic) {
+	function getStatisticHtml($type, $statistic) {
+		switch ($type) {
+			case 'posts'   : $headline = __('Post', 'affiliate-power'); break;
+			case 'partner' : $headline = __('Partner', 'affiliate-power'); break;
+			case 'network' : $headline = __('Network', 'affiliate-power'); break;
+			case 'landing' : $headline = __('Landing Page', 'affiliate-power'); break;
+			case 'referer' : $headline = __('Referer', 'affiliate-power'); break;
+			case 'keyword' : $headline = __('Keyword', 'affiliate-power'); break;
+			case 'day'     : $headline = __('Day', 'affiliate-power'); break;
+			case 'week'    : $headline = __('Week', 'affiliate-power'); break;
+			case 'month'   : $headline = __('Month', 'affiliate-power'); break;
+			default: $headline = $type;
+		}
+		
 		$html = ' 
 			<div style="width:30%; float:left; margin-right:20px;">
 				<h3>'.$headline.'</h3>

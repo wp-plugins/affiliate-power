@@ -178,9 +178,17 @@ class Affiliate_Power_Apis {
 			}
 			//Is it time to activate a new infotext?
 			$meta_options = get_option('affiliate-power-meta-options');
+			
 			$days_since_install = round( (date('U') - $meta_options['installstamp']) / 86400 );
 			if (isset($meta_options['infotext'.$days_since_install])) {
 				$meta_options['infotext'] = $meta_options['infotext'.$days_since_install];
+				$meta_options['hide-infotext'] = 0;
+				update_option('affiliate-power-meta-options', $meta_options);
+			}
+			
+			//promo active?
+			if (date('Y') == 2015 && date('n') == 9 && date('d') >= 14) {
+				$meta_options['infotext'] = $meta_options['infotext_promo_sep'];
 				$meta_options['hide-infotext'] = 0;
 				update_option('affiliate-power-meta-options', $meta_options);
 			}

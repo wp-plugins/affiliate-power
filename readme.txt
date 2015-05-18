@@ -3,7 +3,7 @@ Contributors: JonasBreuer
 Donate link: http://www.j-breuer.de/wordpress-plugins/affiliate-power/
 Tags: affiliate, tracking, subid, sales, leads, affili, affili.net, zanox, tradedoubler, belboon, superclix, cj, commission junction, adcell, amazon, ebay, digistore24, tradetracker, webgains
 Requires at least: 3.1
-Tested up to: 4.2
+Tested up to: 4.2.2
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -152,6 +152,12 @@ Einmal täglich findet eine automatische Aktualisierung statt. Du kannst im Back
 3. Statistics (Premium-Version)
 
 == Changelog ==
+
+= 1.5.2 =
+* German headlines in statistics fixed
+* Show SubIds if tracking is deactivated
+* Zanox Class name collision fixed
+* Digistore24 error message if no key is provided fixed
 
 = 1.5.1 =
 * Updated eBay infotext

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Affiliate Power\n"
-"POT-Creation-Date: 2015-03-31 12:02+1000\n"
-"PO-Revision-Date: 2015-03-31 12:03+1000\n"
+"POT-Creation-Date: 2015-05-18 15:16+1000\n"
+"PO-Revision-Date: 2015-05-18 15:17+1000\n"
 "Last-Translator: \n"
 "Language-Team: Jonas Breuer <affiliate-power@j-breuer.de>\n"
 "Language: de_DE\n"
@@ -1426,8 +1426,48 @@ msgstr "Bis"
 msgid "Period"
 msgstr "Zeitraum"
 
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:220
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:248
+msgid "Post"
+msgstr "Artikel"
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:221
+msgid "Partner"
+msgstr "Partner"
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:222
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:253
+msgid "Network"
+msgstr "Netzwerk"
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:223
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:262
+msgid "Landing Page"
+msgstr "Einsteigsseite"
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:224
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:261
+msgid "Referer"
+msgstr "Besucherquelle"
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:225
+msgid "Keyword"
+msgstr "Keyword"
+
 #: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:226
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:232
+msgid "Day"
+msgstr "Tag"
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:227
+msgid "Week"
+msgstr "Woche"
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:228
+msgid "Month"
+msgstr "Monat"
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:239
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-statistics.php:245
 msgid "Income"
 msgstr "Einnahmen"
 
@@ -1493,10 +1533,6 @@ msgstr "Ansehen"
 msgid "Edit"
 msgstr "Edit"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:248
-msgid "Post"
-msgstr "Artikel"
-
 #: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:249
 msgid "SubId"
 msgstr "SubId"
@@ -1504,10 +1540,6 @@ msgstr "SubId"
 #: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:252
 msgid "Date"
 msgstr "Datum"
-
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:253
-msgid "Network"
-msgstr "Netzwerk"
 
 #: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:254
 msgid "Merchant"
@@ -1533,14 +1565,6 @@ msgstr "Status"
 msgid "Check Date"
 msgstr "Check Datum"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:261
-msgid "Referer"
-msgstr "Besucherquelle"
-
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-transactions.php:262
-msgid "Landing Page"
-msgstr "Einsteigsseite"
-
 #: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power-widget.php:74
 msgid "Refresh"
 msgstr "Aktualisieren"
@@ -1564,25 +1588,24 @@ msgstr "Details"
 #: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:129
 #, php-format
 msgid ""
-"<h3>Now: 30%s Discount On The Premium Version until 6th of April</h3><p>Hey "
-"%s, the new version of Affiliate Power is a big update. The plugin now "
-"supports 4 new networks: eBay, Digistore24, Tradetracker and Webgains. There "
-"is also a new pricing structure with separate licences for one or multiple "
-"sites. To celebrate the new version I'm offering a huge 30%s discount on the "
-"multisite licence. There is a good chance, that the Premium Version will "
-"never be so cheap again.<br><h3><a href=\"http://www.affiliatepowerplugin."
-"com/premium/\">Buy your discounted Premium Version now</a></h3><a href=\"#\" "
-"class=\"affiliate-power-hide-infotext\">Hide this message</a>"
+"<h3>Affiliate Power 1.5.2</h3><p>Hey %s, thank you for updating to the new "
+"version of Affiliate Power. For security and compatibility reasons (and for "
+"all the cool new features) you should always use the newest version of the "
+"plugin. The new version is just a hotfix, which fixes the following issues:"
+"<ul><li>German headlines in statistics</li><li>Show SubIds if tracking is "
+"deactivated</li><li>Zanox Class name collision</li><li>Digistore24 error "
+"message if no key is provided</li></ul><br /><a href=\"#\" class=\"affiliate-"
+"power-hide-infotext\">Hide this message</a>"
 msgstr ""
-"<h3>Jetzt: 30%s Rabatt auf die Premium Version bis zum 06.04.2015</h3><p>Hey "
-"%s, mit der neuen Version unterstützt Affiliate Power gleich 4 neue "
-"Netzwerke: eBay, Digistore24, Tradetracker und Webgains. Außerdem gibt es "
-"jetzt 3 unterschiedliche Lizenzen. Zur Feier der neuen Version gibt es einen "
-"fetten 30%s Rabatt auf die Multi-Lizenz bis zum 06.04.2015. Die Premium-"
-"Version ist wahrscheinlich nie wieder so günstig wie heute. <br><h3><a href="
-"\"http://www.j-breuer.de/wordpress-plugins/affiliate-power-premium/\">Jetzt "
-"die Premium Version mit Rabatt kaufen</a></h3><a href=\"#\" class="
-"\"affiliate-power-hide-infotext\">Nicht mehr anzeigen</a>"
+"<h3>Affiliate Power 1.5.2</h3><p>Hey %s, danke, dass du auf die neueste "
+"Version von Affiliate Power aktualisiert hast. Aus Sicherheits- und "
+"Kompatibilitätsgründen (und für die coolen neuen Features) solltest du immer "
+"auf die neueste Version aktualisieren. Die aktulle Version ist nur ein "
+"Hotfix, der die folgenden Probleme löst:<ul><li>SubId Anzeige bei "
+"deaktiviertem Tracking</li><li>Zanox Klassen Name Kollision</"
+"li><li>Digistore24 Fehlermeldung wenn kein Key angegeben wird</li></ul><br /"
+"><a href=\"#\" class=\"affiliate-power-hide-infotext\">Nicht mehr anzeigen</"
+"a>"
 
 #: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:131
 #, php-format
@@ -1710,7 +1733,26 @@ msgstr ""
 "a></h3><br /><br /><a href=\"#\" class=\"affiliate-power-hide-infotext"
 "\">Nicht mehr anzeigen</a>"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:154
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:139
+#, php-format
+msgid ""
+"<img src=\"%s\" alt=\"Affiliate Power Premium\" style=\"float:left; "
+"width:100px; margin:10px;\" /><h3>Now: 20%s Discount On All Premium Packages "
+"Until The End Of September.</h3><p>Hey %s, have you been thinking about "
+"buying the Premium version? Now would be the perfect time. I'm offering a "
+"huge 20%s discount on all licences. This discount is only active until the "
+"end of the month.<br><h3><a href=\"http://www.affiliatepowerplugin.com/"
+"premium/\">Buy your discounted Premium Version now</a></h3>"
+msgstr ""
+"<img src=\"%s\" alt=\"Affiliate Power Premium\" style=\"float:left; "
+"width:100px; margin:10px;\" /><h3>Jetzt: 20%s Rabatt auf alle Premium "
+"Pakete</h3><p>Hey %s, hast du darüber nachgedacht, die Premium Version zu "
+"kaufen? Jetzt wäre der perfekte Zeitpunkt. Ich biete einen fetten 20%s "
+"Rabatt auf alle Lizenzen an. Dieses Angebot gilt nur bis Ende des Monats. "
+"<br><h3><a href=\"http://www.j-breuer.de/wordpress-plugins/affiliate-power-"
+"premium/\">Kaufe jetzt die Premium Version mit Rabatt</a></h3>"
+
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:158
 #, php-format
 msgid ""
 "<div id=\"message\" class=\"updated\"><img src=\"%s\" alt=\"Affiliate Power"
@@ -1730,7 +1772,7 @@ msgstr ""
 "Tracking verwenden möchtest, solltest du auf der <a href=\"%s"
 "\">Einstellungsseite</a> die Parameter hinterlegen, die du benutzt.</p></div>"
 
-#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:157
+#: C:\develop\j-breuer\affiliate-power\affiliate-power-basic/affiliate-power.php:161
 #, php-format
 msgid ""
 "<div id=\"message\" class=\"updated\"><img src=\"%s\" alt=\"Affiliate Power"
@@ -1749,6 +1791,28 @@ msgstr ""
 "herunterladen und die erste statistische Auswertung vornehmen. Die "
 "Auswertung deiner Artikel kann nur für neue Sales erstellt werden. Alle "
 "anderen Statistiken funktionieren auch für alte Sales.</p></div>"
+
+#~ msgid ""
+#~ "<h3>Now: 30%s Discount On The Premium Version until 6th of April</"
+#~ "h3><p>Hey %s, the new version of Affiliate Power is a big update. The "
+#~ "plugin now supports 4 new networks: eBay, Digistore24, Tradetracker and "
+#~ "Webgains. There is also a new pricing structure with separate licences "
+#~ "for one or multiple sites. To celebrate the new version I'm offering a "
+#~ "huge 30%s discount on the multisite licence. There is a good chance, that "
+#~ "the Premium Version will never be so cheap again.<br><h3><a href=\"http://"
+#~ "www.affiliatepowerplugin.com/premium/\">Buy your discounted Premium "
+#~ "Version now</a></h3><a href=\"#\" class=\"affiliate-power-hide-infotext"
+#~ "\">Hide this message</a>"
+#~ msgstr ""
+#~ "<h3>Jetzt: 30%s Rabatt auf die Premium Version bis zum 06.04.2015</"
+#~ "h3><p>Hey %s, mit der neuen Version unterstützt Affiliate Power gleich 4 "
+#~ "neue Netzwerke: eBay, Digistore24, Tradetracker und Webgains. Außerdem "
+#~ "gibt es jetzt 3 unterschiedliche Lizenzen. Zur Feier der neuen Version "
+#~ "gibt es einen fetten 30%s Rabatt auf die Multi-Lizenz bis zum 06.04.2015. "
+#~ "Die Premium-Version ist wahrscheinlich nie wieder so günstig wie heute. "
+#~ "<br><h3><a href=\"http://www.j-breuer.de/wordpress-plugins/affiliate-"
+#~ "power-premium/\">Jetzt die Premium Version mit Rabatt kaufen</a></h3><a "
+#~ "href=\"#\" class=\"affiliate-power-hide-infotext\">Nicht mehr anzeigen</a>"
 
 #~ msgid ""
 #~ "<div id='ap_ebay_email_info' style='display:none;'>The ebay E-Mail is "
@@ -1824,26 +1888,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Testlogin beim Webworker Dashboard fehlgeschlagen. Bitte überprüfe Deine "
 #~ "Daten."
-
-#~ msgid ""
-#~ "<h3>Affiliate Power 1.4.0</h3><p>Hey %s, thank you for updating to the "
-#~ "new version of Affiliate Power. For security and compatibility reasons "
-#~ "(and for all the cool new features) you should always use the newest "
-#~ "version of the plugin. The new version has the following changes:"
-#~ "<ul><li>Website filter for affili.net</li><li>Show check date as own "
-#~ "sortable column in sales overview</li><li>Fixed Amazon tag filter</"
-#~ "li><li>Little bugfixes and improvements</li></ul><br /><a href=\"#\" "
-#~ "class=\"affiliate-power-hide-infotext\">Hide this message</a>"
-#~ msgstr ""
-#~ "<h3>Affiliate Power 1.4.0</h3><p>Hey %s, danke, dass du auf die neueste "
-#~ "Version von Affiliate Power aktualisiert hast. Aus Sicherheits- und "
-#~ "Kompatibilitätsgründen (und für die coolen neuen Features) solltest du "
-#~ "immer auf die neueste Version aktualisieren. Die Änderungen in der neuen "
-#~ "Version sind:<ul><li>Webseiten Filter für Affili.net</"
-#~ "li><li>Überprüfungsdatum als eigene sortierbare Spalte in der Sales-"
-#~ "Übersicht</li><li>Amazon Tag Filter gefixt</li><li>E-Book eingebaut</"
-#~ "li><li>Kleine Bugfixes und Verbesserungen</li></ul><br /><a href=\"#\" "
-#~ "class=\"affiliate-power-hide-infotext\">Nicht mehr anzeigen</a>"
 
 #~ msgid "Affiliate Power"
 #~ msgstr "Affiliate Power"
@@ -1963,21 +2007,6 @@ msgstr ""
 
 #~ msgid "Saturday"
 #~ msgstr "Samstag"
-
-#~ msgid "Partner"
-#~ msgstr "Partner"
-
-#~ msgid "Keyword"
-#~ msgstr "Keyword"
-
-#~ msgid "Day"
-#~ msgstr "Tag"
-
-#~ msgid "Week"
-#~ msgstr "Woche"
-
-#~ msgid "Month"
-#~ msgstr "Monat"
 
 #~ msgid "- Homepage -"
 #~ msgstr "- Startseite -"

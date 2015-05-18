@@ -152,7 +152,7 @@ define("DIR", dirname(__FILE__));
 
 //Class renamed to avoid collisions, Jonas Breuer, 31.03.2015
  
-final class ApiClient
+final class ZanoxApiClient
 {
 
     /**

@@ -5,10 +5,18 @@ class Affiliate_Power_Api_Zanox {
 
 
 	static public function checkLogin($connect_id, $public_key, $secret_key) {
-		if (!class_exists('ApiClientException')) include_once ("zanox-api/ApiClient.php");
+		if (!class_exists('ApiClientException') && class_exists('ApiClient')) {
+			include_once ("zanox-api/ZanoxApiClient.php");
+			try { $zx = ZanoxApiClient::factory(PROTOCOL_SOAP); }
+			catch (Exception $e) { return false; }
+		}
+		elseif (!class_exists('ApiClientException')) {
+			include_once ("zanox-api/ApiClient.php");
+			try { $zx = ApiClient::factory(PROTOCOL_SOAP); }
+			catch (Exception $e) { return false; }
+		}
 		
 		try {
-			$zx = ZanoxApiClient::factory(PROTOCOL_SOAP); //Class renamed to avoid collisions
 			$zx->setConnectId($connect_id);
 			$zx->setSecretKey($secret_key);
 			$zx->setPublicKey($public_key);
@@ -24,9 +32,17 @@ class Affiliate_Power_Api_Zanox {
 	
 	
 	static public function downloadTransactions($connect_id, $public_key, $secret_key, $filter_adspace, $fromTS, $tillTS) {
-		if (!class_exists('ApiClientException')) include_once ("zanox-api/ApiClient.php");
+		if (!class_exists('ApiClientException') && class_exists('ApiClient')) {
+			include_once ("zanox-api/ZanoxApiClient.php");
+			try { $zx = ZanoxApiClient::factory(PROTOCOL_SOAP); }
+			catch (Exception $e) { return false; }
+		}
+		elseif (!class_exists('ApiClientException')) {
+			include_once ("zanox-api/ApiClient.php");
+			try { $zx = ApiClient::factory(PROTOCOL_SOAP); }
+			catch (Exception $e) { return false; }
+		}
 		
-		$zx = ZanoxApiClient::factory(PROTOCOL_SOAP); //Class renamed to avoid collisions
 		$zx->setConnectId($connect_id);
 		$zx->setSecretKey($secret_key);
 		$zx->setPublicKey($public_key);
